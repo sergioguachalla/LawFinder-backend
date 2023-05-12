@@ -11,8 +11,8 @@ public class CategoryEntity {
     @Column(name = "CATEGORY_ID")
     private Long categoryId;
 
-    @Column(name = "CATNAME", nullable = false, length = 100)
-    private String catName;
+    @Column(name = "CATEGORY_NAME", nullable = false, length = 100)
+    private String categoryName;
 
     @Column(name = "DESCRIPTION", nullable = false, length = 2000)
     private String description;
@@ -24,8 +24,8 @@ public class CategoryEntity {
 
     //Constructor con todos los atributos
 
-    public CategoryEntity(String catname, String description){
-        this.catName = catname;
+    public CategoryEntity(String categoryName, String description){
+        this.categoryName = categoryName;
         this.description = description;
     }
     
@@ -34,8 +34,8 @@ public class CategoryEntity {
         return categoryId;
     }
 
-    public String getCatName() {
-        return catName;
+    public String getcategoryName() {
+        return categoryName;
     }
 
     public String getDescription() {
@@ -47,8 +47,8 @@ public class CategoryEntity {
         this.categoryId = categoryId;
     }
 
-    public void setCatName(String catName) {
-        this.catName = catName;
+    public void setcategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public void setDescription(String description) {
@@ -58,7 +58,7 @@ public class CategoryEntity {
     // toString
     @Override
     public String toString() {
-        return "CategoryEntity [categoryId=" + categoryId + ", catName=" + catName + ", description=" + description
+        return "CategoryEntity [categoryId=" + categoryId + ", categoryName=" + categoryName + ", description=" + description
                 + "]";
     }
 
