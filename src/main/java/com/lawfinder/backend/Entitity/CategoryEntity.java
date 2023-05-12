@@ -55,4 +55,11 @@ public class CategoryEntity {
         this.description = description;
     }
 
+    // toString
+    @Override
+    public String toString() {
+        return "CategoryEntity [categoryId=" + categoryId + ", catName=" + catName + ", description=" + description
+                + "]";
+    }
+
 }

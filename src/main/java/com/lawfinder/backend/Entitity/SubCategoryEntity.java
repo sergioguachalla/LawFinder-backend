@@ -64,6 +64,13 @@ public class SubCategoryEntity {
         this.category = category;
     }
 
+    // toString
+    @Override
+    public String toString() {
+        return "SubCategoryEntity [category=" + category + ", description=" + description + ", subCatName=" + subCatName
+                + ", subCategoryId=" + subCategoryId + "]";
+    }
+
 
     
 }
