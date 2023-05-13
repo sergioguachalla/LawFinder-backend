@@ -8,7 +8,7 @@ public class AddressEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ADRESS_ID")
+    @Column(name = "ADDRESS_ID")
     private Integer addressId;
 
     @Column(name = "ADRESSINFO", length = 1000, nullable = false)

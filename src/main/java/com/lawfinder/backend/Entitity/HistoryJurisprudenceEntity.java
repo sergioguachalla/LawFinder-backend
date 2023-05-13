@@ -94,7 +94,7 @@ public class HistoryJurisprudenceEntity {
         this.subcategoryId = subcategoryId;
     }
 
-    public Integer gethJudgeId() {
+    public Integer getHJudgeId() {
         return hJudgeId;
     }
 

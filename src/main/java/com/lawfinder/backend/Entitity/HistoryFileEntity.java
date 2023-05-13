@@ -7,35 +7,37 @@ import java.util.Date;
 @Entity
 @Table(name = "H_FILE")
 public class HistoryFileEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "H_FILE_ID")
     private Long id;
 
-    @Column(name = "URL", length = 1000, nullable = false)
+    @Column(name = "URL", nullable = false)
     private String url;
 
-    @Column(name = "MIME_TYPE", length = 60, nullable = false)
+    @Column(name = "MIME_TYPE", nullable = false)
     private String mimeType;
 
-    @Column(name = "SIZE", length = 60, nullable = false)
+    @Column(name = "SIZE", nullable = false)
     private String size;
 
-    @Column(name = "MD5", length = 60, nullable = false)
+    @Column(name = "MD5", nullable = false)
     private String md5;
 
-    @Column(name = "TX_USER", length = 100, nullable = false)
+    @Column(name = "TX_USER", nullable = false)
     private String txUser;
 
-    @Column(name = "TX_HOST", length = 100, nullable = false)
+    @Column(name = "TX_HOST", nullable = false)
     private String txHost;
 
     @Column(name = "TX_DATE", nullable = false)
     private Date txDate;
 
-    // constructors, getters, and setters
+    // constructors
 
-    public HistoryFileEntity() {}
+    public HistoryFileEntity() {
+    }
 
     public HistoryFileEntity(String url, String mimeType, String size, String md5, String txUser, String txHost, Date txDate) {
         this.url = url;
@@ -46,7 +48,6 @@ public class HistoryFileEntity {
         this.txHost = txHost;
         this.txDate = txDate;
     }
-
 
     public Long getId() {
         return id;
@@ -126,5 +127,3 @@ public class HistoryFileEntity {
                 '}';
     }
 }
-
-
