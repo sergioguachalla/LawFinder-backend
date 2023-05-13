@@ -33,7 +33,7 @@ public class FileEntity {
     @Column(name = "TX_DATE")
     private Date txDate;
 
-    //Constructor vaciO
+    //Constructor vacio
     public FileEntity() {}
 
     //Constructor con todos los atributos
