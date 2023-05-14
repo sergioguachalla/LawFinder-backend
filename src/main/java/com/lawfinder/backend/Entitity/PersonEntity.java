@@ -17,7 +17,7 @@ public class PersonEntity {
 
     @ManyToOne
     @JoinColumn(name = "ADRESS_ID", referencedColumnName = "ADRESS_ID")
-    private AdressEntity address;
+    private AddressEntity address;
 
     
 }
