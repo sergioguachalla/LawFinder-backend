@@ -1,6 +1,6 @@
 package com.lawfinder.backend.bl;
 
-import com.lawfinder.backend.Entitity.JurisprudenceEntity;
+import com.lawfinder.backend.Entity.JurisprudenceEntity;
 import com.lawfinder.backend.dao.JurisprudenceRepository;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
 package com.lawfinder.backend.bl;
 
-import com.lawfinder.backend.Entitity.DepartmentEntity;
+import com.lawfinder.backend.Entity.DepartmentEntity;
 import com.lawfinder.backend.dao.DepartmentRepository;
 import org.springframework.stereotype.Service;
 

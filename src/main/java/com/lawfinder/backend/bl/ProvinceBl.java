@@ -1,7 +1,7 @@
 
 package com.lawfinder.backend.bl;
 
-import com.lawfinder.backend.Entitity.ProvinceEntity;
+import com.lawfinder.backend.Entity.ProvinceEntity;
 import com.lawfinder.backend.dao.ProvinceRepository;
 import org.springframework.stereotype.Service;
 

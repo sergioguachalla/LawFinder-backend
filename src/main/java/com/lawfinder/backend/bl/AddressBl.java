@@ -1,6 +1,6 @@
 package com.lawfinder.backend.bl;
 
-import com.lawfinder.backend.Entitity.AddressEntity;
+import com.lawfinder.backend.Entity.AddressEntity;
 import com.lawfinder.backend.dao.AddressRepository;
 import org.springframework.stereotype.Service;
 

@@ -1,21 +1,20 @@
-package com.lawfinder.backend.Entitity;
+package com.lawfinder.backend.Entity;
 
 import jakarta.persistence.*;
-
-import java.util.Arrays;
 import java.util.Date;
 
 @Entity
-@Table(name = "H_JURISPRUDENCE")
-public class HistoryJurisprudenceEntity {
+@Table(name = "JURISPRUDENCE")
+public class JurisprudenceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "H_JURISPRUDENCE_ID")
-    private Long id;
+    @Column(name = "JURISPRUDENCE_ID")
+    private Integer id;
 
-    @Column(name = "SENTENCEDATE", nullable = false)
+    @Column(name = "SENTENCE_DATE", nullable = false)
     private Date sentenceDate;
 
+    @Lob
     @Column(name = "JURISPRUDENCE", nullable = false)
     private byte[] jurisprudence;
 
@@ -28,29 +27,39 @@ public class HistoryJurisprudenceEntity {
     @Column(name = "SUBCATEGORY_ID", nullable = false)
     private Integer subcategoryId;
 
-    @Column(name = "H_JUDGE_ID", nullable = false)
-    private Integer hJudgeId;
+    @Column(name = "FILE_FILE_ID", nullable = false)
+    private Integer fileId;
 
-    // Constructor vacío
-    public HistoryJurisprudenceEntity() {
+    @Column(name = "TX_USER", length = 100, nullable = false)
+    private String txUser;
+
+    @Column(name = "TX_HOST", length = 100, nullable = false)
+    private String txHost;
+
+    @Column(name = "TX_DATE", nullable = false)
+    private Date txDate;
+
+
+    public JurisprudenceEntity(){
     }
-
-    // Constructor
-    public HistoryJurisprudenceEntity(Date sentenceDate, byte[] jurisprudence, String summary, Integer provId, Integer subcategoryId, Integer hJudgeId) {
+    public JurisprudenceEntity(Integer id, Date sentenceDate, byte[] jurisprudence, String summary, Integer provId, Integer subcategoryId, Integer fileId, String txUser, String txHost, Date txDate) {
+        this.id = id;
         this.sentenceDate = sentenceDate;
         this.jurisprudence = jurisprudence;
         this.summary = summary;
         this.provId = provId;
         this.subcategoryId = subcategoryId;
-        this.hJudgeId = hJudgeId;
+        this.fileId = fileId;
+        this.txUser = txUser;
+        this.txHost = txHost;
+        this.txDate = txDate;
     }
 
-    // Getters y setters
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -94,25 +103,36 @@ public class HistoryJurisprudenceEntity {
         this.subcategoryId = subcategoryId;
     }
 
-    public Integer getHJudgeId() {
-        return hJudgeId;
+    public Integer getFileId() {
+        return fileId;
     }
 
-    public void sethJudgeId(Integer hJudgeId) {
-        this.hJudgeId = hJudgeId;
+    public void setFileId(Integer fileId) {
+        this.fileId = fileId;
     }
 
-    @Override
-    public String toString() {
-        return "HistoryJurisprudenceEntity{" +
-                "id=" + id +
-                ", sentenceDate=" + sentenceDate +
-                ", jurisprudence=" + Arrays.toString(jurisprudence) +
-                ", summary='" + summary + '\'' +
-                ", provId=" + provId +
-                ", subcategoryId=" + subcategoryId +
-                ", hJudgeId=" + hJudgeId +
-                '}';
+    public String getTxUser() {
+        return txUser;
     }
+
+    public void setTxUser(String txUser) {
+        this.txUser = txUser;
+    }
+
+    public String getTxHost() {
+        return txHost;
+    }
+
+    public void setTxHost(String txHost) {
+        this.txHost = txHost;
+    }
+
+    public Date getTxDate() {
+        return txDate;
+    }
+
+    public void setTxDate(Date txDate) {
+        this.txDate = txDate;
+    }
+
 }
-

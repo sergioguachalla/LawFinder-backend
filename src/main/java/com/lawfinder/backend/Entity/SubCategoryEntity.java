@@ -1,4 +1,4 @@
-package com.lawfinder.backend.Entitity;
+package com.lawfinder.backend.Entity;
 
 import jakarta.persistence.*;
 @Entity
