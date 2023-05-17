@@ -123,5 +123,13 @@ public class LegalCaseDto {
     public void setTxHost(String txHost) {
         this.txHost = txHost;
     }
+
+    public Date getTxDate() {
+        return txDate;
+    }
+
+    public void setTxDate(Date txDate) {
+        this.txDate = txDate;
+    }
 }
 

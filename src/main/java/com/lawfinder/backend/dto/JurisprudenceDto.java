@@ -1,6 +1,14 @@
 package com.lawfinder.backend.dto;
 import java.util.Date;
 
+
+/*
+ * 
+ * HAY QUE CORREGIR unu
+ * 
+ * 
+ * 
+ */
 public class JurisprudenceDto {
     private Long idJurisprudence;
     private String title;
