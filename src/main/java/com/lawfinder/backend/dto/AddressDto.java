@@ -40,4 +40,15 @@ public class AddressDto {
     public void setProvId(Integer provId) {
         this.provId = provId;
     }
+
+    //to string
+
+    @Override 
+    public String toString() {
+        return "AddressDto{" +
+                "addressId=" + addressId +
+                ", addressInfo='" + addressInfo + '\'' +
+                ", provId=" + provId +
+                '}';
+    }
 }
