@@ -14,15 +14,14 @@ public class JurisprudenceEntity {
     @Column(name = "SENTENCE_DATE", nullable = false)
     private Date sentenceDate;
 
-    @Lob
-    @Column(name = "JURISPRUDENCE", nullable = false)
-    private byte[] jurisprudence;
-
     @Column(name = "SUMMARY", length = 2000, nullable = false)
     private String summary;
 
+    @Column(name = "STATUS")
+    private boolean status;
+
     @Column(name = "PROV_ID", nullable = false)
-    private Integer provId;
+    private Integer provinceId;
 
     @Column(name = "SUBCATEGORY_ID", nullable = false)
     private Integer subcategoryId;
@@ -42,12 +41,12 @@ public class JurisprudenceEntity {
 
     public JurisprudenceEntity(){
     }
-    public JurisprudenceEntity(Integer id, Date sentenceDate, byte[] jurisprudence, String summary, Integer provId, Integer subcategoryId, Integer fileId, String txUser, String txHost, Date txDate) {
+    public JurisprudenceEntity(Integer id, Date sentenceDate, Boolean status, String summary, Integer provId, Integer subcategoryId, Integer fileId, String txUser, String txHost, Date txDate) {
         this.id = id;
         this.sentenceDate = sentenceDate;
-        this.jurisprudence = jurisprudence;
         this.summary = summary;
-        this.provId = provId;
+        this.status = status;
+        this.provinceId = provId;
         this.subcategoryId = subcategoryId;
         this.fileId = fileId;
         this.txUser = txUser;
@@ -71,14 +70,6 @@ public class JurisprudenceEntity {
         this.sentenceDate = sentenceDate;
     }
 
-    public byte[] getJurisprudence() {
-        return jurisprudence;
-    }
-
-    public void setJurisprudence(byte[] jurisprudence) {
-        this.jurisprudence = jurisprudence;
-    }
-
     public String getSummary() {
         return summary;
     }
@@ -88,11 +79,11 @@ public class JurisprudenceEntity {
     }
 
     public Integer getProvId() {
-        return provId;
+        return provinceId;
     }
 
     public void setProvId(Integer provId) {
-        this.provId = provId;
+        this.provinceId = provId;
     }
 
     public Integer getSubcategoryId() {
@@ -133,6 +124,14 @@ public class JurisprudenceEntity {
 
     public void setTxDate(Date txDate) {
         this.txDate = txDate;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
 }
