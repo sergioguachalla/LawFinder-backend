@@ -15,8 +15,11 @@ public class DepartmentEntity {
     public DepartmentEntity() {}
     
     // Constructor con todos los atributos
-    public DepartmentEntity(String name){
+    public DepartmentEntity( Long departmentId, String name){
+        
+        this.departmentId = departmentId;
         this.name = name;
+
     }
 
     // Getters

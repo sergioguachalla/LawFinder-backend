@@ -15,7 +15,7 @@ public class SubCategoryEntity {
     @Column(name = "DESCRIPTION", nullable = false, length = 2000)
     private String description;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CATEGORY_ID", nullable = false)
     private CategoryEntity category;
 
@@ -23,7 +23,9 @@ public class SubCategoryEntity {
     public SubCategoryEntity() {}
 
     // Constructor con todos los atributos
-    public SubCategoryEntity(String subCatName, String description, CategoryEntity category){
+    public SubCategoryEntity( Long subCategoryId ,String subCatName, String description, CategoryEntity category){
+        
+        this.subCategoryId = subCategoryId;
         this.subCatName = subCatName;
         this.description = description;
         this.category = category;

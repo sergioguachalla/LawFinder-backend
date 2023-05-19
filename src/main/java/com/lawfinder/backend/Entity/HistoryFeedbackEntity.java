@@ -30,12 +30,13 @@ public class HistoryFeedbackEntity {
     private Date txDate;
 
     // Constructor
-    public HistoryFeedbackEntity() {
-    }
+    public HistoryFeedbackEntity() {}
 
     // Constructor con todos los atributos
 
-    public HistoryFeedbackEntity(int feedbackId, String content, int userId, String txUser, String txHost, Date txDate) {
+    public HistoryFeedbackEntity(Long hFeedbackId,int feedbackId, String content, int userId, String txUser, String txHost, Date txDate) {
+        
+        this.hFeedbackId = hFeedbackId;
         this.feedbackId = feedbackId;
         this.content = content;
         this.userId = userId;

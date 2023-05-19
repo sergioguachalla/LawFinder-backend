@@ -39,7 +39,9 @@ public class HistoryFileEntity {
     public HistoryFileEntity() {
     }
 
-    public HistoryFileEntity(String url, String mimeType, String size, String md5, String txUser, String txHost, Date txDate) {
+    public HistoryFileEntity(Long id ,String url, String mimeType, String size, String md5, String txUser, String txHost, Date txDate) {
+        
+        this.id = id;
         this.url = url;
         this.mimeType = mimeType;
         this.size = size;

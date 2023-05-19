@@ -36,7 +36,9 @@ public class HistoryJurisprudenceEntity {
     }
 
     // Constructor
-    public HistoryJurisprudenceEntity(Date sentenceDate, byte[] jurisprudence, String summary, Integer provId, Integer subcategoryId, Integer hJudgeId) {
+    public HistoryJurisprudenceEntity(Long id ,Date sentenceDate, byte[] jurisprudence, String summary, Integer provId, Integer subcategoryId, Integer hJudgeId) {
+        
+        this.id = id;
         this.sentenceDate = sentenceDate;
         this.jurisprudence = jurisprudence;
         this.summary = summary;

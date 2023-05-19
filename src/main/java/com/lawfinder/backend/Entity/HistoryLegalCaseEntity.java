@@ -55,9 +55,11 @@ public class HistoryLegalCaseEntity {
     }
 
     // Constructor con todos los atributos
-    public HistoryLegalCaseEntity(int idLegalCase, String title, Date startDate, String summary, String status,
+    public HistoryLegalCaseEntity(Long hLegalCaseId,int idLegalCase, String title, Date startDate, String summary, String status,
             String firstInstanceCourt, String secondInstanceCourt, String thirdInstanceCourt, int userId, String txUser,
             String txHost, Date txDate) {
+
+        this.hLegalCaseId = hLegalCaseId;
         this.idLegalCase = idLegalCase;
         this.title = title;
         this.startDate = startDate;

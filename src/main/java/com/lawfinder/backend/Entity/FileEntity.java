@@ -37,7 +37,9 @@ public class FileEntity {
     public FileEntity() {}
 
     //Constructor con todos los atributos
-    public FileEntity(String url, String mimeType, String size, String md5, String txUser, String txHost, Date txDate){
+    public FileEntity(Long fileId,String url, String mimeType, String size, String md5, String txUser, String txHost, Date txDate){
+        
+        this.fileId = fileId;
         this.url = url;
         this.mimeType = mimeType;
         this.size = size;

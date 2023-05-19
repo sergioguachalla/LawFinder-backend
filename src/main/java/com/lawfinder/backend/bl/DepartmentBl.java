@@ -2,7 +2,7 @@ package com.lawfinder.backend.bl;
 
 import com.lawfinder.backend.Entity.DepartmentEntity;
 import com.lawfinder.backend.dao.DepartmentRepository;
-import org.springframework.data.jpa.repository.Query;
+//import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
