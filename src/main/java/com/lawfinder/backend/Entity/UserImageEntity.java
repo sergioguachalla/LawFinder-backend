@@ -39,4 +39,14 @@ public class UserImageEntity {
     public void setFileId(FileEntity fileId) {
         this.fileId = fileId;
     }
+
+    // toString
+
+    @Override
+    public String toString() {
+        return "UserImageEntity{" +
+                "imageId=" + imageId +
+                ", fileId=" + fileId +
+                '}';
+    }
 }
