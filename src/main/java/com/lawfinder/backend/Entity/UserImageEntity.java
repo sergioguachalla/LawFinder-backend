@@ -10,7 +10,8 @@ public class UserImageEntity {
     @Column(name = "IMAGE_ID")
     private Long imageId;
 
-    @Column(name = "FILE_ID", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "FILE_ID", nullable = false)
     private FileEntity fileId;
 
     // Constructor

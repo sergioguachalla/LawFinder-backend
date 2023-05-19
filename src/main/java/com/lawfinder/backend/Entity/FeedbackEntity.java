@@ -1,5 +1,4 @@
 package com.lawfinder.backend.Entity;
-
 import jakarta.persistence.*;
 
 @Entity
@@ -13,8 +12,11 @@ public class FeedbackEntity {
     @Column(name = "CONTENT", nullable = false, columnDefinition = "text")
     private String content;
 
-    @Column(name = "USER_ID", nullable = false)
-    private int userId;
+    @ManyToOne
+    @JoinColumn(name = "USER_ID", nullable = false)
+    private UserEntity userId;
+
+
 
     @Column(name = "TX_USER", nullable = false, length = 100)
     private String txUser;
@@ -30,7 +32,7 @@ public class FeedbackEntity {
     }
 
     // Constructor con todos los atributos
-    public FeedbackEntity(String content, int userId, String txUser, String txHost, String txDate) {
+    public FeedbackEntity(String content, UserEntity userId, String txUser, String txHost, String txDate) {
         this.content = content;
         this.userId = userId;
         this.txUser = txUser;
@@ -56,11 +58,11 @@ public class FeedbackEntity {
         this.content = content;
     }
 
-    public int getUserId() {
+    public UserEntity getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(UserEntity userId) {
         this.userId = userId;
     }
 

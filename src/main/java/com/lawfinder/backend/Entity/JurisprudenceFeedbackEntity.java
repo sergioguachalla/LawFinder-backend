@@ -11,14 +11,16 @@ public class JurisprudenceFeedbackEntity {
     @Column(name = "JURISPRUDENCE_FEEDBACK_ID")
     private Long jurisprudenceFeedbackId;
 
-    @Column(name = "FEEDBACK_ID", nullable = false)
+    
+    @ManyToOne
+    @JoinColumn(name = "FEEDBACK_ID", nullable = false)
     private FeedbackEntity feedbackId;
 
-    @Column(name = "JURISPRUDENCE_ID", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "JURISPRUDENCE_ID", nullable = false)
     private JurisprudenceEntity jurisprudenceId;
 
     @Column(name = "DATE", nullable = false)
-    @Temporal(TemporalType.DATE)
     private Date date;
 
     // Constructor

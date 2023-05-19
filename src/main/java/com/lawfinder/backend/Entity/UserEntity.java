@@ -27,8 +27,8 @@ public class UserEntity {
     @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "PERSON_ID", nullable = false)
     private PersonEntity personId;
-
-    @Column(name = "IMAGE_ID", nullable = false)
+    @ManyToOne (fetch = FetchType.LAZY)
+    @JoinColumn(name = "IMAGE_ID", nullable = false)
     private UserImageEntity imageId;
 
     @Column(name = "TX_USER", length = 100, nullable = false)
