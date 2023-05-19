@@ -13,7 +13,9 @@ public class FileDto {
 
     public FileDto() {}
 
-    public FileDto(String url, String mimeType, String size, String md5, String txUser, String txHost, Date txDate){
+    public FileDto(Long fileId, String url, String mimeType, String size, String md5, String txUser, String txHost, Date txDate){
+        
+        this.fileId = fileId;
         this.url = url;
         this.mimeType = mimeType;
         this.size = size;
@@ -89,6 +91,14 @@ public class FileDto {
 
     public void setTxDate(Date txDate) {
         this.txDate = txDate;
+    }
+
+    //toString
+
+    @Override
+    public String toString() {
+        return "FileDto [fileId=" + fileId + ", md5=" + md5 + ", mimeType=" + mimeType + ", size=" + size + ", txDate="
+                + txDate + ", txHost=" + txHost + ", txUser=" + txUser + ", url=" + url + "]";
     }
 
 }
