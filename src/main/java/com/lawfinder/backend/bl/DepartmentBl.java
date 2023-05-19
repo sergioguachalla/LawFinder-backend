@@ -21,4 +21,8 @@ public class DepartmentBl {
         return departmentRepository.findAll();
     }
 
+    public List<DepartmentEntity> findByDepartmentId(Long departmentId){
+        return departmentRepository.findByDepartmentId(departmentId);
+    }
+
 }

@@ -11,14 +11,21 @@ public class AddressEntity {
     @Column(name = "ADDRESS_ID")
     private Integer addressId;
 
-    @Column(name = "ADRESSINFO", length = 1000, nullable = false)
+    @Column(name = "ADRESSINFO", nullable = false)
     private String addressInfo;
 
-    @Column(name = "PROV_ID", nullable = false)
-    private Integer provId;
+    @ManyToOne
+    @JoinColumn(name = "PROV_ID", referencedColumnName = "PROVINCE_ID")
+    private ProvinceEntity province;
 
     // Constructor vacío
     public AddressEntity() {}
+
+    public AddressEntity(Integer addressId, String addressInfo, ProvinceEntity province) {
+        this.addressId = addressId;
+        this.addressInfo = addressInfo;
+        this.province = province;
+    }
 
     // Getters y setters
 
@@ -39,11 +46,20 @@ public class AddressEntity {
         this.addressInfo = addressInfo;
     }
 
-    public Integer getProvId() {
-        return provId;
+    public ProvinceEntity getProvId() {
+        return province;
     }
 
-    public void setProvId(Integer provId) {
-        this.provId = provId;
+    public void setProvId(ProvinceEntity province) {
+        this.province = province;
+    }
+
+    @Override
+    public String toString() {
+        return "AddressEntity{" +
+                "addressId=" + addressId +
+                ", addressInfo='" + addressInfo + '\'' +
+                ", provId=" + province +
+                '}';
     }
 }

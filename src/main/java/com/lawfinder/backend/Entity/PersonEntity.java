@@ -21,8 +21,9 @@ public class PersonEntity {
     @Column(name = "EMAIL", length = 300)
     private String email;
 
-    @ManyToOne
-    @JoinColumn(name = "ADRESS_ID", referencedColumnName = "ADRESS_ID")
+
+    @OneToOne
+    @JoinColumn(name = "ADDRESS_ID", referencedColumnName = "ADDRESS_ID")
     private AddressEntity address;
 
     // Constructor
