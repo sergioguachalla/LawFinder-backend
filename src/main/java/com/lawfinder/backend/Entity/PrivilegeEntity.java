@@ -18,7 +18,8 @@ public class PrivilegeEntity {
     }
 
     // Constructor con todos los atributos
-    public PrivilegeEntity(String priv) {
+    public PrivilegeEntity(Long privilegeId, String priv) {
+        this.privilegeId = privilegeId;
         this.priv = priv;
     }
 

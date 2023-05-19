@@ -24,11 +24,12 @@ public class UserEntity {
     @Column(name = "STATUS", nullable = false)
     private Boolean status;
 
-    @Column(name = "PERSON_ID", nullable = false)
+    @ManyToOne (fetch = FetchType.LAZY)
+    @JoinColumn(name = "PERSON_ID", nullable = false)
     private PersonEntity personId;
 
     @Column(name = "IMAGE_ID", nullable = false)
-    private Long imageId;
+    private UserImageEntity imageId;
 
     @Column(name = "TX_USER", length = 100, nullable = false)
     private String txUser;
@@ -45,7 +46,9 @@ public class UserEntity {
     // Getters y setters
 
 
-    public UserEntity(Long id, String username, String userLastname, String secret, Boolean status, PersonEntity personId, Long imageId, String txUser, String txHost, Date txDate) {
+    public UserEntity(Long id, String username, String userLastname, String secret, 
+    Boolean status, PersonEntity personId, UserImageEntity imageId, String txUser, 
+    String txHost, Date txDate) {
         this.id = id;
         this.username = username;
         this.userLastname = userLastname;
@@ -106,11 +109,11 @@ public class UserEntity {
         this.personId = personId;
     }
 
-    public Long getImageId() {
+    public UserImageEntity getImageId() {
         return imageId;
     }
 
-    public void setImageId(Long imageId) {
+    public void setImageId(UserImageEntity imageId) {
         this.imageId = imageId;
     }
 
