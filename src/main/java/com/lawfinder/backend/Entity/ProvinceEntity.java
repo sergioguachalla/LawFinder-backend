@@ -12,7 +12,7 @@ public class ProvinceEntity {
     @Column(name = "PROVINCE_NAME", length = 100)
     private String provinceName;
 
-    @ManyToOne
+    @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "DEPARTMENT_ID", referencedColumnName = "DEPARTMENT_ID")
     private DepartmentEntity department;
 

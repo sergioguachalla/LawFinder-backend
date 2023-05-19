@@ -12,11 +12,11 @@ public class NotificationEntity {
     @Column(name = "ISREAD", nullable = false)
     private boolean isRead;
 
-    @ManyToOne
+    @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "SUBCATEGORY_ID", nullable = false)
     private SubCategoryEntity subCategory;
 
-    @ManyToOne
+    @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "CONTENT_NOTIFICATION_ID", nullable = false)
     private ContentNotificationEntity contentNotification;
 
@@ -25,7 +25,9 @@ public class NotificationEntity {
 
     // Constructor con todos los atributos
 
-    public NotificationEntity(boolean isRead, SubCategoryEntity subCategory, ContentNotificationEntity contentNotification) {
+    public NotificationEntity( Long notificationId,boolean isRead, SubCategoryEntity subCategory, ContentNotificationEntity contentNotification) {
+        
+        this.notificationId = notificationId;
         this.isRead = isRead;
         this.subCategory = subCategory;
         this.contentNotification = contentNotification;

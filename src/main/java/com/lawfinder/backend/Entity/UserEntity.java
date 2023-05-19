@@ -25,7 +25,7 @@ public class UserEntity {
     private Boolean status;
 
     @Column(name = "PERSON_ID", nullable = false)
-    private Long personId;
+    private PersonEntity personId;
 
     @Column(name = "IMAGE_ID", nullable = false)
     private Long imageId;
@@ -45,7 +45,7 @@ public class UserEntity {
     // Getters y setters
 
 
-    public UserEntity(Long id, String username, String userLastname, String secret, Boolean status, Long personId, Long imageId, String txUser, String txHost, Date txDate) {
+    public UserEntity(Long id, String username, String userLastname, String secret, Boolean status, PersonEntity personId, Long imageId, String txUser, String txHost, Date txDate) {
         this.id = id;
         this.username = username;
         this.userLastname = userLastname;
@@ -98,11 +98,11 @@ public class UserEntity {
         this.status = status;
     }
 
-    public Long getPersonId() {
+    public PersonEntity getPersonId() {
         return personId;
     }
 
-    public void setPersonId(Long personId) {
+    public void setPersonId(PersonEntity personId) {
         this.personId = personId;
     }
 

@@ -134,4 +134,22 @@ public class JurisprudenceEntity {
         this.status = status;
     }
 
+    //toString 
+
+    @Override
+    public String toString() {
+        return "JurisprudenceEntity{" +
+                "id=" + id +
+                ", sentenceDate=" + sentenceDate +
+                ", summary='" + summary + '\'' +
+                ", status=" + status +
+                ", provinceId=" + provinceId +
+                ", subcategoryId=" + subcategoryId +
+                ", fileId=" + fileId +
+                ", txUser='" + txUser + '\'' +
+                ", txHost='" + txHost + '\'' +
+                ", txDate=" + txDate +
+                '}';
+    }
+
 }
