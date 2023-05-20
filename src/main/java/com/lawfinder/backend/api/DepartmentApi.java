@@ -16,8 +16,8 @@ public class DepartmentApi {
     }
 
     @GetMapping("/api/v1/department")
-    public ResponseDto<List<DepartmentDto>> getAllDepartments(
-        @RequestHeader("Authorization") String token){  
+    public ResponseDto<List<DepartmentDto>> getAllDepartments(){  
+        /* 
         AuthBl authBl = new AuthBl();
         if (!authBl.validateToken(token)) {
             ResponseDto<List<DepartmentDto>> response = new ResponseDto<>();
@@ -26,6 +26,7 @@ public class DepartmentApi {
             response.setErrorMessage("Invalid token");
             return response;
         }
+        */
         ResponseDto<List<DepartmentDto>> response = new ResponseDto<>();
         response.setCode("0000");
         response.setResponse(this.departmentBl.findAll());
