@@ -6,7 +6,9 @@ public class DepartmentDto {
 
     public DepartmentDto() {}
 
-    public DepartmentDto(String departmentName) {
+    public DepartmentDto(Long idDepartment ,String departmentName) {
+        
+        this.idDepartment = idDepartment;
         this.departmentName = departmentName;
  
     }

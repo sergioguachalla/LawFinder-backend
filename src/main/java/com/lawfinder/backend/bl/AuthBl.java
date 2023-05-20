@@ -15,6 +15,11 @@ import java.util.Date;
 public class AuthBl {
 
     private final UserRepository userRepository;
+
+    public AuthBl() {
+        this.userRepository = null;
+    }
+
     public AuthBl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }

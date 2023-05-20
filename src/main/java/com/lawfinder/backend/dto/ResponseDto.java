@@ -1,44 +1,44 @@
 package com.lawfinder.backend.dto;
 
 public class ResponseDto<T> {
-    private Integer code;
-    private T data;
-    private String message;
+    private String code;
+    private T response;
+    private String errorMessage;
 
     public ResponseDto() {}
 
-    public ResponseDto(Integer code, T data, String message) {
+    public ResponseDto(String code, T response, String errorMessage) {
         this.code = code;
-        this.data = data;
-        this.message = message;
+        this.response = response;
+        this.errorMessage = errorMessage;
     }
 
     //getters
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
-    public T getData() {
-        return data;
+    public T getResponse() {
+        return response;
     }
 
-    public String getMessage() {
-        return message;
+    public String getErrormessage() {
+        return errorMessage;
     }
 
     //setters
 
-    public void setCode(Integer code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
-    public void setData(T data) {
-        this.data = data;
+    public void setResponse(T response) {
+        this.response = response;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
     
 }
