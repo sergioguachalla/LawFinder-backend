@@ -21,19 +21,20 @@ public class PersonEntity {
     @Column(name = "EMAIL", length = 300)
     private String email;
 
+    /* 
     @Column(name = "ADRESS_ID")
     private int address;
-
-    /* 
+    */
+    
     @OneToOne
     @JoinColumn(name = "ADRESS_ID", referencedColumnName = "ADDRESS_ID")
     private AddressEntity address;
-    */
+    
     // Constructor
     public PersonEntity() {}
     // Constructor con todos los atributos
 
-    public PersonEntity(String name, String lastname, String number, String email, int address){
+    public PersonEntity(String name, String lastname, String number, String email, AddressEntity address){
         this.name = name;
         this.lastname = lastname;
         this.number = number;
@@ -63,7 +64,7 @@ public class PersonEntity {
         return email;
     }
 
-    public int getAddress() {
+    public AddressEntity getAddress() {
         return address;
     }
 
@@ -89,7 +90,7 @@ public class PersonEntity {
         this.email = email;
     }
 
-    public void setAddress(int address) {
+    public void setAddress(AddressEntity address) {
         this.address = address;
     }
 

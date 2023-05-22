@@ -3,25 +3,28 @@ package com.lawfinder.backend.Entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "ADRESS")
+@Table(name = "ADDRESS")
 public class AddressEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ADDRESS_ID")
-    private Integer addressId;
+    private int addressId;
 
     @Column(name = "ADRESSINFO", nullable = false)
     private String addressInfo;
 
+    @Column(name = "PROV_ID", nullable = false)
+    private int province;
+    /*
     @ManyToOne
     @JoinColumn(name = "PROV_ID", referencedColumnName = "PROVINCE_ID")
     private ProvinceEntity province;
-
+    */
     // Constructor vacío
     public AddressEntity() {}
 
-    public AddressEntity(Integer addressId, String addressInfo, ProvinceEntity province) {
+    public AddressEntity(int addressId, String addressInfo, int province) {
         this.addressId = addressId;
         this.addressInfo = addressInfo;
         this.province = province;
@@ -29,7 +32,7 @@ public class AddressEntity {
 
     // Getters y setters
 
-    public Integer getAddressId() {
+    public int getAddressId() {
         return addressId;
     }
 
@@ -46,11 +49,11 @@ public class AddressEntity {
         this.addressInfo = addressInfo;
     }
 
-    public ProvinceEntity getProvId() {
+    public int getProvId() {
         return province;
     }
 
-    public void setProvId(ProvinceEntity province) {
+    public void setProvId(int  province) {
         this.province = province;
     }
 

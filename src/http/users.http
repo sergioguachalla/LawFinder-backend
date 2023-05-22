@@ -6,9 +6,12 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "name": "John",
-  "lastname": "Doe",
-  "number": "1234567890",
-  "email": "johndoe@example.com",
-  "address": 1
+    "name": "Juan",
+    "lastname": "Perez",
+    "number": "123456789",
+    "email": "juan.perez@example.com",
+    "address": {
+        "addressInfo": "123 Calle Principal",
+        "provId": 1
+    }
 }

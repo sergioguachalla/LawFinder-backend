@@ -8,11 +8,11 @@ public class PersonDto {
     private String lastname;
     private String number;
     private String email;
-    private int address;
+    private AddressDto address;
 
     public PersonDto() {}
 
-    public PersonDto(Long personId, String name, String lastname, String number, String email, int address) {
+    public PersonDto(Long personId, String name, String lastname, String number, String email, AddressDto address) {
         this.personId = personId;
         this.name = name;
         this.lastname = lastname;
@@ -61,11 +61,11 @@ public class PersonDto {
         this.email = email;
     }
 
-    public int getAddress() {
+    public AddressDto getAddress() {
         return address;
     }
 
-    public void setAddress(int address) {
+    public void setAddress(AddressDto address) {
         this.address = address;
     }
 
