@@ -1,6 +1,5 @@
 package com.lawfinder.backend.dto;
 
-import com.lawfinder.backend.Entity.AddressEntity;
 
 public class PersonDto {
     private Long personId;

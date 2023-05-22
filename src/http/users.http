@@ -6,12 +6,24 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "name": "Juan",
-    "lastname": "Perez",
-    "number": "123456789",
-    "email": "juan.perez@example.com",
-    "address": {
-        "addressInfo": "123 Calle Principal",
-        "provId": 1
-    }
+    "username": "usuario",
+    "userLastname": "apellido",
+    "secret": "contraseña",
+    "status": true,
+    "personId": {
+        "personId": 6,
+        "name": "Juan",
+        "lastname": "Perez",
+        "number": "123456789",
+        "email": "juan.perez@example.com",
+        "address": {
+            "id": 1,
+            "addressInfo": "Villa sexo69",
+            "provId": 1
+        }
+    },
+    "ImageId": 0,
+    "txUser": "usuario",
+    "txHost": "localhost",
+    "txDate": "2021-09-30T00:00:00.000+00:00"
 }

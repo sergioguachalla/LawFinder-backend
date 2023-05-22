@@ -20,26 +20,26 @@ public class UserApi {
         this.userBl = userBl;
         this.personBl = personBl;
     }
-
+/* 
     @GetMapping("/api/v1/user")
     public ResponseDto<List<UserDto>> getAllTasks(
-        /*@RequestHeader("Authorization") String token*/) {
-       /*  AuthBl authBl = new AuthBl();
+        /*@RequestHeader("Authorization") String token) {
+         AuthBl authBl = new AuthBl();
         if (!authBl.validateToken(token)) {
             ResponseDto<List<UserDto>> response = new ResponseDto<>();
             response.setCode("0001");
             response.setResponse(null);
             response.setErrorMessage("Invalid token");
             return response;
-        }*/
+        }
         ResponseDto<List<UserDto>> response = new ResponseDto<>();
         response.setCode("0000");
         response.setResponse(this.userBl.findAll());
         return response;
     }
-
+*/
     @PostMapping("/api/v1/user")
-    public ResponseDto<String> createUser(@RequestBody PersonDto user /* , @RequestHeader("Authorization") String token*/) {
+    public ResponseDto<String> createUser(@RequestBody UserDto user /* , @RequestHeader("Authorization") String token*/) {
         ResponseDto<String> response = new ResponseDto<>();
        /*  AuthBl authBl = new AuthBl();
         if (!authBl.validateToken(token)) {
@@ -51,12 +51,14 @@ public class UserApi {
         
         */
         System.out.println(user.toString());
-        this.personBl.addPerson(user);;
+        this.userBl.saveUser(user);;
         response.setCode("0000");
         response.setResponse("Task created");
         return response;
 
         
     }
+
+
 
 }

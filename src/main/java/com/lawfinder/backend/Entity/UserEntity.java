@@ -24,12 +24,13 @@ public class UserEntity {
     @Column(name = "STATUS", nullable = false)
     private Boolean status;
 
-    @ManyToOne (fetch = FetchType.LAZY)
+    @OneToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "PERSON_ID", nullable = false)
     private PersonEntity personId;
-    @ManyToOne (fetch = FetchType.LAZY)
-    @JoinColumn(name = "IMAGE_ID", nullable = false)
-    private UserImageEntity imageId;
+   // @OneToOne (fetch = FetchType.LAZY)
+    //@JoinColumn(name = "IMAGE_ID", nullable = false)
+    @Column(name = "IMAGE_ID", nullable = false)
+    private int imageId;
 
     @Column(name = "TX_USER", length = 100, nullable = false)
     private String txUser;
@@ -47,7 +48,7 @@ public class UserEntity {
 
 
     public UserEntity(Long id, String username, String userLastname, String secret, 
-    Boolean status, PersonEntity personId, UserImageEntity imageId, String txUser, 
+    Boolean status, PersonEntity personId, int imageId, String txUser, 
     String txHost, Date txDate) {
         this.id = id;
         this.username = username;
@@ -109,11 +110,11 @@ public class UserEntity {
         this.personId = personId;
     }
 
-    public UserImageEntity getImageId() {
+    public int getImageId() {
         return imageId;
     }
 
-    public void setImageId(UserImageEntity imageId) {
+    public void setImageId(int imageId) {
         this.imageId = imageId;
     }
 
