@@ -2,6 +2,9 @@ package com.lawfinder.backend.dto;
 
 import java.util.Date;
 
+import com.lawfinder.backend.Entity.PersonEntity;
+import com.lawfinder.backend.Entity.UserImageEntity;
+
 public class UserDto {
 
     private Long id;
@@ -14,9 +17,9 @@ public class UserDto {
 
     private Boolean status;
 
-    private Long personId;
+    private PersonEntity personId;
 
-    private Long imageId;
+    private UserImageEntity imageId;
 
     private String txUser;
 
@@ -26,7 +29,7 @@ public class UserDto {
 
     public UserDto() {}
 
-    public UserDto(Long id, String username, String userLastname, String secret, Boolean status, Long personId, Long imageId, String txUser, String txHost, Date txDate) {
+    public UserDto(Long id, String username, String userLastname, String secret, Boolean status, PersonEntity personEntity, UserImageEntity userImageEntity, String txUser, String txHost, Date txDate) {
         this.id = id;
         this.username = username;
         this.userLastname = userLastname;
@@ -79,19 +82,19 @@ public class UserDto {
         this.status = status;
     }
 
-    public Long getPersonId() {
+    public PersonEntity getPersonId() {
         return personId;
     }
 
-    public void setPersonId(Long personId) {
+    public void setPersonId(PersonEntity personId) {
         this.personId = personId;
     }
 
-    public Long getImageId() {
+    public UserImageEntity getImageId() {
         return imageId;
     }
 
-    public void setImageId(Long imageId) {
+    public void setImageId(UserImageEntity imageId) {
         this.imageId = imageId;
     }
 

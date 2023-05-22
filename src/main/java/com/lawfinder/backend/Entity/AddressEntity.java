@@ -3,7 +3,7 @@ package com.lawfinder.backend.Entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "ADDRESS")
+@Table(name = "ADRESS")
 public class AddressEntity {
 
     @Id
