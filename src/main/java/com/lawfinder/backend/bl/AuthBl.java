@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
+
 @Service
 public class AuthBl {
 
@@ -22,9 +24,9 @@ public class AuthBl {
 
     public AuthBl() {
         this.userRepository = null;
+
     }
 
-    @Autowired
     public AuthBl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -34,23 +36,30 @@ public class AuthBl {
 
     public TokenDto login(LoginDto login) {
         System.out.println("Login: " + login.getUsername() + " " + login.getPassword());
-        UserEntity userEntity = findByUsername(login.getUsername());
-        if (login.getUsername().equals(userEntity.getUsername()) &&
-                login.getPassword().equals(userEntity.getSecret())){
+        List<UserEntity> userEntityAll = userRepository.findAllByUsername(login.getUsername());
+        UserEntity userEntityLogin = new UserEntity();
+        for (UserEntity userEntity : userEntityAll) {
+            if(userEntity.getUsername().equals(login.getUsername())){
+                    //userEntity.getSecret().equals(login.getPassword())){
+                System.out.println("Login: " + userEntity.getUsername() + " " + userEntity.getSecret());
+                 userEntityLogin = userEntity;
+            }
+        }
+
+        if (login.getUsername().equals(userEntityLogin.getUsername()) &&
+                login.getPassword().equals(userEntityLogin.getSecret())){
             TokenDto tokenDto = new TokenDto();
-            tokenDto.setAuthToken(generateToken(userEntity.getId(), login.getUsername(), "AUTH", 30));
-            tokenDto.setRefreshToken(generateToken(userEntity.getId(), login.getUsername() , "REFRESH", 60));
+            tokenDto.setAuthToken(generateToken(userEntityLogin.getId(), login.getUsername(), "AUTH", 30));
+            tokenDto.setRefreshToken(generateToken(userEntityLogin.getId(), login.getUsername() , "REFRESH", 60));
             return tokenDto;
         } else {
             return null;
         }
     }
 
-    public UserEntity findByUsername(String username) {
 
-        assert userRepository != null;
-        return userRepository.findUserEntityByUsername(username);
-    }
+
+
 
     private String  generateToken(Long userId, String name, String type, int minutes) {
         try {

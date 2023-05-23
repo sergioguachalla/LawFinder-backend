@@ -1,13 +1,22 @@
 POST http://localhost:8080/api/v1/file
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsYXdmaW5kZXIuY29tIiwibmFtZSI6InVzdWFyaW9zcyIsInR5cGUiOiJBVVRIIiwiZXhwIjoxNjg0ODU5MDM3LCJ1c2VySWQiOjN9.TKrp3IXfgTHP6sPqYn9AyXgDUNFXsf9P8rp7H1tVGbI
 
 {
-    "url": "Hola",
-    "mimeType": ".trojan",
+    "url": "Hola2",
+    "mimeType": ".trojan2",
     "size": "500mb",
     "md5": "xd?",
     "txUser": "usuario",
     "txHost": "localhost",
     "txDate": "2021-09-30T00:00:00.000+00:00"
 }
+
+###
+GET http://localhost:8080/api/v1/file
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsYXdmaW5kZXIuY29tIiwibmFtZSI6InVzdWFyaW9zcyIsInR5cGUiOiJBVVRIIiwiZXhwIjoxNjg0ODU5MDM3LCJ1c2VySWQiOjN9.TKrp3IXfgTHP6sPqYn9AyXgDUNFXsf9P8rp7H1tVGbI
+
+###
+GET http://localhost:8080/api/v1/file/1
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsYXdmaW5kZXIuY29tIiwibmFtZSI6InVzdWFyaW9zcyIsInR5cGUiOiJBVVRIIiwiZXhwIjoxNjg0ODU5MDM3LCJ1c2VySWQiOjN9.TKrp3IXfgTHP6sPqYn9AyXgDUNFXsf9P8rp7H1tVGbI

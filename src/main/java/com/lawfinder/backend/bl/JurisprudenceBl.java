@@ -6,10 +6,14 @@ import com.lawfinder.backend.Entity.ProvinceEntity;
 import com.lawfinder.backend.Entity.SubCategoryEntity;
 import com.lawfinder.backend.dao.FileRepository;
 import com.lawfinder.backend.dao.JurisprudenceRepository;
+import com.lawfinder.backend.dto.FileDto;
 import com.lawfinder.backend.dto.JurisprudenceDto;
 
+import com.lawfinder.backend.dto.ProvinceDto;
+import com.lawfinder.backend.dto.SubCategoryDto;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -56,8 +60,37 @@ public class JurisprudenceBl {
         
     }
 
-    public List<JurisprudenceEntity> findAll(){
-        return jurisprudenceRepository.findAll();
+    public List<JurisprudenceDto> findAll(){
+        List<JurisprudenceEntity> jurisprudencesEntities = jurisprudenceRepository.findAll();
+        List<JurisprudenceDto> jurisprudencesDtoList = new ArrayList<>();
+
+        for (JurisprudenceEntity jurisprudenceEntity : jurisprudencesEntities) {
+            JurisprudenceDto jurisprudenceDto = new JurisprudenceDto();
+            jurisprudenceDto.setSentenceDate(jurisprudenceEntity.getSentenceDate());
+            jurisprudenceDto.setSummary(jurisprudenceEntity.getSummary());
+            jurisprudenceDto.setStatus(jurisprudenceEntity.getStatus());
+            jurisprudenceDto.setTxDate(jurisprudenceEntity.getTxDate());
+            jurisprudenceDto.setTxHost(jurisprudenceEntity.getTxHost());
+            jurisprudenceDto.setTxUser(jurisprudenceEntity.getTxUser());
+            jurisprudenceDto.setIdJurisprudence(jurisprudenceEntity.getId().longValue());
+            FileEntity fileEntity = jurisprudenceEntity.getFileId();
+            FileDto fileDto = new FileDto();
+            fileDto.setFileId(fileEntity.getFileId());
+            ProvinceEntity provinceEntity = jurisprudenceEntity.getProvId();
+            ProvinceDto provinceDto = new ProvinceDto();
+            provinceDto.setIdProvince(provinceEntity.getProvinceId());
+            SubCategoryEntity subCategoryEntity = jurisprudenceEntity.getSubcategoryId();
+            SubCategoryDto subCategoryDto = new SubCategoryDto();
+            subCategoryDto.setIdSubCategory(subCategoryEntity.getSubCategoryId());
+            jurisprudenceDto.setFileId(fileDto);
+            jurisprudenceDto.setProvinceId(provinceDto);
+            jurisprudenceDto.setSubcategoryId(subCategoryDto);
+            jurisprudencesDtoList.add(jurisprudenceDto);
+        }
+        return jurisprudencesDtoList;
+
+
+
     }
 
 }

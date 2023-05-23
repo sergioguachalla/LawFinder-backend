@@ -6,6 +6,7 @@ import com.lawfinder.backend.dto.FileDto;
 
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,11 +28,49 @@ public class FileBl {
         fileEntity.setTxDate(file.getTxDate());
 
         // save file
-        fileRepository.save(fileEntity);
+        fileRepository.saveAndFlush(fileEntity);
     }
 
-    public List<FileEntity> findAll(){
-        return fileRepository.findAll();
+    public List<FileDto> findAll(){
+
+        List<FileEntity> filesEntityList = this.fileRepository.findAll();
+
+        List<FileDto> filesDtoList = new ArrayList<>();
+        for (FileEntity fileEntity : filesEntityList) {
+
+            FileDto fileDto = new FileDto();
+            fileDto.setFileId(fileEntity.getFileId());
+            fileDto.setUrl(fileEntity.getUrl());
+            fileDto.setMimeType(fileEntity.getMimeType());
+            fileDto.setSize(fileEntity.getSize());
+            fileDto.setMd5(fileEntity.getMd5());
+            fileDto.setTxUser(fileEntity.getTxUser());
+            fileDto.setTxHost(fileEntity.getTxHost());
+            fileDto.setTxDate(fileEntity.getTxDate());
+            filesDtoList.add(fileDto);
+        }
+        return filesDtoList;
+    }
+
+    public FileDto findById(Long id){
+       FileEntity fileEntity = this.fileRepository.findByFileId(id);
+
+       FileDto fileDto = new FileDto();
+        if (fileEntity != null) {
+
+           // FileDto fileDto = new FileDto();
+            fileDto.setFileId(fileEntity.getFileId());
+            fileDto.setUrl(fileEntity.getUrl());
+            fileDto.setMimeType(fileEntity.getMimeType());
+            fileDto.setSize(fileEntity.getSize());
+            fileDto.setMd5(fileEntity.getMd5());
+            fileDto.setTxUser(fileEntity.getTxUser());
+            fileDto.setTxHost(fileEntity.getTxHost());
+            fileDto.setTxDate(fileEntity.getTxDate());
+
+        }
+        return fileDto;
+
     }
 
 }
