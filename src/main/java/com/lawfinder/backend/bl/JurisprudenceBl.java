@@ -63,7 +63,6 @@ public class JurisprudenceBl {
     public List<JurisprudenceDto> findAll(){
         List<JurisprudenceEntity> jurisprudencesEntities = jurisprudenceRepository.findAll();
         List<JurisprudenceDto> jurisprudencesDtoList = new ArrayList<>();
-
         for (JurisprudenceEntity jurisprudenceEntity : jurisprudencesEntities) {
             JurisprudenceDto jurisprudenceDto = new JurisprudenceDto();
             jurisprudenceDto.setSentenceDate(jurisprudenceEntity.getSentenceDate());

@@ -55,6 +55,25 @@ public class DepartmentApi {
 
     }
 
+    @GetMapping("/api/v1/department/{idDepartment}/province")
+    public ResponseDto<List<ProvinceDto>> getProvincesByDepartment(@RequestHeader("Authorization") String token, @PathVariable Long idDepartment){
+
+        AuthBl authBl = new AuthBl();
+        if (!authBl.validateToken(token)) {
+            ResponseDto<List<ProvinceDto>> response = new ResponseDto<>();
+            response.setCode("0001");
+            response.setResponse(null);
+            response.setErrorMessage("Invalid token");
+            return response;
+        }
+
+        ResponseDto<List<ProvinceDto>> response = new ResponseDto<>();
+        response.setCode("0000");
+        response.setResponse(this.departmentBl.findProvinceByDepartmentId(idDepartment));
+        return response;
+
+    }
+
 
 
     

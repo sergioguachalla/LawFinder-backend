@@ -1,9 +1,11 @@
 package com.lawfinder.backend.bl;
 
 import com.lawfinder.backend.Entity.DepartmentEntity;
+import com.lawfinder.backend.Entity.ProvinceEntity;
 import com.lawfinder.backend.dao.DepartmentRepository;
 import com.lawfinder.backend.dto.DepartmentDto;
 
+import com.lawfinder.backend.dto.ProvinceDto;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
@@ -47,6 +49,18 @@ public class DepartmentBl {
         }
         return new DepartmentDto(departmentEntity.getDepartmentId(), departmentEntity.getName());
     }
+
+    public List<ProvinceDto> findProvinceByDepartmentId(Long departmentId){
+        List<ProvinceEntity> provincesList =  departmentRepository.findProvinceByDepartmentId(departmentId);
+        List<ProvinceDto> provinceDtoList = new ArrayList<>();
+        provincesList.forEach(province -> {
+            ProvinceDto provinceDto = new ProvinceDto(province.getProvinceId(), province.getProvinceName(), province.getDepartment().getDepartmentId());
+            provinceDtoList.add(provinceDto);
+        });
+        return provinceDtoList;
+    }
+
+
     /*@Query("SELECT d FROM DEPARTMENT d WHERE d.department_id = departmentId")
     public List<DepartmentEntity> findAllByDepartmentId(Long departmentId){
 

@@ -4,11 +4,12 @@ public class ProvinceDto {
 
     private Long idProvince;
     private String provinceName;
-    private int idDepartment;
+    private Long idDepartment;
 
     public ProvinceDto() {}
 
-    public ProvinceDto(String provinceName, int idDepartment) {
+    public ProvinceDto(Long idProvince, String provinceName, Long idDepartment) {
+        this.idProvince = idProvince;
         this.provinceName = provinceName;
         this.idDepartment = idDepartment;
     }
@@ -23,7 +24,7 @@ public class ProvinceDto {
         return provinceName;
     }
 
-    public int getIdDepartment() {
+    public Long getIdDepartment() {
         return idDepartment;
     }
 
@@ -37,7 +38,7 @@ public class ProvinceDto {
         this.provinceName = provinceName;
     }
 
-    public void setIdDepartment(int idDepartment) {
+    public void setIdDepartment(Long idDepartment) {
         this.idDepartment = idDepartment;
     }
     
