@@ -1,0 +1,26 @@
+POST http://localhost:8080/api/v1/jurisprudence
+Content-Type: application/json
+Accept: application/json
+
+{
+    "sentenceDate": "2023-05-22",
+    "summary": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "status": true,
+    "provinceId": {
+      "idProvince": 1,
+      "provinceName": "Example Province"
+    },
+    "subcategoryId": {
+      "idSubCategory": 1,
+      "subCategoryName": "Example Subcategory"
+    },
+    "fileId": {
+      "url": "https://example.com/file.pdf",
+      "mimeType": "application/pdf",
+      "size": 1024,
+      "md5": "abcdef123456",
+      "txDate": "2023-05-22"
+    },
+    "txDate": "2023-05-22"
+  
+}

@@ -1,7 +1,10 @@
 package com.lawfinder.backend.api;
+
+import org.springframework.web.bind.annotation.RestController;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import com.lawfinder.backend.bl.DepartmentBl;
 import com.lawfinder.backend.dto.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,16 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lawfinder.backend.bl.*;
 
 @RestController
-public class FileApi {
+public class JurisprudenceApi {
     @Autowired
-    private FileBl fileBl;
-
-    public FileApi(FileBl fileBl){
-        this.fileBl = fileBl;
-    }
-
-    @PostMapping("/api/v1/file")
-    public ResponseDto<String> createFile(@RequestBody FileDto file /* , @RequestHeader("Authorization") String token*/) {
+    private JurisprudenceBl jurispeudenceBl;
+    @PostMapping("/api/v1/jurisprudence")
+    public ResponseDto<String> createJurisprudence(@RequestBody JurisprudenceDto juris /* , @RequestHeader("Authorization") String token*/) {
         ResponseDto<String> response = new ResponseDto<>();
        /*  AuthBl authBl = new AuthBl();
         if (!authBl.validateToken(token)) {
@@ -30,16 +28,14 @@ public class FileApi {
         }
         
         */
-        System.out.println(file.toString());
-        this.fileBl.saveFile(file);;
+        System.out.println(juris.toString());
+        this.jurispeudenceBl.saveJurisprudence(juris);
         response.setCode("0000");
         response.setResponse("Task created");
         return response;
 
         
     }
-
-
 
     
 }

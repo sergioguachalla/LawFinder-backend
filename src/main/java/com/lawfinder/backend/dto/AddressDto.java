@@ -1,6 +1,5 @@
 package com.lawfinder.backend.dto;
 
-
 public class AddressDto {
 
     private Integer addressId;

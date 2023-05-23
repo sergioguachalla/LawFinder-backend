@@ -13,10 +13,10 @@ public class JurisprudenceDto {
     private Long idJurisprudence;
     private Date sentenceDate;
     private String summary;
-    private String status;
-    private Integer provinceId;
-    private Integer subcategoryId;
-    private Integer fileId;
+    private Boolean status;
+    private ProvinceDto provinceId;
+    private SubCategoryDto subcategoryId;
+    private FileDto fileId;
     private String txUser;
     private String txHost;
     private Date txDate;
@@ -24,7 +24,8 @@ public class JurisprudenceDto {
 
     public JurisprudenceDto() {}
 
-    public JurisprudenceDto(Long idJurisprudence, Date sentenceDate, String summary, String status, Integer provinceId, Integer subcategoryId, Integer fileId, String txUser, String txHost, Date txDate) {
+    public JurisprudenceDto(Long idJurisprudence, Date sentenceDate, String summary, Boolean status, ProvinceDto provinceId,
+         SubCategoryDto subcategoryId, FileDto fileId, String txUser, String txHost, Date txDate) {
         this.idJurisprudence = idJurisprudence;
         this.sentenceDate = sentenceDate;
         this.summary = summary;
@@ -52,19 +53,19 @@ public class JurisprudenceDto {
         return summary;
     }
 
-    public String getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public Integer getProvinceId() {
+    public ProvinceDto getProvinceId() {
         return provinceId;
     }
 
-    public Integer getSubcategoryId() {
+    public SubCategoryDto getSubcategoryId() {
         return subcategoryId;
     }
 
-    public Integer getFileId() {
+    public FileDto getFileId() {
         return fileId;
     }
 
@@ -94,19 +95,19 @@ public class JurisprudenceDto {
         this.summary = summary;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 
-    public void setProvinceId(Integer provinceId) {
+    public void setProvinceId(ProvinceDto provinceId) {
         this.provinceId = provinceId;
     }
 
-    public void setSubcategoryId(Integer subcategoryId) {
+    public void setSubcategoryId(SubCategoryDto subcategoryId) {
         this.subcategoryId = subcategoryId;
     }
 
-    public void setFileId(Integer fileId) {
+    public void setFileId(FileDto fileId) {
         this.fileId = fileId;
     }
 
@@ -120,6 +121,24 @@ public class JurisprudenceDto {
 
     public void setTxDate(Date txDate) {
         this.txDate = txDate;
+    }
+
+    //toString
+
+    @Override
+    public String toString() {
+        return "JurisprudenceDto{" +
+                "idJurisprudence=" + idJurisprudence +
+                ", sentenceDate=" + sentenceDate +
+                ", summary='" + summary + '\'' +
+                ", status=" + status +
+                ", provinceId=" + provinceId +
+                ", subcategoryId=" + subcategoryId +
+                ", fileId=" + fileId +
+                ", txUser='" + txUser + '\'' +
+                ", txHost='" + txHost + '\'' +
+                ", txDate=" + txDate +
+                '}';
     }
 
 

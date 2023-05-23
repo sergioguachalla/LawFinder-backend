@@ -3,7 +3,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "title": "Caso Legal 1",
+    "title": "Caso Legal 500",
     "startDate": "2023-05-23",
     "summary": "Resumen del caso legal 1",
     "status": true,

@@ -11,7 +11,7 @@ public class JurisprudenceEntity {
     @Column(name = "JURISPRUDENCE_ID")
     private Integer id;
 
-    @Column(name = "SENTENCE_DATE", nullable = false)
+    @Column(name = "SENTENCEDATE", nullable = false)
     private Date sentenceDate;
 
     @Column(name = "SUMMARY", length = 2000, nullable = false)
@@ -20,14 +20,17 @@ public class JurisprudenceEntity {
     @Column(name = "STATUS")
     private boolean status;
 
-    @Column(name = "PROV_ID", nullable = false)
-    private Integer provinceId;
+    @ManyToOne (fetch = FetchType.LAZY)
+    @JoinColumn(name = "PROVINCE_ID", referencedColumnName = "PROVINCE_ID")
+    private ProvinceEntity provinceId;
 
-    @Column(name = "SUBCATEGORY_ID", nullable = false)
-    private Integer subcategoryId;
+    @ManyToOne (fetch = FetchType.LAZY)
+    @JoinColumn(name = "SUBCATEGORY_ID", referencedColumnName = "SUBCATEGORY_ID")
+    private SubCategoryEntity subcategoryId;
 
-    @Column(name = "FILE_FILE_ID", nullable = false)
-    private Integer fileId;
+    @OneToOne (fetch = FetchType.LAZY)
+    @JoinColumn(name = "FILE_ID", referencedColumnName = "FILE_ID")
+    private FileEntity fileId;
 
     @Column(name = "TX_USER", length = 100, nullable = false)
     private String txUser;
@@ -41,7 +44,8 @@ public class JurisprudenceEntity {
 
     public JurisprudenceEntity(){
     }
-    public JurisprudenceEntity(Integer id, Date sentenceDate, Boolean status, String summary, Integer provId, Integer subcategoryId, Integer fileId, String txUser, String txHost, Date txDate) {
+    public JurisprudenceEntity(Integer id, Date sentenceDate, Boolean status, String summary, ProvinceEntity provId, 
+            SubCategoryEntity subcategoryId, FileEntity fileId, String txUser, String txHost, Date txDate) {
         this.id = id;
         this.sentenceDate = sentenceDate;
         this.summary = summary;
@@ -78,27 +82,27 @@ public class JurisprudenceEntity {
         this.summary = summary;
     }
 
-    public Integer getProvId() {
+    public ProvinceEntity getProvId() {
         return provinceId;
     }
 
-    public void setProvId(Integer provId) {
+    public void setProvId(ProvinceEntity provId) {
         this.provinceId = provId;
     }
 
-    public Integer getSubcategoryId() {
+    public SubCategoryEntity getSubcategoryId() {
         return subcategoryId;
     }
 
-    public void setSubcategoryId(Integer subcategoryId) {
+    public void setSubcategoryId(SubCategoryEntity subcategoryId) {
         this.subcategoryId = subcategoryId;
     }
 
-    public Integer getFileId() {
+    public FileEntity getFileId() {
         return fileId;
     }
 
-    public void setFileId(Integer fileId) {
+    public void setFileId(FileEntity fileId) {
         this.fileId = fileId;
     }
 
