@@ -14,6 +14,7 @@ class AuthApi {
 
     @Autowired
     private UserRepository userRepository;
+
     @PostMapping("/api/v1/auth/login")
     public ResponseDto<TokenDto> login(@RequestBody LoginDto login) {
         ResponseDto<TokenDto> response = new ResponseDto<>();
