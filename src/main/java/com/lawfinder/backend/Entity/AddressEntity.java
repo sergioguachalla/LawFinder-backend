@@ -11,7 +11,7 @@ public class AddressEntity {
     @Column(name = "ADDRESS_ID")
     private int addressId;
 
-    @Column(name = "ADRESSINFO", nullable = false)
+    @Column(name = "ADDRESSINFO", nullable = false)
     private String addressInfo;
 
     @Column(name = "PROV_ID", nullable = false)

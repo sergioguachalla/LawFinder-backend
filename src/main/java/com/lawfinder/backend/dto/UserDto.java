@@ -9,8 +9,6 @@ public class UserDto {
 
     private String username;
 
-    private String userLastname;
-
     private String secret;
 
     private Boolean status;
@@ -27,10 +25,9 @@ public class UserDto {
 
     public UserDto() {}
 
-    public UserDto(Long id, String username, String userLastname, String secret, Boolean status, PersonDto personId, int imageId, String txUser, String txHost, Date txDate) {
+    public UserDto(Long id, String username, String secret, Boolean status, PersonDto personId, int imageId, String txUser, String txHost, Date txDate) {
         this.id = id;
         this.username = username;
-        this.userLastname = userLastname;
         this.secret = secret;
         this.status = status;
         this.personId = personId;
@@ -54,14 +51,6 @@ public class UserDto {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getUserLastname() {
-        return userLastname;
-    }
-
-    public void setUserLastname(String userLastname) {
-        this.userLastname = userLastname;
     }
 
     public String getSecret() {
@@ -125,7 +114,6 @@ public class UserDto {
         return "UserDTO{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
-                ", userLastname='" + userLastname + '\'' +
                 ", secret='" + secret + '\'' +
                 ", status=" + status +
                 ", personId=" + personId +

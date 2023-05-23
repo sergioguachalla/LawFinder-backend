@@ -7,7 +7,6 @@ Accept: application/json
 
 {
     "username": "usuario",
-    "userLastname": "apellido",
     "secret": "contraseña",
     "status": true,
     "personId": {

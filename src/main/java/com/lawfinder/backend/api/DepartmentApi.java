@@ -2,8 +2,6 @@ package com.lawfinder.backend.api;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import com.lawfinder.backend.bl.AuthBl;
 import com.lawfinder.backend.bl.DepartmentBl;
 import com.lawfinder.backend.dto.*;
 import org.springframework.web.bind.annotation.GetMapping;

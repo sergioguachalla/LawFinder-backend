@@ -27,7 +27,7 @@ public class PersonEntity {
     */
     
     @OneToOne
-    @JoinColumn(name = "ADRESS_ID", referencedColumnName = "ADDRESS_ID")
+    @JoinColumn(name = "ADDRESS_ID", referencedColumnName = "ADDRESS_ID")
     private AddressEntity address;
     
     // Constructor

@@ -15,9 +15,6 @@ public class UserEntity {
     @Column(name = "USERNAME", length = 100, nullable = false)
     private String username;
 
-    @Column(name = "USERLASTNAME", length = 100, nullable = false)
-    private String userLastname;
-
     @Column(name = "SECRET", length = 60, nullable = false)
     private String secret;
 
@@ -47,12 +44,11 @@ public class UserEntity {
     // Getters y setters
 
 
-    public UserEntity(Long id, String username, String userLastname, String secret, 
+    public UserEntity(Long id, String username, String secret, 
     Boolean status, PersonEntity personId, int imageId, String txUser, 
     String txHost, Date txDate) {
         this.id = id;
         this.username = username;
-        this.userLastname = userLastname;
         this.secret = secret;
         this.status = status;
         this.personId = personId;
@@ -78,13 +74,7 @@ public class UserEntity {
         this.username = username;
     }
 
-    public String getUserLastname() {
-        return userLastname;
-    }
 
-    public void setUserLastname(String userLastname) {
-        this.userLastname = userLastname;
-    }
 
     public String getSecret() {
         return secret;
@@ -147,7 +137,6 @@ public class UserEntity {
         return "UserEntity{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
-                ", userLastname='" + userLastname + '\'' +
                 ", secret='" + secret + '\'' +
                 ", status=" + status +
                 ", personId=" + personId +

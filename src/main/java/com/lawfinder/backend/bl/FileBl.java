@@ -2,6 +2,8 @@ package com.lawfinder.backend.bl;
 
 import com.lawfinder.backend.Entity.FileEntity;
 import com.lawfinder.backend.dao.FileRepository;
+import com.lawfinder.backend.dto.FileDto;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,8 +16,18 @@ public class FileBl {
         this.fileRepository = fileRepository;
     }
 
-    public FileEntity saveFile(FileEntity fileEntity){
-        return fileRepository.save(fileEntity);
+    public void saveFile(FileDto file){
+        FileEntity fileEntity = new FileEntity();
+        fileEntity.setUrl(file.getUrl());
+        fileEntity.setMimeType(file.getMimeType());
+        fileEntity.setSize(file.getSize());
+        fileEntity.setMd5(file.getMd5());
+        fileEntity.setTxUser("lawfinder");
+        fileEntity.setTxHost("localhost");
+        fileEntity.setTxDate(file.getTxDate());
+
+        // save file
+        fileRepository.save(fileEntity);
     }
 
     public List<FileEntity> findAll(){

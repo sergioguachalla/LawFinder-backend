@@ -1,0 +1,13 @@
+POST http://localhost:8080/api/v1/file
+Content-Type: application/json
+Accept: application/json
+
+{
+    "url": "Sergio haz algo carajo",
+    "mimeType": ".trojan",
+    "size": "500mb",
+    "md5": "xd?",
+    "txUser": "usuario",
+    "txHost": "localhost",
+    "txDate": "2021-09-30T00:00:00.000+00:00"
+}
