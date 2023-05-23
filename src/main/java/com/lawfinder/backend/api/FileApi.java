@@ -45,24 +45,27 @@ public class FileApi {
             response.setErrorMessage("Invalid token");
             return response;
         }
-        List<FileEntity> filesEntityList = this.fileBl.findAll();
-
-        List<FileDto> filesDtoList = new ArrayList<>();
-        for (FileEntity fileEntity : filesEntityList) {
-
-            FileDto fileDto = new FileDto();
-            fileDto.setFileId(fileEntity.getFileId());
-            fileDto.setUrl(fileEntity.getUrl());
-            fileDto.setMimeType(fileEntity.getMimeType());
-            fileDto.setSize(fileEntity.getSize());
-            fileDto.setMd5(fileEntity.getMd5());
-            fileDto.setTxUser(fileEntity.getTxUser());
-            fileDto.setTxHost(fileEntity.getTxHost());
-            fileDto.setTxDate(fileEntity.getTxDate());
-            filesDtoList.add(fileDto);
-        }
+        List<FileDto> filesDtoList = this.fileBl.findAll();
         response.setCode("0000");
         response.setResponse(filesDtoList);
+        return response;
+    }
+
+    @GetMapping("/api/v1/file/{idFile}")
+    public ResponseDto<FileDto> getFileById(@RequestHeader("Authorization") String token, @PathVariable Long idFile) {
+        ResponseDto<FileDto> response = new ResponseDto<>();
+        AuthBl authBl = new AuthBl();
+        if (!authBl.validateToken(token)) {
+            response.setCode("0001");
+            response.setResponse(null);
+            response.setErrorMessage("Invalid token");
+            return response;
+        }
+        FileDto fileDto = this.fileBl.findById(idFile);
+
+
+        response.setCode("0000");
+        response.setResponse(fileDto);
         return response;
     }
 
