@@ -3,6 +3,7 @@ package com.lawfinder.backend.Entity;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "SE_USER")
@@ -37,6 +38,9 @@ public class UserEntity {
 
     @Column(name = "TX_DATE", nullable = false)
     private Date txDate;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<LegalCaseEntity> legalCases;
 
     // Constructor vacío
     public UserEntity() {}

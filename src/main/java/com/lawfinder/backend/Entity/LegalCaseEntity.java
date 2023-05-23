@@ -32,7 +32,7 @@ public class LegalCaseEntity {
     private String thirdInstanceCourt;
 
     @ManyToOne (fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_ID")
+    @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
     private UserEntity user;
 
     @Column(name = "TX_USER", length = 100)

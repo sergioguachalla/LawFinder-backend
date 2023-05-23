@@ -1,7 +1,4 @@
 package com.lawfinder.backend.dto;
-
-import com.lawfinder.backend.Entity.UserEntity;
-
 import java.util.Date;
 
 public class LegalCaseDto {
@@ -14,7 +11,7 @@ public class LegalCaseDto {
     private String firstInstanceCourt;
     private String secondInstanceCourt;
     private String thirdInstanceCourt;
-    private UserEntity user;
+    private UserDto user;
     private String txUser;
     private String txHost;
     private Date txDate;
@@ -22,7 +19,7 @@ public class LegalCaseDto {
     public LegalCaseDto() {
     }
 
-    public LegalCaseDto(String title, Date startDate, String summary, String status, String firstInstanceCourt, String secondInstanceCourt, String thirdInstanceCourt, UserEntity user, String txUser, String txHost, Date txDate) {
+    public LegalCaseDto(String title, Date startDate, String summary, String status, String firstInstanceCourt, String secondInstanceCourt, String thirdInstanceCourt, UserDto user, String txUser, String txHost, Date txDate) {
         this.title = title;
         this.startDate = startDate;
         this.summary = summary;
@@ -100,11 +97,11 @@ public class LegalCaseDto {
         this.thirdInstanceCourt = thirdInstanceCourt;
     }
 
-    public UserEntity getUser() {
+    public UserDto getUser() {
         return user;
     }
 
-    public void setUser(UserEntity user) {
+    public void setUser(UserDto user) {
         this.user = user;
     }
 

@@ -11,8 +11,9 @@ import com.lawfinder.backend.bl.*;
 import com.lawfinder.backend.dto.*;
 @RestController
 public class UserApi {
-    
+    @Autowired
     private UserBl userBl;
+    @Autowired
     private PersonBl personBl;
     // Constructor
 

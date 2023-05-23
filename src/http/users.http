@@ -6,12 +6,12 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "username": "usuario",
+    "username": "usuarioss",
     "secret": "contraseña",
     "status": true,
     "personId": {
         "personId": 6,
-        "name": "Juan",
+        "name": "equij de",
         "lastname": "Perez",
         "number": "123456789",
         "email": "juan.perez@example.com",
