@@ -54,7 +54,7 @@ public class UserApi {
         System.out.println(user.toString());
         this.userBl.saveUser(user);;
         response.setCode("0000");
-        response.setResponse("Task created");
+        response.setResponse("user created");
         return response;
 
         

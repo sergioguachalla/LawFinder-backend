@@ -10,8 +10,12 @@ import com.lawfinder.backend.dao.UserRepository;
 import com.lawfinder.backend.dto.LoginDto;
 import com.lawfinder.backend.dto.TokenDto;
 import com.lawfinder.backend.dto.UserDto;
+import org.apache.catalina.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
+@Service
 public class AuthBl {
 
     private final UserRepository userRepository;
@@ -20,14 +24,17 @@ public class AuthBl {
         this.userRepository = null;
     }
 
+    @Autowired
     public AuthBl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
     public static final String KEY = "lawFinder_2023";
 
+
+
     public TokenDto login(LoginDto login) {
-        UserEntity userEntity = userRepository.findByUsername(login.getUsername());
-        System.out.println(userEntity.toString());
+        System.out.println("Login: " + login.getUsername() + " " + login.getPassword());
+        UserEntity userEntity = findByUsername(login.getUsername());
         if (login.getUsername().equals(userEntity.getUsername()) &&
                 login.getPassword().equals(userEntity.getSecret())){
             TokenDto tokenDto = new TokenDto();
@@ -38,6 +45,13 @@ public class AuthBl {
             return null;
         }
     }
+
+    public UserEntity findByUsername(String username) {
+
+        assert userRepository != null;
+        return userRepository.findUserEntityByUsername(username);
+    }
+
     private String  generateToken(Long userId, String name, String type, int minutes) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(KEY);
@@ -74,5 +88,7 @@ public class AuthBl {
             return false;
         }
     }
+
+
 
 }
