@@ -27,7 +27,7 @@ public class FileBl {
         fileEntity.setTxDate(file.getTxDate());
 
         // save file
-        fileRepository.save(fileEntity);
+        fileRepository.saveAndFlush(fileEntity);
     }
 
     public List<FileEntity> findAll(){
