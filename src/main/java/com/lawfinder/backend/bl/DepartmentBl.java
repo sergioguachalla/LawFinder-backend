@@ -39,6 +39,14 @@ public class DepartmentBl {
     public List<DepartmentEntity> findByDepartmentId(Long departmentId){
         return departmentRepository.findByDepartmentId(departmentId);
     }
+
+    public DepartmentDto findById(Long departmentId){
+        DepartmentEntity departmentEntity = departmentRepository.findById(departmentId).orElse(null);
+        if(departmentEntity == null){
+            return null;
+        }
+        return new DepartmentDto(departmentEntity.getDepartmentId(), departmentEntity.getName());
+    }
     /*@Query("SELECT d FROM DEPARTMENT d WHERE d.department_id = departmentId")
     public List<DepartmentEntity> findAllByDepartmentId(Long departmentId){
 

@@ -6,16 +6,13 @@ import com.lawfinder.backend.dao.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.lawfinder.backend.bl.DepartmentBl;
 import com.lawfinder.backend.dto.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class DepartmentApi {
     @Autowired
     private DepartmentBl departmentBl;
-    private UserRepository userRepository;
+
     /*public DepartmentApi(DepartmentBl departmentBl){
         this.departmentBl = departmentBl;
     }*/
@@ -38,5 +35,25 @@ public class DepartmentApi {
         return response;  
 
     }
+
+    @GetMapping("/api/v1/department/{idDepartment}")
+    public ResponseDto<DepartmentDto> getDepartmentById(@RequestHeader("Authorization") String token, @PathVariable Long idDepartment){
+
+        AuthBl authBl = new AuthBl();
+        if (!authBl.validateToken(token)) {
+            ResponseDto<DepartmentDto> response = new ResponseDto<>();
+            response.setCode("0001");
+            response.setResponse(null);
+            response.setErrorMessage("Invalid token");
+            return response;
+        }
+
+        ResponseDto<DepartmentDto> response = new ResponseDto<>();
+        response.setCode("0000");
+        response.setResponse(this.departmentBl.findById(idDepartment));
+        return response;
+
+    }
+
     
 }
