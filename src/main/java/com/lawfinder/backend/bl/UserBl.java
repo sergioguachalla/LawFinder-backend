@@ -5,19 +5,25 @@ import com.lawfinder.backend.dao.*;
 import com.lawfinder.backend.dto.*;
 import java.util.*;
 
+import com.lawfinder.backend.services.EmailService;
+import com.lawfinder.backend.services.PasswordService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 @Service
 public class UserBl {
     private final UserRepository userRepository;
     private final PersonRepository personRepository;
     private final AddressRepository addressRepository;
+    private final EmailService emailService;
 
-    public UserBl(UserRepository userRepository, PersonRepository personRepository, AddressRepository addressRepository) {
+
+    public UserBl(UserRepository userRepository, PersonRepository personRepository, AddressRepository addressRepository, EmailService emailService) {
         this.userRepository = userRepository;
         this.personRepository = personRepository;
         this.addressRepository = addressRepository;
+        this.emailService = emailService;
     }
 
     @Transactional
@@ -41,11 +47,20 @@ public class UserBl {
         person.setNumber(personDto.getNumber());
         person.setEmail(personDto.getEmail());
         person.setAddress(addressEntity);
-        personRepository.saveAndFlush(person);
+        PersonEntity personMemory = personRepository.save(person);
+
+        /*
+            This is where the verification email is sent to the user
+
+         */
+        emailService.sendEmail(personMemory.getEmail(), "Bienvenido a LawFinder", "Hola " + personMemory.getName() + " " + personMemory.getLastname() + " gracias por registrarte en LawFinder");
+
+        //personRepository.saveAndFlush(person);
 
         // Set properties from userDto to userEntity
         userEntity.setUsername(userDto.getUsername());
-        userEntity.setSecret(userDto.getSecret()); // this should be hashed!
+
+        userEntity.setSecret(PasswordService.hashPassword(userDto.getSecret()));
         userEntity.setStatus(true);
         userEntity.setPersonId(person);
         userEntity.setImageId(1);
@@ -57,5 +72,9 @@ public class UserBl {
         // Save userEntity in the database
         userRepository.save(userEntity);
 
+    }
+
+    public List<UserEntity> getAllUsers() {
+        return userRepository.findAll();
     }
 }

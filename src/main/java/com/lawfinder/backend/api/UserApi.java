@@ -21,24 +21,26 @@ public class UserApi {
         this.userBl = userBl;
         this.personBl = personBl;
     }
-/* 
+
     @GetMapping("/api/v1/user")
     public ResponseDto<List<UserDto>> getAllTasks(
-        /*@RequestHeader("Authorization") String token) {
-         AuthBl authBl = new AuthBl();
+        /*@RequestHeader("Authorization") String token*/) {
+         /*AuthBl authBl = new AuthBl();
         if (!authBl.validateToken(token)) {
             ResponseDto<List<UserDto>> response = new ResponseDto<>();
             response.setCode("0001");
             response.setResponse(null);
             response.setErrorMessage("Invalid token");
             return response;
-        }
+        }*/
         ResponseDto<List<UserDto>> response = new ResponseDto<>();
         response.setCode("0000");
-        response.setResponse(this.userBl.findAll());
+
+        response.setResponse(this.userBl.getAllUsers());
+
         return response;
     }
-*/
+
     @PostMapping("/api/v1/user")
     public ResponseDto<String> createUser(@RequestBody UserDto user /* , @RequestHeader("Authorization") String token*/) {
         ResponseDto<String> response = new ResponseDto<>();

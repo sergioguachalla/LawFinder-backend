@@ -10,6 +10,7 @@ import com.lawfinder.backend.dao.UserRepository;
 import com.lawfinder.backend.dto.LoginDto;
 import com.lawfinder.backend.dto.TokenDto;
 import com.lawfinder.backend.dto.UserDto;
+import com.lawfinder.backend.services.PasswordService;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,7 +48,7 @@ public class AuthBl {
         }
 
         if (login.getUsername().equals(userEntityLogin.getUsername()) &&
-                login.getPassword().equals(userEntityLogin.getSecret())){
+               PasswordService.checkPassword(login.getPassword(), userEntityLogin.getSecret())) {
             TokenDto tokenDto = new TokenDto();
             tokenDto.setAuthToken(generateToken(userEntityLogin.getId(), login.getUsername(), "AUTH", 30));
             tokenDto.setRefreshToken(generateToken(userEntityLogin.getId(), login.getUsername() , "REFRESH", 60));

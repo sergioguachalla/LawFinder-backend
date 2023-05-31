@@ -8,6 +8,7 @@ import com.lawfinder.backend.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 @Service
 public class PersonBl {
     @Autowired
@@ -29,10 +30,10 @@ public class PersonBl {
         addressEntity.setAddressInfo(addressDto.getAddressInfo());
         addressEntity.setProvId(addressDto.getProvId());
 
-         // save the address before setting it to the person entity
-         addressEntity = addressRepository.save(addressEntity);
+        // save the address before setting it to the person entity
+        addressEntity = addressRepository.save(addressEntity);
 
-                // Set properties from personDto to personEntity
+        // Set properties from personDto to personEntity
         personEntity.setName(person.getName());
         personEntity.setLastname(person.getLastname());
         personEntity.setNumber(person.getNumber());

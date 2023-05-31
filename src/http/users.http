@@ -6,15 +6,15 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "username": "usuarioss",
-    "secret": "contraseña",
+    "username": "usuarios_test",
+    "secret": "1234",
     "status": true,
     "personId": {
         "personId": 6,
         "name": "equij de",
         "lastname": "Perez",
         "number": "123456789",
-        "email": "juan.perez@example.com",
+        "email": "prueba_software@yopmail.com",
         "address": {
             "id": 1,
             "addressInfo": "Villa sexo69",
