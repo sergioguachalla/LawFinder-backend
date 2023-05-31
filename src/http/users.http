@@ -6,7 +6,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "username": "usuarios_test",
+    "username": "usuarios_testo",
     "secret": "1234",
     "status": true,
     "personId": {

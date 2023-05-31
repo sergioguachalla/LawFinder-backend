@@ -13,12 +13,11 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: law.finder.ucb@gmail.com
-    password: Lawfindertudios
+    password: zxtgwqffbbgubfbg
     properties:
       mail:
         smtp:
           auth: true
           starttls:
             enable: true
-
 
