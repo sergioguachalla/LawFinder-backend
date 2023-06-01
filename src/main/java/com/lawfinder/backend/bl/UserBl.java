@@ -53,6 +53,7 @@ public class UserBl {
         // Generar código de verificación de 6 dígitos
         String verificationCode = generateVerificationCode();
 
+
         // Enviar el código de verificación por correo electrónico
         String subject = "Código de verificación de LawFinder";
         String message = "Hola " + personMemory.getName() + " " + personMemory.getLastname() + ",\n\n"
@@ -80,7 +81,7 @@ public class UserBl {
         verificationCode = generateVerificationCode();
 
         // Enviar el código de verificación por correo electrónico
-        String subject = "Código de verificación de LawFinder";
+        String subject = "Código de verificación de Law Finder";
         String message = "Hola " + ",\n\n"
                 + "Gracias por registrarte en LawFinder. Tu código de verificación es: " + verificationCode + "\n\n"
                 + "Utiliza este código para completar tu registro en LawFinder.\n\n"
@@ -90,11 +91,7 @@ public class UserBl {
 
     public Boolean verify(VerifyDto mail){
         String code= mail.getToken();
-        if(code.equals(verificationCode)){
-            return true;
-        }else{
-            return false;
-        }
+        return code.equals(verificationCode);
         
     }
 
