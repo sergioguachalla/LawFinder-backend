@@ -6,11 +6,11 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "username": "usuarios_testo2",
+    "username": "usuarios_testo32",
     "secret": "1234",
     "status": false,
     "personId": {
-        "personId": 6,
+        "personId": 1,
         "name": "ale",
         "lastname": "que haces",
         "number": "123456789",

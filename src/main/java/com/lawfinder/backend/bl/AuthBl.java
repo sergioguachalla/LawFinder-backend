@@ -38,17 +38,19 @@ public class AuthBl {
     public TokenDto login(LoginDto login) {
         List<UserEntity> userEntityAll = userRepository.findAllByUsername(login.getUsername());
         UserEntity userEntityLogin = new UserEntity();
+        System.out.println(login.getPassword());
         for (UserEntity userEntity : userEntityAll) {
             if(userEntity.getUsername().equals(login.getUsername())){
                     //userEntity.getSecret().equals(login.getPassword())){
-                System.out.println("Login: " + userEntity.getUsername() + " " + userEntity.getSecret());
                  userEntityLogin = userEntity;
             }
         }
-        System.out.println("Logi2n: " + userEntityLogin.getUsername() + " " + userEntityLogin.getSecret());
+       // System.out.println("AuthBl " + userEntityLogin.getUsername() + " " + userEntityLogin.getSecret());
 
         if (login.getUsername().equals(userEntityLogin.getUsername()) &&
-               PasswordService.checkPassword(login.getPassword(), userEntityLogin.getSecret())) {
+               PasswordService.checkPassword(login.getPassword(), userEntityLogin.getSecret())
+        ) {
+            //System.out.println(PasswordService.checkPassword(login.getPassword(), userEntityLogin.getSecret()));
             TokenDto tokenDto = new TokenDto();
             tokenDto.setAuthToken(generateToken(userEntityLogin.getId(), login.getUsername(), "AUTH", 30));
             tokenDto.setRefreshToken(generateToken(userEntityLogin.getId(), login.getUsername() , "REFRESH", 60));

@@ -41,18 +41,17 @@ public class UserBl {
         PersonEntity person = new PersonEntity();
 
         // Convert AddressDto to AddressEntity
-        AddressEntity addressEntity = new AddressEntity();
-        addressEntity.setAddressInfo(personDto.getAddress().getAddressInfo());
-        addressEntity.setProvId(personDto.getAddress().getProvId());
 
-        // save the address before setting it to the person entity
-        addressEntity = addressRepository.save(addressEntity);
 
         person.setName(personDto.getName());
         person.setLastname(personDto.getLastname());
         person.setNumber(personDto.getNumber());
         person.setEmail(personDto.getEmail());
-        person.setAddress(addressEntity);
+        person.setAddress(personDto.getAddress());
+        person.setCi(personDto.getCi());
+        person.setTx_user("lawfinder");
+        person.setTx_date(new java.util.Date());
+        person.setTx_host("localhost");
         personMemory = personRepository.save(person);
 
         // Generar código de verificación de 6 dígitos
@@ -75,16 +74,25 @@ public class UserBl {
         userEntity.setSecret(PasswordService.hashPassword(userDto.getSecret()));
         userEntity.setStatus(false);
         userEntity.setPersonId(person);
-        userEntity.setImageId(1);
+        //userEntity.setImageId(1);
         userEntity.setTxUser("lawfinder");
         userEntity.setTxHost("localhost");
         userEntity.setTxDate(new Date());
-
+       // userEntity.setImageId(1);
         // Save userEntity in the database
         userRepository.save(userEntity);
+
+
     }
 
     public void sendmail(MailDto mail) {
+        VerificationEntity verificationEntity = new VerificationEntity(
+                personMemory,
+                generateVerificationCode()
+        );
+        verificationRepository.saveAndFlush(verificationEntity);
+
+
         // Generar código de verificación de 6 dígitos
         verificationCode = generateVerificationCode();
 
@@ -98,11 +106,7 @@ public class UserBl {
     }
 
     public Boolean verify(VerifyDto mail) {
-        VerificationEntity verificationEntity = new VerificationEntity(
-                personMemory,
-                generateVerificationCode()
-        );
-        verificationRepository.saveAndFlush(verificationEntity);
+
         PersonEntity person = personRepository.findByEmail(mail.getEmail());
         VerificationEntity verification = verificationRepository.findByPersonId(person.getPersonId());
         if (verification == null) {
@@ -110,6 +114,16 @@ public class UserBl {
         }
         return mail.getToken().equals(verification.getToken());
         //String code = mail.getToken();
+
+    }
+
+    public void saveVerification(MailDto mail){
+        VerificationEntity verificationEntity = new VerificationEntity(
+
+        );
+        verificationEntity.setPersonId(personMemory);
+        verificationEntity.setToken(generateVerificationCode());
+        verificationRepository.saveAndFlush(verificationEntity);
 
     }
 

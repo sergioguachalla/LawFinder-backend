@@ -1,0 +1,12 @@
+POST http://localhost:8080/api/v1/person
+Content-Type: application/json
+Accept: application/json
+
+{
+    "name": "John2",
+    "lastname": "Doe2",
+    "number": 354750,
+    "ci": "91292222LP",
+    "email": "prueba@asd.com",
+    "address": "Calle 123"
+}
