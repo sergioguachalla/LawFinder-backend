@@ -29,10 +29,8 @@ public class LegalCaseBl {
         CategoryEntity category = new CategoryEntity();
         UserEntity user = new UserEntity();
         PersonEntity person = new PersonEntity();
-
         province.setProvinceId(Long.valueOf(legalCaseDto.getIdProvince()));
         subCategory.setSubCategoryId(Long.valueOf(legalCaseDto.getIdSubCategory()));
-
         province.setDepartment(department);
         subCategory.setCategory(category);
         user.setPersonId(person);
