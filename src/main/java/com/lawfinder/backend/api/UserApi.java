@@ -1,5 +1,6 @@
 package com.lawfinder.backend.api;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,40 +25,10 @@ public class UserApi {
         this.userBl = userBl;
         this.personBl = personBl;
     }
-    /* 
-
-    @GetMapping("/api/v1/user")
-    public ResponseDto<List<UserDto>> getAllTasks(
-        @RequestHeader("Authorization") String token) {
-         AuthBl authBl = new AuthBl();
-        if (!authBl.validateToken(token)) {
-            ResponseDto<List<UserDto>> response = new ResponseDto<>();
-            response.setCode("0001");
-            response.setResponse(null);
-            response.setErrorMessage("Invalid token");
-            return response;
-        }
-        ResponseDto<List<UserDto>> response = new ResponseDto<>();
-        response.setCode("0000");
-
-        response.setResponse(this.userBl.getAllUsers());
-
-        return response;
-    }
-    */
 
     @PostMapping("/api/v1/user")
-    public ResponseDto<String> createUser(@RequestBody UserDto user /* , @RequestHeader("Authorization") String token*/) {
+    public ResponseDto<String> createUser(@RequestBody UserDto user) {
         ResponseDto<String> response = new ResponseDto<>();
-       /*  AuthBl authBl = new AuthBl();
-        if (!authBl.validateToken(token)) {
-            response.setCode("0001");
-            response.setResponse(null);
-            response.setErrorMessage("Invalid token");
-            return response;
-        }
-        
-        */
         System.out.println(user.toString());
         this.userBl.saveUser(user);;
         response.setCode("0000");
@@ -66,6 +37,32 @@ public class UserApi {
 
         
     }
+
+    @PostMapping("/api/v1/sendmail")
+    public ResponseDto<String> sendMail(@RequestBody MailDto mail) {
+        ResponseDto<String> response = new ResponseDto<>();
+        this.userBl.sendmail(mail);
+        response.setCode("0000");
+        response.setResponse("mail sended");
+        return response;
+   
+    }
+
+    @PostMapping("/api/v1/verify")
+    public ResponseDto<String> verifyMail(@RequestBody VerifyDto mail) {
+        ResponseDto<String> response = new ResponseDto<>();
+        if(this.userBl.verify(mail)){
+            response.setCode("0000");
+            response.setResponse("mail verified");
+        }else{
+            response.setCode("0001");
+            response.setResponse("mail not verified");
+        }
+        return response;
+   
+    }
+
+
 
 
 

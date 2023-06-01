@@ -11,10 +11,10 @@ Accept: application/json
     "status": true,
     "personId": {
         "personId": 6,
-        "name": "equij de",
-        "lastname": "Perez",
+        "name": "ale",
+        "lastname": "que haces",
         "number": "123456789",
-        "email": "prueba_software@yopmail.com",
+        "email": "sergio.guachalla@ucb.edu.bo",
         "address": {
             "id": 1,
             "addressInfo": "Villa sexo69",
