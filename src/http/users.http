@@ -14,15 +14,11 @@ Accept: application/json
         "name": "ale",
         "lastname": "que haces",
         "number": "123456789",
-        "email": "sergio.guachalla@ucb.edu.bo",
+        "email": "polfaalejandro@gmail.com",
         "address": {
-            "id": 1,
             "addressInfo": "Villa sexo69",
             "provId": 1
         }
     },
-    "ImageId": 0,
-    "txUser": "usuario",
-    "txHost": "localhost",
-    "txDate": "2021-09-30T00:00:00.000+00:00"
+    "ImageId": 0
 }
