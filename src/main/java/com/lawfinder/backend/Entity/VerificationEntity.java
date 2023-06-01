@@ -13,7 +13,7 @@ public class VerificationEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PERSON_ID")
-    @Column(name = "PERSON_ID")
+    //@Column(name = "PERSON_ID")
     private PersonEntity personId;
 
     @Column(name = "TOKEN")

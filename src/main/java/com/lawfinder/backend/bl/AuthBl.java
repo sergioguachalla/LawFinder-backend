@@ -36,7 +36,6 @@ public class AuthBl {
 
 
     public TokenDto login(LoginDto login) {
-        System.out.println("Login: " + login.getUsername() + " " + login.getPassword());
         List<UserEntity> userEntityAll = userRepository.findAllByUsername(login.getUsername());
         UserEntity userEntityLogin = new UserEntity();
         for (UserEntity userEntity : userEntityAll) {
@@ -46,6 +45,7 @@ public class AuthBl {
                  userEntityLogin = userEntity;
             }
         }
+        System.out.println("Logi2n: " + userEntityLogin.getUsername() + " " + userEntityLogin.getSecret());
 
         if (login.getUsername().equals(userEntityLogin.getUsername()) &&
                PasswordService.checkPassword(login.getPassword(), userEntityLogin.getSecret())) {
