@@ -8,7 +8,7 @@ public class VerificationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "VERIFICATION_ID")
-    private int verificationId;
+    private Long verificationId;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -35,11 +35,11 @@ public class VerificationEntity {
 
     // Getters y Setters
 
-    public int getVerificationId() {
+    public Long getVerificationId() {
         return verificationId;
     }
 
-    public void setVerificationId(int verificationId) {
+    public void setVerificationId(Long verificationId) {
         this.verificationId = verificationId;
     }
 
