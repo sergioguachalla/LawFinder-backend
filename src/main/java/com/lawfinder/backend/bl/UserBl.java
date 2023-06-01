@@ -39,7 +39,7 @@ public class UserBl {
         // Convert PersonDto to PersonEntity
         PersonDto personDto = userDto.getPersonId();
         PersonEntity person = new PersonEntity();
-
+        personMemory.setPersonId(Long.valueOf(1));
         // Convert AddressDto to AddressEntity
 
 
