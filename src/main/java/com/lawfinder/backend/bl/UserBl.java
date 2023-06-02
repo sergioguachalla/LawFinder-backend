@@ -86,11 +86,11 @@ public class UserBl {
     }
 
     public void sendmail(MailDto mail) {
-        VerificationEntity verificationEntity = new VerificationEntity(
+        /*VerificationEntity verificationEntity = new VerificationEntity(
                 personMemory,
                 generateVerificationCode()
         );
-        verificationRepository.saveAndFlush(verificationEntity);
+        verificationRepository.saveAndFlush(verificationEntity);*/
 
 
         // Generar código de verificación de 6 dígitos
@@ -118,12 +118,12 @@ public class UserBl {
     }
 
     public void saveVerification(MailDto mail){
-        VerificationEntity verificationEntity = new VerificationEntity(
+        /*VerificationEntity verificationEntity = new VerificationEntity(
 
         );
         verificationEntity.setPersonId(personMemory);
         verificationEntity.setToken(generateVerificationCode());
-        verificationRepository.saveAndFlush(verificationEntity);
+        verificationRepository.saveAndFlush(verificationEntity);*/
 
     }
 
