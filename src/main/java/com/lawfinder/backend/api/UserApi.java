@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
@@ -87,6 +88,21 @@ public class UserApi {
         return response;
 
     }
+    /* 
+    @PutMapping("/api/v1/verify")
+    public ResponseDto<String> verifyMail(@RequestBody VerifyDto body) {
+        ResponseDto<String> response = new ResponseDto<>();
+        if(this.userBl.verify(body)){
+            response.setCode("0000");
+            response.setResponse("mail verified");
+        }else{
+            response.setCode("0001");
+            response.setResponse("mail not verified");
+        }
+        return response;
+
+    }
+    */
 
 
 

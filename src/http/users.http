@@ -10,15 +10,13 @@ Accept: application/json
     "secret": "1234",
     "status": false,
     "personId": {
-        "personId": 1,
         "name": "ale",
+        "ci": "123456789",
+        "ciExpedition": "",
         "lastname": "que haces",
         "number": "123456789",
         "email": "idontevenplaymm@gmail.com",
-        "address": {
-            "addressInfo": "Villa sexo69",
-            "provId": 1
-        }
+        "address": "calle 1234"
     },
     "ImageId": 0
 }
