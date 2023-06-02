@@ -40,7 +40,6 @@ public class UserBl {
         personMemory.setPersonId(Long.valueOf(1));
         // Convert AddressDto to AddressEntity
 
-
         person.setName(personDto.getName());
         person.setLastname(personDto.getLastname());
         person.setNumber(personDto.getNumber());
@@ -120,6 +119,7 @@ public class UserBl {
 
     }
 
+    @Transactional
     public void saveVerificationEntity(DeviceIdDto deviceIdDto) {
         UUID uuid = UUID.randomUUID();
         VerificationEntity verificationEntity = new VerificationEntity();
@@ -130,6 +130,7 @@ public class UserBl {
         verificationEntity.setCodeHash(generateVerificationCode());
         verificationEntity.setVcType(deviceIdDto.getType());
         verificationEntity.setDeviceId(deviceIdDto.getDeviceId());
+        System.out.println(verificationEntity.toString());
         this.verificationRepository.save(verificationEntity);
 
     }

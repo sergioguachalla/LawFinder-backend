@@ -7,8 +7,9 @@ import java.util.Date;
 @Table(name = "SE_VERIFICATION")
 public class VerificationEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "VERIFICATION_ID")
-    private int verificationId;
+    private Long verificationId;
 
     @Column(name = "UUID")
     private String token;
@@ -30,7 +31,7 @@ public class VerificationEntity {
     public VerificationEntity() {
     }
 
-    public VerificationEntity(int verificationId, String token, Date expirationDate, String codeHash, String vcType, String deviceId) {
+    public VerificationEntity(Long verificationId, String token, Date expirationDate, String codeHash, String vcType, String deviceId) {
         this.verificationId = verificationId;
         this.token = token;
         this.expirationDate = expirationDate;
@@ -39,11 +40,11 @@ public class VerificationEntity {
         this.deviceId = deviceId;
     }
 
-    public int getVerificationId() {
+    public Long getVerificationId() {
         return verificationId;
     }
 
-    public void setVerificationId(int verificationId) {
+    public void setVerificationId(Long verificationId) {
         this.verificationId = verificationId;
     }
 
