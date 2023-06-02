@@ -25,13 +25,14 @@ public class UserDto {
 
     public UserDto() {}
 
-    public UserDto(Long id, String username, String secret, Boolean status, PersonDto personId, int imageId, String txUser, String txHost, Date txDate) {
+    public UserDto(Long id, String username, String secret, Boolean status, PersonDto personId, //int imageId,
+                    String txUser, String txHost, Date txDate) {
         this.id = id;
         this.username = username;
         this.secret = secret;
-        this.status = status;
+        this.status = false;
         this.personId = personId;
-        this.imageId = imageId;
+        //this.imageId = imageId;
         this.txUser = txUser;
         this.txHost = txHost;
         this.txDate = txDate;
@@ -81,9 +82,9 @@ public class UserDto {
         return imageId;
     }
 
-    public void setImageId(int imageId) {
+   /* public void setImageId(int imageId) {
         this.imageId = imageId;
-    }
+    }*/
 
     public String getTxUser() {
         return txUser;

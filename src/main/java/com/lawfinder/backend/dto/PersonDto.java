@@ -7,17 +7,20 @@ public class PersonDto {
     private String lastname;
     private String number;
     private String email;
-    private AddressDto address;
+    private String address;
+    private String ci;
 
     public PersonDto() {}
 
-    public PersonDto(Long personId, String name, String lastname, String number, String email, AddressDto address) {
+    public PersonDto(Long personId, String name, String lastname, String number, String ci, String email, String address) {
         this.personId = personId;
         this.name = name;
         this.lastname = lastname;
+        this.ci = ci;
         this.number = number;
         this.email = email;
         this.address = address;
+
     }
 
     public Long getPersonId() {
@@ -60,12 +63,20 @@ public class PersonDto {
         this.email = email;
     }
 
-    public AddressDto getAddress() {
+    public String getAddress() {
         return address;
     }
 
-    public void setAddress(AddressDto address) {
+    public void setAddress(String address) {
         this.address = address;
+    }
+
+    public void setCi(String ci) {
+        this.ci = ci;
+    }
+
+    public String getCi() {
+        return ci;
     }
 
     @Override
