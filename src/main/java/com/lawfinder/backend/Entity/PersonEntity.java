@@ -27,6 +27,8 @@ public class PersonEntity {
     @Column(name = "CI")
     private String ci;
 
+    @Column(name = "COMPLEMENT",nullable = true)
+    private String complement;
 
     @Column(name = "ADDRESS")
     private String address;
@@ -45,7 +47,7 @@ public class PersonEntity {
     // Constructor con todos los atributos
 
     public PersonEntity(String name, String lastname, String number, String ci, String email, String address,
-    String tx_user, Date tx_date, String tx_host){
+    String tx_user, Date tx_date, String tx_host, String complement){
         this.name = name;
         this.lastname = lastname;
         this.number = number;
@@ -55,6 +57,7 @@ public class PersonEntity {
         this.tx_user = tx_user;
         this.tx_date = tx_date;
         this.tx_host = tx_host;
+        this.complement = complement;
 
 
     }
@@ -65,84 +68,98 @@ public class PersonEntity {
         return personId;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    // Setters
-
     public void setPersonId(Long personId) {
         this.personId = personId;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    public String getLastname() {
+        return lastname;
+    }
+
     public void setLastname(String lastname) {
         this.lastname = lastname;
+    }
+
+    public String getNumber() {
+        return number;
     }
 
     public void setNumber(String number) {
         this.number = number;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getCi() {
+        return ci;
+    }
+
+    public void setCi(String ci) {
+        this.ci = ci;
+    }
+
+    public String getComplement() {
+        return complement;
+    }
+
+    public void setComplement(String complement) {
+        this.complement = complement;
+    }
+
+    public String getAddress() {
+        return address;
     }
 
     public void setAddress(String address) {
         this.address = address;
     }
-    public String getCi() {
-        return ci;
-    }
-    public void setCi(String ci) {
-        this.ci = ci;
-    }
 
     public String getTx_user() {
         return tx_user;
     }
+
     public void setTx_user(String tx_user) {
         this.tx_user = tx_user;
     }
+
     public Date getTx_date() {
         return tx_date;
     }
+
     public void setTx_date(Date tx_date) {
         this.tx_date = tx_date;
     }
+
     public String getTx_host() {
         return tx_host;
     }
+
     public void setTx_host(String tx_host) {
         this.tx_host = tx_host;
     }
 
     // toString
-
     @Override
     public String toString() {
         return "PersonEntity [address=" + address + ", email=" + email + ", lastname=" + lastname + ", name=" + name
                 + ", number=" + number + ", personId=" + personId + "]";
     }
+
+
 
     
 }
