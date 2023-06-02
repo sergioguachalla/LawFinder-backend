@@ -1,36 +1,33 @@
 package com.lawfinder.backend.dto;
+
 import java.util.Date;
 
 public class LegalCaseDto {
 
     private Long idLegalCase;
+    private int idSubCategory;
+    private int idProvince;
+    private int userId;
+    private String part;
+    private String contrapart;
     private String title;
     private Date startDate;
     private String summary;
-    private String status;
-    private String firstInstanceCourt;
-    private String secondInstanceCourt;
-    private String thirdInstanceCourt;
-    private UserDto user;
-    private String txUser;
-    private String txHost;
-    private Date txDate;
 
     public LegalCaseDto() {
     }
 
-    public LegalCaseDto(String title, Date startDate, String summary, String status, String firstInstanceCourt, String secondInstanceCourt, String thirdInstanceCourt, UserDto user, String txUser, String txHost, Date txDate) {
+    public LegalCaseDto(Long idLegalCase, int idSubCategory, int idProvince, int userId, String part, String contrapart,
+                        String title, Date startDate, String summary) {
+        this.idLegalCase = idLegalCase;
+        this.idSubCategory = idSubCategory;
+        this.idProvince = idProvince;
+        this.userId = userId;
+        this.part = part;
+        this.contrapart = contrapart;
         this.title = title;
         this.startDate = startDate;
         this.summary = summary;
-        this.status = status;
-        this.firstInstanceCourt = firstInstanceCourt;
-        this.secondInstanceCourt = secondInstanceCourt;
-        this.thirdInstanceCourt = thirdInstanceCourt;
-        this.user = user;
-        this.txUser = txUser;
-        this.txHost = txHost;
-        this.txDate = txDate;
     }
 
     public Long getIdLegalCase() {
@@ -39,6 +36,46 @@ public class LegalCaseDto {
 
     public void setIdLegalCase(Long idLegalCase) {
         this.idLegalCase = idLegalCase;
+    }
+
+    public int getIdSubCategory() {
+        return idSubCategory;
+    }
+
+    public void setIdSubCategory(int idSubCategory) {
+        this.idSubCategory = idSubCategory;
+    }
+
+    public int getIdProvince() {
+        return idProvince;
+    }
+
+    public void setIdProvince(int idProvince) {
+        this.idProvince = idProvince;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public String getPart() {
+        return part;
+    }
+
+    public void setPart(String part) {
+        this.part = part;
+    }
+
+    public String getContrapart() {
+        return contrapart;
+    }
+
+    public void setContrapart(String contrapart) {
+        this.contrapart = contrapart;
     }
 
     public String getTitle() {
@@ -64,69 +101,4 @@ public class LegalCaseDto {
     public void setSummary(String summary) {
         this.summary = summary;
     }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getFirstInstanceCourt() {
-        return firstInstanceCourt;
-    }
-
-    public void setFirstInstanceCourt(String firstInstanceCourt) {
-        this.firstInstanceCourt = firstInstanceCourt;
-    }
-
-    public String getSecondInstanceCourt() {
-        return secondInstanceCourt;
-    }
-
-    public void setSecondInstanceCourt(String secondInstanceCourt) {
-        this.secondInstanceCourt = secondInstanceCourt;
-    }
-
-    public String getThirdInstanceCourt() {
-        return thirdInstanceCourt;
-    }
-
-    public void setThirdInstanceCourt(String thirdInstanceCourt) {
-        this.thirdInstanceCourt = thirdInstanceCourt;
-    }
-
-    public UserDto getUser() {
-        return user;
-    }
-
-    public void setUser(UserDto user) {
-        this.user = user;
-    }
-
-    public String getTxUser() {
-        return txUser;
-    }
-
-    public void setTxUser(String txUser) {
-        this.txUser = txUser;
-    }
-
-    public String getTxHost() {
-        return txHost;
-    }
-
-    public void setTxHost(String txHost) {
-        this.txHost = txHost;
-    }
-
-    public Date getTxDate() {
-        return txDate;
-    }
-
-    public void setTxDate(Date txDate) {
-        this.txDate = txDate;
-    }
 }
-
