@@ -12,23 +12,10 @@ public class LegalCaseEntity {
     @Column(name = "LEGAL_CASE_ID")
     private Long legalCaseId;
 
-    @OneToOne
-    @JoinColumn(name = "SUBCATEGORY_ID", referencedColumnName = "SUBCATEGORY_ID")
-    private SubCategoryEntity subcategory;
-
-    @OneToOne
-    @JoinColumn(name = "PROVINCE_ID", referencedColumnName = "PROVINCE_ID")
-    private ProvinceEntity province;
-
     @ManyToOne
     @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
     private UserEntity user;
 
-    @Column(name = "PART", length = 200)
-    private String part;
-
-    @Column(name = "CONTRAPART", length = 200)
-    private String contrapart;
 
     @Column(name = "TITLE", length = 2000)
     private String title;
@@ -38,6 +25,16 @@ public class LegalCaseEntity {
 
     @Column(name = "SUMMARY", columnDefinition = "TEXT")
     private String summary;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CRIME_ID", referencedColumnName = "CRIME_ID")
+    private CrimeEntity crime;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PROVINCE_ID", nullable = false)
+    private ProvinceEntity province;
+
 
     @Column(name = "STATUS", length = 100)
     private String status;
@@ -56,12 +53,10 @@ public class LegalCaseEntity {
     }
 
     // Constructor con todos los atributos
-    public LegalCaseEntity(SubCategoryEntity subcategory, ProvinceEntity province, UserEntity user, String part, String contrapart, String title, Date startDate, String summary, String status, String txUser, String txHost, Date txDate) {
-        this.subcategory = subcategory;
+    public LegalCaseEntity( ProvinceEntity province, UserEntity user, String title, Date startDate, String summary, String status, String txUser, String txHost, Date txDate) {
+
         this.province = province;
         this.user = user;
-        this.part = part;
-        this.contrapart = contrapart;
         this.title = title;
         this.startDate = startDate;
         this.summary = summary;
@@ -76,9 +71,7 @@ public class LegalCaseEntity {
         return legalCaseId;
     }
 
-    public SubCategoryEntity getSubcategory() {
-        return subcategory;
-    }
+
 
     public ProvinceEntity getProvince() {
         return province;
@@ -88,13 +81,7 @@ public class LegalCaseEntity {
         return user;
     }
 
-    public String getPart() {
-        return part;
-    }
 
-    public String getContrapart() {
-        return contrapart;
-    }
 
     public String getTitle() {
         return title;
@@ -129,9 +116,6 @@ public class LegalCaseEntity {
         this.legalCaseId = legalCaseId;
     }
 
-    public void setSubcategory(SubCategoryEntity subcategory) {
-        this.subcategory = subcategory;
-    }
 
     public void setProvince(ProvinceEntity province) {
         this.province = province;
@@ -141,13 +125,8 @@ public class LegalCaseEntity {
         this.user = user;
     }
 
-    public void setPart(String part) {
-        this.part = part;
-    }
 
-    public void setContrapart(String contrapart) {
-        this.contrapart = contrapart;
-    }
+
 
     public void setTitle(String title) {
         this.title = title;
@@ -178,11 +157,21 @@ public class LegalCaseEntity {
     }
 
     // toString
+
     @Override
     public String toString() {
-        return "LegalCaseEntity [legalCaseId=" + legalCaseId + ", subcategory=" + subcategory + ", province=" + province
-                + ", user=" + user + ", part=" + part + ", contrapart=" + contrapart + ", title=" + title
-                + ", startDate=" + startDate + ", summary=" + summary + ", status=" + status + ", txUser=" + txUser
-                + ", txHost=" + txHost + ", txDate=" + txDate + "]";
+        return "LegalCaseEntity{" +
+                "legalCaseId=" + legalCaseId +
+                ", user=" + user +
+                ", title='" + title + '\'' +
+                ", startDate=" + startDate +
+                ", summary='" + summary + '\'' +
+                ", crime=" + crime +
+                ", province=" + province +
+                ", status='" + status + '\'' +
+                ", txUser='" + txUser + '\'' +
+                ", txHost='" + txHost + '\'' +
+                ", txDate=" + txDate +
+                '}';
     }
 }

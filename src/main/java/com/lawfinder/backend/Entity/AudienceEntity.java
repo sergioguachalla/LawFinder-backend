@@ -22,6 +22,7 @@ public class AudienceEntity {
     @Column(name = "VERDICT", nullable = false, columnDefinition = "TEXT")
     private String verdict;
 
+
     // Constructor vacío
     public AudienceEntity() {
     }
