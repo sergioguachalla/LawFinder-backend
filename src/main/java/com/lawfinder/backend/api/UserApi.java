@@ -47,7 +47,7 @@ public class UserApi {
     @PostMapping("/api/v1/sendmail")
     public ResponseDto<String> sendMail(@RequestBody MailDto mail) {
         ResponseDto<String> response = new ResponseDto<>();
-        this.userBl.saveVerification(mail);
+        //this.userBl.saveVerification(mail);
         this.userBl.sendmail(mail);
         response.setCode("0000");
         response.setResponse("mail sended");
@@ -55,7 +55,7 @@ public class UserApi {
    
     }
 
-    @PostMapping("/api/v1/verify")
+    /*@PostMapping("/api/v1/verify")
     public ResponseDto<String> verifyMail(@RequestBody VerifyDto mail) {
         ResponseDto<String> response = new ResponseDto<>();
         if(this.userBl.verify(mail)){
@@ -66,7 +66,26 @@ public class UserApi {
             response.setResponse("mail not verified");
         }
         return response;
-   
+
+    } */
+
+    @PostMapping("/api/v1/verify")
+    public ResponseDto<String> verifyMail(@RequestBody DeviceIdDto body) {
+        ResponseDto<String> response = new ResponseDto<>();
+        this.userBl.saveVerificationEntity(body);
+        response.setCode("0000");
+        response.setResponse("mail verified");
+
+
+        /*if(this.userBl.verify(body)){
+            response.setCode("0000");
+            response.setResponse("mail verified");
+        }else{
+            response.setCode("0001");
+            response.setResponse("mail not verified");
+        }*/
+        return response;
+
     }
 
 

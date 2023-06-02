@@ -7,8 +7,10 @@ import org.springframework.data.repository.query.Param;
 
 public interface VerificationRepository extends JpaRepository<VerificationEntity, Long> {
 
-    @Query("SELECT v FROM VerificationEntity v WHERE v.personId.personId = :personId ")
-    VerificationEntity findByPersonId(@Param("personId") Long personId);
+
+
+    @Query(value = "SELECT * FROM se_verification WHERE device_id = :uuid", nativeQuery = true)
+    VerificationEntity findByDeviceId(@Param("uuid") String uuid );
 
 
 }

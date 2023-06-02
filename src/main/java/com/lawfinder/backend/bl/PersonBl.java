@@ -13,12 +13,11 @@ import org.springframework.stereotype.Service;
 public class PersonBl {
     @Autowired
     private PersonRepository personRepository;
-    @Autowired
-    private final AddressRepository addressRepository;
 
-    public PersonBl(PersonRepository personRepository, AddressRepository addressRepository){
+
+    public PersonBl(PersonRepository personRepository){
         this.personRepository = personRepository;
-        this.addressRepository = addressRepository;
+
     }
 
     public void addPerson(PersonDto person){

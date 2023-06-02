@@ -16,18 +16,16 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserBl {
     private final UserRepository userRepository;
     private final PersonRepository personRepository;
-    private final AddressRepository addressRepository;
     private final EmailService emailService;
     private final VerificationRepository verificationRepository;
     private String verificationCode;
 
     PersonEntity personMemory = new PersonEntity();
 
-    public UserBl(UserRepository userRepository, PersonRepository personRepository, AddressRepository addressRepository, EmailService emailService,
+    public UserBl(UserRepository userRepository, PersonRepository personRepository,  EmailService emailService,
                   VerificationRepository verificationRepository) {
         this.userRepository = userRepository;
         this.personRepository = personRepository;
-        this.addressRepository = addressRepository;
         this.emailService = emailService;
         this.verificationRepository = verificationRepository;
     }
@@ -86,6 +84,7 @@ public class UserBl {
     }
 
     public void sendmail(MailDto mail) {
+
         /*VerificationEntity verificationEntity = new VerificationEntity(
                 personMemory,
                 generateVerificationCode()
@@ -105,25 +104,33 @@ public class UserBl {
         emailService.sendEmail(mail.getMail(), subject, message);     
     }
 
-    public Boolean verify(VerifyDto mail) {
-
-        PersonEntity person = personRepository.findByEmail(mail.getEmail());
-        VerificationEntity verification = verificationRepository.findByPersonId(person.getPersonId());
-        if (verification == null) {
+    public Boolean verify(DeviceIdDto deviceIdDto) {
+        VerificationEntity verificationEntity = verificationRepository.findByDeviceId(deviceIdDto.getDeviceId());
+        if (verificationEntity == null) {
             return false;
         }
-        return mail.getToken().equals(verification.getToken());
-        //String code = mail.getToken();
+        String codeHash = verificationEntity.getCodeHash();
+        return deviceIdDto.getDeviceId().equals(codeHash);
 
     }
 
-    public void saveVerification(MailDto mail){
-        /*VerificationEntity verificationEntity = new VerificationEntity(
+    public void initialVerification(DeviceIdDto deviceIdDto){
+        VerificationEntity verificationEntity = verificationRepository.findByDeviceId(deviceIdDto.getDeviceId());
 
-        );
-        verificationEntity.setPersonId(personMemory);
-        verificationEntity.setToken(generateVerificationCode());
-        verificationRepository.saveAndFlush(verificationEntity);*/
+
+    }
+
+    public void saveVerificationEntity(DeviceIdDto deviceIdDto) {
+        UUID uuid = UUID.randomUUID();
+        VerificationEntity verificationEntity = new VerificationEntity();
+        verificationEntity.setToken(uuid.toString());
+        //TODO: cambiar la fecha para que sea en 5 minutos
+        Date date = new Date();
+        verificationEntity.setExpirationDate(date);
+        verificationEntity.setCodeHash(generateVerificationCode());
+        verificationEntity.setVcType(deviceIdDto.getType());
+        verificationEntity.setDeviceId(deviceIdDto.getDeviceId());
+        this.verificationRepository.save(verificationEntity);
 
     }
 
@@ -138,7 +145,5 @@ public class UserBl {
         return String.valueOf(code);
     }
 
-    public VerificationEntity findTokenByPersonId(Long id){
-        return verificationRepository.findByPersonId(id);
-    }
+
 }

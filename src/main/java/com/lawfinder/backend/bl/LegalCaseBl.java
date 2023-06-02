@@ -23,28 +23,23 @@ public class LegalCaseBl {
     @Transactional
     public void saveLegalCase(LegalCaseDto legalCaseDto) {
         LegalCaseEntity legalCaseEntity = new LegalCaseEntity();
-        SubCategoryEntity subCategory = new SubCategoryEntity();
         ProvinceEntity province = new ProvinceEntity();
         DepartmentEntity department = new DepartmentEntity();
         CategoryEntity category = new CategoryEntity();
         UserEntity user = new UserEntity();
         PersonEntity person = new PersonEntity();
         province.setProvinceId(Long.valueOf(legalCaseDto.getIdProvince()));
-        subCategory.setSubCategoryId(Long.valueOf(legalCaseDto.getIdSubCategory()));
         province.setDepartment(department);
-        subCategory.setCategory(category);
         user.setPersonId(person);
         
 
         user.setId(Long.valueOf(legalCaseDto.getUserId()));
         legalCaseEntity.setUser(user);
-        legalCaseEntity.setPart(legalCaseDto.getPart());
-        legalCaseEntity.setContrapart(legalCaseDto.getContrapart());
+
         legalCaseEntity.setTitle(legalCaseDto.getTitle());
         legalCaseEntity.setStartDate(legalCaseDto.getStartDate());
         legalCaseEntity.setSummary(legalCaseDto.getSummary());
         legalCaseEntity.setStatus("En proceso");
-        legalCaseEntity.setSubcategory(subCategory);
         legalCaseEntity.setProvince(province);
         legalCaseEntity.setTxUser("admin");
         legalCaseEntity.setTxHost("192.128.12.3");

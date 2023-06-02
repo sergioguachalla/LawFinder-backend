@@ -10,7 +10,7 @@ public class VerificationEntity {
     @Column(name = "VERIFICATION_ID")
     private int verificationId;
 
-    @Column(name = "TOKEN")
+    @Column(name = "UUID")
     private String token;
 
     @Column(name = "EXPIRATION_DATE")
