@@ -1,5 +1,6 @@
 package com.lawfinder.backend.api;
 
+import com.lawfinder.backend.Entity.PersonEntity;
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,7 +31,12 @@ public class UserApi {
     public ResponseDto<String> createUser(@RequestBody UserDto user) {
         ResponseDto<String> response = new ResponseDto<>();
         System.out.println(user.toString());
-        this.userBl.saveUser(user);;
+        this.userBl.saveUser(user);
+        PersonEntity person = new PersonEntity();
+        person.setEmail(user.getPersonId().getEmail());
+        MailDto mail = new MailDto();
+        mail.setMail(user.getPersonId().getEmail());
+        this.userBl.sendmail(mail);
         response.setCode("0000");
         response.setResponse("user created");
         return response;
@@ -41,6 +47,7 @@ public class UserApi {
     @PostMapping("/api/v1/sendmail")
     public ResponseDto<String> sendMail(@RequestBody MailDto mail) {
         ResponseDto<String> response = new ResponseDto<>();
+        this.userBl.saveVerification(mail);
         this.userBl.sendmail(mail);
         response.setCode("0000");
         response.setResponse("mail sended");
