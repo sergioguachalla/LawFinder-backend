@@ -56,7 +56,7 @@ public class LegalCaseBl {
         
         InstanceLegalCaseEntity instanceCase= new InstanceLegalCaseEntity();
         InstanceEntity instance = new InstanceEntity();
-        instance.setInstanceId(Long.valueOf(legalCaseDto.getIdInstance()));        
+        instance.setInstanceId((long) legalCaseDto.getIdInstance());
         instanceCase.setInstance(instance);
         instanceCase.setLegalCase(legalCaseEntity);
         instanceCase.setStartDate(legalCaseDto.getStartDateInstance());

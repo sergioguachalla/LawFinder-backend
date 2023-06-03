@@ -9,7 +9,7 @@ public class SubCategoryEntity {
     @Column(name = "SUBCATEGORY_ID")
     private Long subCategoryId;
 
-    @Column(name = "SUBCATNAME", nullable = false, length = 100)
+    @Column(name = "SUB_CATEGORY_NAME", nullable = false, length = 100)
     private String subCatName;
 
     @Column(name = "DESCRIPTION", nullable = false, length = 2000)
