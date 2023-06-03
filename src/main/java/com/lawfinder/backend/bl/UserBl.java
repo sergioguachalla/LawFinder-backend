@@ -104,11 +104,15 @@ public class UserBl {
 
     public Boolean verify(DeviceIdDto deviceIdDto) {
         VerificationEntity verificationEntity = verificationRepository.findByDeviceId(deviceIdDto.getDeviceId());
-        if (verificationEntity == null) {
+
+
+        String codeHash = verificationEntity.getCodeHash();
+        if(PasswordService.checkPassword(deviceIdDto.getCode(), codeHash)){
+            return true;
+        }
+        else{
             return false;
         }
-        String codeHash = verificationEntity.getCodeHash();
-        return deviceIdDto.getDeviceId().equals(codeHash);
 
     }
 
@@ -129,8 +133,8 @@ public class UserBl {
         verificationEntity.setExpirationDate(date);
         sendmail(deviceIdDto.getEmail(), verificationCodeFinal);
         //verificationCode = generateVerificationCode();
-        String hashedVerificationCode = PasswordService.hashPassword(verificationCode);
-        verificationEntity.setCodeHash(verificationCodeFinal);
+        String hashedVerificationCode = PasswordService.hashPassword(verificationCodeFinal);
+        verificationEntity.setCodeHash(hashedVerificationCode);
         verificationEntity.setVcType(deviceIdDto.getType());
         verificationEntity.setDeviceId(deviceIdDto.getDeviceId());
         System.out.println(verificationEntity.toString());

@@ -89,11 +89,11 @@ public class UserApi {
         return response;
 
     }
-    /*
+
     @PutMapping("/api/v1/verify")
-    public ResponseDto<String> verifyMail(@RequestBody VerifyDto body) {
+    public ResponseDto<String> verifyMailCode(@RequestBody DeviceIdDto bodyFinal) {
         ResponseDto<String> response = new ResponseDto<>();
-        if(this.userBl.verify(body)){
+        if(this.userBl.verify(bodyFinal)){
             response.setCode("0000");
             response.setResponse("mail verified");
         }else{
@@ -102,7 +102,7 @@ public class UserApi {
         }
         return response;
 
-    }*/
+    }
 
 
 
