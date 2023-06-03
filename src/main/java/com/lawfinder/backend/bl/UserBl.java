@@ -57,7 +57,6 @@ public class UserBl {
         //String verificationCode = generateVerificationCode();
 
 
-
         // Enviar el código de verificación por correo electrónico
         String subject = "Código de verificación de LawFinder";
         String message = "Hola " + personMemory.getName() + " " + personMemory.getLastname() + ",\n\n"
@@ -82,7 +81,7 @@ public class UserBl {
 
     }
 
-    public void sendmail(MailDto mail) {
+    public void sendmail(String email, String code) {
 
         /*VerificationEntity verificationEntity = new VerificationEntity(
                 personMemory,
@@ -92,15 +91,15 @@ public class UserBl {
 
 
         // Generar código de verificación de 6 dígitos
-        verificationCode = generateVerificationCode();
+        //verificationCode = generateVerificationCode();
 
         // Enviar el código de verificación por correo electrónico
         String subject = "Código de verificación de Law Finder";
-        String message = "Hola " + ",\n\n"
-                + "Gracias por registrarte en LawFinder. Tu código de verificación es: " + verificationCode + "\n\n"
+        String message = "Hola " + email +  ",\n\n"
+                + "Gracias por registrarte en LawFinder. Tu código de verificación es: " + code + "\n\n"
                 + "Utiliza este código para completar tu registro en LawFinder.\n\n"
                 + "¡Bienvenido y que tengas una excelente experiencia con nuestra plataforma!";
-        emailService.sendEmail(mail.getMail(), subject, message);     
+        emailService.sendEmail(email, subject, message);
     }
 
     public Boolean verify(DeviceIdDto deviceIdDto) {
@@ -122,16 +121,21 @@ public class UserBl {
     @Transactional
     public void saveVerificationEntity(DeviceIdDto deviceIdDto) {
         UUID uuid = UUID.randomUUID();
+        String verificationCodeFinal = generateVerificationCode();
         VerificationEntity verificationEntity = new VerificationEntity();
         verificationEntity.setToken(uuid.toString());
         //TODO: cambiar la fecha para que sea en 5 minutos
         Date date = new Date();
         verificationEntity.setExpirationDate(date);
-        verificationEntity.setCodeHash(generateVerificationCode());
+        sendmail(deviceIdDto.getEmail(), verificationCodeFinal);
+        //verificationCode = generateVerificationCode();
+        String hashedVerificationCode = PasswordService.hashPassword(verificationCode);
+        verificationEntity.setCodeHash(verificationCodeFinal);
         verificationEntity.setVcType(deviceIdDto.getType());
         verificationEntity.setDeviceId(deviceIdDto.getDeviceId());
         System.out.println(verificationEntity.toString());
         this.verificationRepository.save(verificationEntity);
+
 
     }
 

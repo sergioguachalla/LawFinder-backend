@@ -37,7 +37,7 @@ public class UserApi {
         person.setEmail(user.getPersonId().getEmail());
         MailDto mail = new MailDto();
         mail.setMail(user.getPersonId().getEmail());
-        this.userBl.sendmail(mail);
+        //this.userBl.sendmail(mail);
         response.setCode("0000");
         response.setResponse("user created");
         return response;
@@ -49,7 +49,7 @@ public class UserApi {
     public ResponseDto<String> sendMail(@RequestBody MailDto mail) {
         ResponseDto<String> response = new ResponseDto<>();
         //this.userBl.saveVerification(mail);
-        this.userBl.sendmail(mail);
+        //this.userBl.sendmail(mail);
         response.setCode("0000");
         response.setResponse("mail sended");
         return response;
@@ -74,6 +74,7 @@ public class UserApi {
     public ResponseDto<String> verifyMail(@RequestBody DeviceIdDto body) {
         ResponseDto<String> response = new ResponseDto<>();
         this.userBl.saveVerificationEntity(body);
+        //this.userBl.sendmail(body.getEmail());
         response.setCode("0000");
         response.setResponse("mail verified");
 
@@ -88,7 +89,7 @@ public class UserApi {
         return response;
 
     }
-    /* 
+    /*
     @PutMapping("/api/v1/verify")
     public ResponseDto<String> verifyMail(@RequestBody VerifyDto body) {
         ResponseDto<String> response = new ResponseDto<>();
@@ -101,8 +102,8 @@ public class UserApi {
         }
         return response;
 
-    }
-    */
+    }*/
+
 
 
 
