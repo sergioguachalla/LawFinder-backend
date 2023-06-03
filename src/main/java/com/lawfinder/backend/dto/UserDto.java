@@ -30,7 +30,7 @@ public class UserDto {
         this.id = id;
         this.username = username;
         this.secret = secret;
-        this.status = false;
+        this.status = status;
         this.personId = personId;
         //this.imageId = imageId;
         this.txUser = txUser;

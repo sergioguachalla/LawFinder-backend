@@ -76,18 +76,8 @@ public class UserApi {
         this.userBl.saveVerificationEntity(body);
         //this.userBl.sendmail(body.getEmail());
         response.setCode("0000");
-        response.setResponse("mail verified");
-
-
-        /*if(this.userBl.verify(body)){
-            response.setCode("0000");
-            response.setResponse("mail verified");
-        }else{
-            response.setCode("0001");
-            response.setResponse("mail not verified");
-        }*/
+        response.setResponse("verification mail sent");
         return response;
-
     }
 
     @PutMapping("/api/v1/verify")

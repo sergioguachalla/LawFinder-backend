@@ -12,26 +12,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.management.relation.Role;
+
 @Service
 public class UserBl {
     private final UserRepository userRepository;
     private final PersonRepository personRepository;
     private final EmailService emailService;
+    private final RoleRepository roleRepository;
     private final VerificationRepository verificationRepository;
-    private String verificationCode;
+    private UserRoleRepository userRoleRepository;
+
 
     PersonEntity personMemory = new PersonEntity();
 
     public UserBl(UserRepository userRepository, PersonRepository personRepository,  EmailService emailService,
-                  VerificationRepository verificationRepository) {
+                  VerificationRepository verificationRepository, RoleRepository roleRepository, UserRoleRepository userRoleRepository) {
         this.userRepository = userRepository;
         this.personRepository = personRepository;
         this.emailService = emailService;
         this.verificationRepository = verificationRepository;
+        this.roleRepository = roleRepository;
+        this.userRoleRepository = userRoleRepository;
     }
 
     @Transactional
-    public void saveUser(UserDto userDto) {
+    public void saveCustomer(UserDto userDto) {
         UserEntity userEntity = new UserEntity();
 
         // Convert PersonDto to PersonEntity
@@ -51,22 +57,9 @@ public class UserBl {
         person.setTx_host("localhost");
         personMemory = personRepository.save(person);
 
-        // Generar código de verificación de 6 dígitos
-
-
-        //String verificationCode = generateVerificationCode();
-
-
-        // Enviar el código de verificación por correo electrónico
-        String subject = "Código de verificación de LawFinder";
-        String message = "Hola " + personMemory.getName() + " " + personMemory.getLastname() + ",\n\n"
-                + "Gracias por registrarte en LawFinder. Tu código de verificación es: " + verificationCode + "\n\n"
-                + "Utiliza este código para completar tu registro en LawFinder.\n\n"
-                + "¡Bienvenido y que tengas una excelente experiencia con nuestra plataforma!";
-        //emailService.sendEmail(personMemory.getEmail(), subject, message);
-
         // Set properties from userDto to userEntity
         userEntity.setUsername(userDto.getUsername());
+        System.out.println("Contraseña" + userDto.getSecret());
         userEntity.setSecret(PasswordService.hashPassword(userDto.getSecret()));
         userEntity.setStatus(false);
         userEntity.setPersonId(person);
@@ -78,22 +71,25 @@ public class UserBl {
         // Save userEntity in the database
         userRepository.save(userEntity);
 
+        // Create UserRoleEntity
+        UserRoleEntity userRoleEntity = new UserRoleEntity();
+        RoleEntity roleEntity = roleRepository.findByRole("CUSTOMER");
+
+        userRoleEntity.setRole(roleEntity);
+        userRoleEntity.setUser(userEntity);
+        userRoleEntity.setStatus(1);
+        userRoleEntity.setTx_user("lawfinder");
+        userRoleEntity.setTx_host("localhost");
+        userRoleEntity.setTx_date(new Date());
+        userRoleRepository.save(userRoleEntity);
+
+
+
 
     }
 
     public void sendmail(String email, String code) {
 
-        /*VerificationEntity verificationEntity = new VerificationEntity(
-                personMemory,
-                generateVerificationCode()
-        );
-        verificationRepository.saveAndFlush(verificationEntity);*/
-
-
-        // Generar código de verificación de 6 dígitos
-        //verificationCode = generateVerificationCode();
-
-        // Enviar el código de verificación por correo electrónico
         String subject = "Código de verificación de Law Finder";
         String message = "Hola " + email +  ",\n\n"
                 + "Gracias por registrarte en LawFinder. Tu código de verificación es: " + code + "\n\n"
@@ -104,23 +100,11 @@ public class UserBl {
 
     public Boolean verify(DeviceIdDto deviceIdDto) {
         VerificationEntity verificationEntity = verificationRepository.findByDeviceId(deviceIdDto.getDeviceId());
-
-
         String codeHash = verificationEntity.getCodeHash();
-        if(PasswordService.checkPassword(deviceIdDto.getCode(), codeHash)){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return PasswordService.checkPassword(deviceIdDto.getCode(), codeHash);
 
     }
 
-    public void initialVerification(DeviceIdDto deviceIdDto){
-        VerificationEntity verificationEntity = verificationRepository.findByDeviceId(deviceIdDto.getDeviceId());
-
-
-    }
 
     @Transactional
     public void saveVerificationEntity(DeviceIdDto deviceIdDto) {
