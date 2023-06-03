@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.lawfinder.backend.bl.DepartmentBl;
 import com.lawfinder.backend.dto.*;
 import org.springframework.web.bind.annotation.*;
+@CrossOrigin(origins = "*")
 
 @RestController
 public class DepartmentApi {
