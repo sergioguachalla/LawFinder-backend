@@ -7,27 +7,36 @@ public class LegalCaseDto {
     private Long idLegalCase;
     private int idSubCategory;
     private int idProvince;
+    private int idCrime;
     private int userId;
     private String part;
     private String contrapart;
     private String title;
     private Date startDate;
     private String summary;
+    //Para guardar la instancia
+    private int idInstance;
+    private Date startDateInstance;
+    private Date endDateInstance;
 
     public LegalCaseDto() {
     }
 
-    public LegalCaseDto(Long idLegalCase, int idSubCategory, int idProvince, int userId, String part, String contrapart,
-                        String title, Date startDate, String summary) {
+    public LegalCaseDto(Long idLegalCase, int idSubCategory, int idProvince, int idCrime ,int userId, String part, String contrapart,
+                        String title, Date startDate, String summary, int idInstance, Date startDateInstance, Date endDateInstance) {
         this.idLegalCase = idLegalCase;
         this.idSubCategory = idSubCategory;
         this.idProvince = idProvince;
+        this.idCrime = idCrime;
         this.userId = userId;
         this.part = part;
         this.contrapart = contrapart;
         this.title = title;
         this.startDate = startDate;
         this.summary = summary;
+        this.idInstance = idInstance;
+        this.startDateInstance = startDateInstance;
+        this.endDateInstance = endDateInstance;
     }
 
     public Long getIdLegalCase() {
@@ -70,6 +79,14 @@ public class LegalCaseDto {
         this.part = part;
     }
 
+    public int getIdCrime() {
+        return idCrime;
+    }
+
+    public void setIdCrime(int idCrime) {
+        this.idCrime = idCrime;
+    }
+
     public String getContrapart() {
         return contrapart;
     }
@@ -100,5 +117,29 @@ public class LegalCaseDto {
 
     public void setSummary(String summary) {
         this.summary = summary;
+    }
+
+    public int getIdInstance() {
+        return idInstance;
+    }
+
+    public void setIdInstance(int idInstance) {
+        this.idInstance = idInstance;
+    }
+
+    public Date getStartDateInstance() {
+        return startDateInstance;
+    }
+
+    public void setStartDateInstance(Date startDateInstance) {
+        this.startDateInstance = startDateInstance;
+    }
+
+    public Date getEndDateInstance() {
+        return endDateInstance;
+    }
+
+    public void setEndDateInstance(Date endDateInstance) {
+        this.endDateInstance = endDateInstance;
     }
 }

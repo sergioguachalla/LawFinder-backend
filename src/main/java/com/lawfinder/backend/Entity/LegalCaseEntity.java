@@ -37,7 +37,7 @@ public class LegalCaseEntity {
 
 
     @Column(name = "STATUS", length = 100)
-    private String status;
+    private boolean status;
 
     @Column(name = "TX_USER", length = 100)
     private String txUser;
@@ -53,11 +53,13 @@ public class LegalCaseEntity {
     }
 
     // Constructor con todos los atributos
-    public LegalCaseEntity( ProvinceEntity province, UserEntity user, String title, Date startDate, String summary, String status, String txUser, String txHost, Date txDate) {
+    public LegalCaseEntity( ProvinceEntity province, UserEntity user, CrimeEntity crime ,
+    String title, Date startDate, String summary, Boolean status, String txUser, String txHost, Date txDate) {
 
         this.province = province;
         this.user = user;
         this.title = title;
+        this.crime = crime;
         this.startDate = startDate;
         this.summary = summary;
         this.status = status;
@@ -69,6 +71,10 @@ public class LegalCaseEntity {
     // Getters
     public Long getLegalCaseId() {
         return legalCaseId;
+    }
+
+    public CrimeEntity getCrime() {
+        return crime;
     }
 
 
@@ -95,7 +101,7 @@ public class LegalCaseEntity {
         return summary;
     }
 
-    public String getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
@@ -126,6 +132,11 @@ public class LegalCaseEntity {
     }
 
 
+    public void setCrime(CrimeEntity crime) {
+        this.crime = crime;
+    }
+
+
 
 
     public void setTitle(String title) {
@@ -140,7 +151,7 @@ public class LegalCaseEntity {
         this.summary = summary;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 

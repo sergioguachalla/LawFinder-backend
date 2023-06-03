@@ -13,11 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class LegalCaseBl {
 
     private final LegalCaseRepository legalCaseRepository;
-    private final UserRepository userRepository;
+    private final InstanceLegalCaseRepository instanceLegalCaseRepository;
 
-    public LegalCaseBl(LegalCaseRepository legalCaseRepository, UserRepository userRepository) {
+    public LegalCaseBl(LegalCaseRepository legalCaseRepository, InstanceLegalCaseRepository instanceLegalCaseRepository) {
         this.legalCaseRepository = legalCaseRepository;
-        this.userRepository = userRepository;
+        this.instanceLegalCaseRepository = instanceLegalCaseRepository;    
     }
 
     @Transactional
@@ -25,12 +25,16 @@ public class LegalCaseBl {
         LegalCaseEntity legalCaseEntity = new LegalCaseEntity();
         ProvinceEntity province = new ProvinceEntity();
         DepartmentEntity department = new DepartmentEntity();
-        CategoryEntity category = new CategoryEntity();
         UserEntity user = new UserEntity();
         PersonEntity person = new PersonEntity();
+        CrimeEntity crime = new CrimeEntity();
+
+
+
         province.setProvinceId(Long.valueOf(legalCaseDto.getIdProvince()));
         province.setDepartment(department);
         user.setPersonId(person);
+        crime.setCrimeId(legalCaseDto.getIdCrime());
         
 
         user.setId(Long.valueOf(legalCaseDto.getUserId()));
@@ -39,16 +43,27 @@ public class LegalCaseBl {
         legalCaseEntity.setTitle(legalCaseDto.getTitle());
         legalCaseEntity.setStartDate(legalCaseDto.getStartDate());
         legalCaseEntity.setSummary(legalCaseDto.getSummary());
-        legalCaseEntity.setStatus("En proceso");
+        legalCaseEntity.setCrime(crime);
+        legalCaseEntity.setStatus(true);
         legalCaseEntity.setProvince(province);
         legalCaseEntity.setTxUser("admin");
         legalCaseEntity.setTxHost("192.128.12.3");
         legalCaseEntity.setTxDate(new java.util.Date());
         
         legalCaseRepository.saveAndFlush(legalCaseEntity);
-        // Use existing userDto, no need to convert again
+        // Register the initial instance on db
         
-
+        
+        InstanceLegalCaseEntity instanceCase= new InstanceLegalCaseEntity();
+        InstanceEntity instance = new InstanceEntity();
+        instance.setInstanceId(Long.valueOf(legalCaseDto.getIdInstance()));        
+        instanceCase.setInstance(instance);
+        instanceCase.setLegalCase(legalCaseEntity);
+        instanceCase.setStartDate(legalCaseDto.getStartDateInstance());
+        instanceCase.setEndDate(legalCaseDto.getEndDateInstance());
+        instanceLegalCaseRepository.saveAndFlush(instanceCase);
+        
+        
     }
     
 }
