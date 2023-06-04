@@ -4,6 +4,8 @@ import com.lawfinder.backend.dao.*;
 import com.lawfinder.backend.dto.*;
 
 import org.apache.tomcat.util.http.fileupload.MultipartStream.ProgressNotifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -82,7 +84,7 @@ public class LegalCaseBl {
         return instanceDtoList;
     }
 
-    public List<LegalCaseDto> findAllByUserId(Long userId){
+   /* public List<LegalCaseDto> findAllByUserId(Long userId){
         List<LegalCaseDto> legalCaseDtoList = new ArrayList<>();
         List<LegalCaseEntity> legalCaseEntityList = legalCaseRepository.findAllByUserId(userId);
         for (LegalCaseEntity legalCaseEntity : legalCaseEntityList) {
@@ -98,6 +100,24 @@ public class LegalCaseBl {
             legalCaseDtoList.add(legalCaseDto);
         }
         return legalCaseDtoList;
+    }*/
+
+    public Page<LegalCaseDto> findAllByUserIdPaginated(Long userId, Pageable pageable) {
+        Page<LegalCaseEntity> legalCasePage = legalCaseRepository.findAllByUserId(userId, pageable);
+        return legalCasePage.map(this::convertToLegalCaseDto);
+    }
+
+    private LegalCaseDto convertToLegalCaseDto(LegalCaseEntity legalCaseEntity) {
+        LegalCaseDto legalCaseDto = new LegalCaseDto();
+        legalCaseDto.setIdLegalCase(legalCaseEntity.getLegalCaseId());
+        legalCaseDto.setIdProvince(legalCaseEntity.getProvince().getProvinceId().intValue());
+        legalCaseDto.setIdCrime(legalCaseEntity.getCrime().getCrimeId());
+        legalCaseDto.setUserId(legalCaseEntity.getUser().getId().intValue());
+        legalCaseDto.setStartDate(legalCaseEntity.getStartDate());
+        legalCaseDto.setTitle(legalCaseEntity.getTitle());
+        legalCaseDto.setSummary(legalCaseEntity.getSummary());
+        legalCaseDto.setLastUpdate(legalCaseEntity.getTxDate());
+        return legalCaseDto;
     }
     
 }
