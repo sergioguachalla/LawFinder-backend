@@ -40,7 +40,7 @@ public class LegalCaseBl {
         province.setProvinceId(Long.valueOf(legalCaseDto.getIdProvince()));
         province.setDepartment(department);
         user.setPersonId(person);
-        crime.setCrimeId(legalCaseDto.getIdCrime());
+        crime.setCrimeId((long) legalCaseDto.getIdCrime());
         
 
         user.setId(Long.valueOf(legalCaseDto.getUserId()));
@@ -111,7 +111,7 @@ public class LegalCaseBl {
         LegalCaseDto legalCaseDto = new LegalCaseDto();
         legalCaseDto.setIdLegalCase(legalCaseEntity.getLegalCaseId());
         legalCaseDto.setIdProvince(legalCaseEntity.getProvince().getProvinceId().intValue());
-        legalCaseDto.setIdCrime(legalCaseEntity.getCrime().getCrimeId());
+        legalCaseDto.setIdCrime(legalCaseEntity.getCrime().getCrimeId().intValue());
         legalCaseDto.setUserId(legalCaseEntity.getUser().getId().intValue());
         legalCaseDto.setStartDate(legalCaseEntity.getStartDate());
         legalCaseDto.setTitle(legalCaseEntity.getTitle());
