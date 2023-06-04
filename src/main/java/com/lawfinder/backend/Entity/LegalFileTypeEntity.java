@@ -11,15 +11,20 @@ public class LegalFileTypeEntity{
     private int legalFileTypeId;
 
     @Column(name = "NAME")
-    private int name;
+    private String name;
 
     // Constructores, getters y setters
 
     public LegalFileTypeEntity() {
     }
 
-    public LegalFileTypeEntity(int name) {
+    // Constructor con todos los atributos
+
+
+
+    public LegalFileTypeEntity(int legalFileTypeId  ,String name) {
         this.name = name;
+        this.legalFileTypeId = legalFileTypeId;
     }
 
     public int getLegalFileTypeId() {
@@ -30,11 +35,11 @@ public class LegalFileTypeEntity{
         this.legalFileTypeId = legalFileTypeId;
     }
 
-    public int getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(int name) {
+    public void setName(String name) {
         this.name = name;
     }
 }

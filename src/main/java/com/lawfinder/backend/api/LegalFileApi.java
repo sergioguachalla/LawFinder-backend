@@ -11,6 +11,8 @@ import java.util.List;
 
 import static java.net.HttpURLConnection.HTTP_OK;
 
+@CrossOrigin(origins = "*")
+
 @RestController
 public class LegalFileApi {
 
@@ -38,10 +40,10 @@ public class LegalFileApi {
     }
     */
 
-    @PostMapping("upload")
-    public String upload(@RequestParam("file") MultipartFile file){
-       return s3Service.saveFile(file);
-    }
+        @PostMapping("upload")
+        public String upload(@RequestParam("file") MultipartFile file){
+        return s3Service.saveFile(file);
+        }
 
     @GetMapping("download/{filename}")
     public ResponseEntity<byte[]> download(@PathVariable("filename") String filename){
