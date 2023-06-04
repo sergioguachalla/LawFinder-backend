@@ -31,7 +31,6 @@ Accept: application/json
     "idSubCategory": 2,
     "idProvince": 3,
     "idCrime": 1,
-    "part": "Parte demandante",
     "contrapart": "Parte demandada",
     "title": "Caso Legal 500",
     "startDate": "2023-05-23",

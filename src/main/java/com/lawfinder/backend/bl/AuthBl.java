@@ -11,8 +11,6 @@ import com.lawfinder.backend.dto.LoginDto;
 import com.lawfinder.backend.dto.TokenDto;
 import com.lawfinder.backend.dto.UserDto;
 import com.lawfinder.backend.services.PasswordService;
-import org.apache.catalina.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
