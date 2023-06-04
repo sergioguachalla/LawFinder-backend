@@ -81,5 +81,23 @@ public class LegalCaseBl {
         }
         return instanceDtoList;
     }
+
+    public List<LegalCaseDto> findAllByUserId(Long userId){
+        List<LegalCaseDto> legalCaseDtoList = new ArrayList<>();
+        List<LegalCaseEntity> legalCaseEntityList = legalCaseRepository.findAllByUserId(userId);
+        for (LegalCaseEntity legalCaseEntity : legalCaseEntityList) {
+            LegalCaseDto legalCaseDto = new LegalCaseDto();
+            legalCaseDto.setIdLegalCase(legalCaseEntity.getLegalCaseId());
+            legalCaseDto.setIdProvince(legalCaseEntity.getProvince().getProvinceId().intValue());
+            legalCaseDto.setIdCrime(legalCaseEntity.getCrime().getCrimeId());
+            legalCaseDto.setUserId(legalCaseEntity.getUser().getId().intValue());
+            legalCaseDto.setStartDate(legalCaseEntity.getStartDate());
+            legalCaseDto.setTitle(legalCaseEntity.getTitle());
+            legalCaseDto.setSummary(legalCaseEntity.getSummary());
+            legalCaseDto.setLastUpdate(legalCaseEntity.getTxDate());
+            legalCaseDtoList.add(legalCaseDto);
+        }
+        return legalCaseDtoList;
+    }
     
 }

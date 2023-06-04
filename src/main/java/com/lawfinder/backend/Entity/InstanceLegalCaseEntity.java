@@ -27,6 +27,7 @@ public class InstanceLegalCaseEntity {
     @Column(name = "END_DATE")
     private Date endDate;
 
+
     // Constructor vacío
     public InstanceLegalCaseEntity() {
     }

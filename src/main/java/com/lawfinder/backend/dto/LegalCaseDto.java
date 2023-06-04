@@ -5,7 +5,6 @@ import java.util.Date;
 public class LegalCaseDto {
 
     private Long idLegalCase;
-    private int idSubCategory;
     private int idProvince;
     private int idCrime;
     private int userId;
@@ -16,16 +15,19 @@ public class LegalCaseDto {
     private String summary;
     //Para guardar la instancia
     private int idInstance;
+
     private Date startDateInstance;
     private Date endDateInstance;
+
+    private Date lastUpdate;
+
 
     public LegalCaseDto() {
     }
 
     public LegalCaseDto(Long idLegalCase, int idSubCategory, int idProvince, int idCrime ,int userId, String part, String contrapart,
-                        String title, Date startDate, String summary, int idInstance, Date startDateInstance, Date endDateInstance) {
+                        String title, Date startDate, String summary, int idInstance, Date startDateInstance, Date endDateInstance, Date lastUpdate ) {
         this.idLegalCase = idLegalCase;
-        this.idSubCategory = idSubCategory;
         this.idProvince = idProvince;
         this.idCrime = idCrime;
         this.userId = userId;
@@ -37,6 +39,7 @@ public class LegalCaseDto {
         this.idInstance = idInstance;
         this.startDateInstance = startDateInstance;
         this.endDateInstance = endDateInstance;
+        this.lastUpdate = lastUpdate;
     }
 
     public Long getIdLegalCase() {
@@ -47,13 +50,7 @@ public class LegalCaseDto {
         this.idLegalCase = idLegalCase;
     }
 
-    public int getIdSubCategory() {
-        return idSubCategory;
-    }
 
-    public void setIdSubCategory(int idSubCategory) {
-        this.idSubCategory = idSubCategory;
-    }
 
     public int getIdProvince() {
         return idProvince;
@@ -87,13 +84,7 @@ public class LegalCaseDto {
         this.idCrime = idCrime;
     }
 
-    public String getContrapart() {
-        return contrapart;
-    }
 
-    public void setContrapart(String contrapart) {
-        this.contrapart = contrapart;
-    }
 
     public String getTitle() {
         return title;
@@ -125,6 +116,22 @@ public class LegalCaseDto {
 
     public void setIdInstance(int idInstance) {
         this.idInstance = idInstance;
+    }
+
+    public Date getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    public String getContrapart() {
+        return contrapart;
+    }
+
+    public void setContrapart(String contrapart) {
+        this.contrapart = contrapart;
     }
 
     public Date getStartDateInstance() {
