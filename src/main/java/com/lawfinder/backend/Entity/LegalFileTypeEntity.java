@@ -8,9 +8,9 @@ public class LegalFileTypeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "LEGAL_FILE_TYPE_ID")
-    private int legalFileTypeId;
+    private long legalFileTypeId;
 
-    @Column(name = "NAME")
+    @Column(name = "FILE_NAME")
     private String name;
 
     // Constructores, getters y setters
@@ -22,16 +22,16 @@ public class LegalFileTypeEntity{
 
 
 
-    public LegalFileTypeEntity(int legalFileTypeId  ,String name) {
+    public LegalFileTypeEntity(Long legalFileTypeId  ,String name) {
         this.name = name;
         this.legalFileTypeId = legalFileTypeId;
     }
 
-    public int getLegalFileTypeId() {
+    public long getLegalFileTypeId() {
         return legalFileTypeId;
     }
 
-    public void setLegalFileTypeId(int legalFileTypeId) {
+    public void setLegalFileTypeId(long legalFileTypeId) {
         this.legalFileTypeId = legalFileTypeId;
     }
 
