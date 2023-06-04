@@ -37,4 +37,16 @@ public class CategoryBl {
         }
         return subCategoryDtoList;
     }
+    public List<CategoryDto> findAll(){
+        List<CategoryEntity> categoryEntityList = categoryRepository.findAll();
+        List<CategoryDto> categoryDtoList = new ArrayList<>();
+        for (CategoryEntity categoryEntity : categoryEntityList) {
+            CategoryDto categoryDto = new CategoryDto();
+            categoryDto.setCategoryId(categoryEntity.getCategoryId());
+            categoryDto.setCategoryName(categoryEntity.getcategoryName());
+            categoryDto.setDescription(categoryEntity.getDescription());
+            categoryDtoList.add(categoryDto);
+        }
+        return categoryDtoList;
+    }
 }

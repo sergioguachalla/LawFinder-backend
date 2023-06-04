@@ -10,6 +10,8 @@ import com.lawfinder.backend.bl.LegalCaseBl;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
+
 @RestController
 public class LegalCaseApi {
     @Autowired
@@ -70,6 +72,25 @@ public class LegalCaseApi {
         //this.categoryBl.findAllSubCategoriesByCategoryId(id);
         response.setCode("0000");
         response.setResponse(this.legalCaseBl.findAllInstances());
+        response.setErrorMessage(null);
+        return response;
+
+    }
+
+    @GetMapping("/api/v1/category")
+    public ResponseDto<List<CategoryDto>> getCategories( /* , @RequestHeader("Authorization") String token*/) {
+        ResponseDto<List<CategoryDto>> response = new ResponseDto<>();
+       /*  AuthBl authBl = new AuthBl();
+        if (!authBl.validateToken(token)) {
+            response.setCode("0001");
+            response.setResponse(null);
+            response.setErrorMessage("Invalid token");
+            return response;
+        }
+        */
+        //this.categoryBl.findAllSubCategoriesByCategoryId(id);
+        response.setCode("0000");
+        response.setResponse(this.categoryBl.findAll());
         response.setErrorMessage(null);
         return response;
 
