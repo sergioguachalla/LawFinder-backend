@@ -7,6 +7,8 @@ import org.apache.tomcat.util.http.fileupload.MultipartStream.ProgressNotifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -14,10 +16,12 @@ public class LegalCaseBl {
 
     private final LegalCaseRepository legalCaseRepository;
     private final InstanceLegalCaseRepository instanceLegalCaseRepository;
+    private final InstanceRepository instanceRepository;
 
-    public LegalCaseBl(LegalCaseRepository legalCaseRepository, InstanceLegalCaseRepository instanceLegalCaseRepository) {
+    public LegalCaseBl(LegalCaseRepository legalCaseRepository, InstanceLegalCaseRepository instanceLegalCaseRepository, InstanceRepository instanceRepository) {
         this.legalCaseRepository = legalCaseRepository;
-        this.instanceLegalCaseRepository = instanceLegalCaseRepository;    
+        this.instanceLegalCaseRepository = instanceLegalCaseRepository;
+        this.instanceRepository = instanceRepository;
     }
 
     @Transactional
@@ -64,6 +68,18 @@ public class LegalCaseBl {
         instanceLegalCaseRepository.saveAndFlush(instanceCase);
         
         
+    }
+
+    public List<InstanceDto> findAllInstances(){
+        List<InstanceEntity> instanceEntityList = instanceRepository.findAll();
+        List<InstanceDto> instanceDtoList = new ArrayList<>();
+        for (InstanceEntity instanceEntity : instanceEntityList) {
+            InstanceDto instanceDto = new InstanceDto();
+            instanceDto.setInstanceId(instanceEntity.getInstanceId());
+            instanceDto.setInstanceName(instanceEntity.getInstanceName());
+            instanceDtoList.add(instanceDto);
+        }
+        return instanceDtoList;
     }
     
 }
