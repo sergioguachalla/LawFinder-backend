@@ -13,10 +13,6 @@ public class InstanceLegalCaseEntity {
     @Column(name = "INSTANCE_LEGAL_CASE_ID")
     private Long instanceLegalCaseId;
 
-    @OneToOne
-    @JoinColumn(name = "AUDIENCE_ID", referencedColumnName = "AUDIENCE_ID", nullable = false)
-    private AudienceEntity audience;
-
     @ManyToOne
     @JoinColumn(name = "INSTANCE_ID", referencedColumnName = "INSTANCE_ID", nullable = false)
     private InstanceEntity instance;
@@ -25,9 +21,7 @@ public class InstanceLegalCaseEntity {
     @JoinColumn(name = "LEGAL_CASE_ID", referencedColumnName = "LEGAL_CASE_ID", nullable = false)
     private LegalCaseEntity legalCase;
 
-    @OneToOne
-    @JoinColumn(name = "RESOLUTION_ID", referencedColumnName = "RESOLUTION_ID", nullable = false)
-    private ResolutionEntity resolution;
+
 
     @Column(name = "START_DATE", nullable = false)
     private Date startDate;
@@ -37,11 +31,9 @@ public class InstanceLegalCaseEntity {
     }
 
     // Constructor con todos los atributos
-    public InstanceLegalCaseEntity(AudienceEntity audience, InstanceEntity instance, LegalCaseEntity legalCase, ResolutionEntity resolution, Date startDate) {
-        this.audience = audience;
+    public InstanceLegalCaseEntity( InstanceEntity instance, LegalCaseEntity legalCase, ResolutionEntity resolution, Date startDate) {
         this.instance = instance;
         this.legalCase = legalCase;
-        this.resolution = resolution;
         this.startDate = startDate;
     }
 
@@ -50,9 +42,6 @@ public class InstanceLegalCaseEntity {
         return instanceLegalCaseId;
     }
 
-    public AudienceEntity getAudience() {
-        return audience;
-    }
 
     public InstanceEntity getInstance() {
         return instance;
@@ -62,9 +51,7 @@ public class InstanceLegalCaseEntity {
         return legalCase;
     }
 
-    public ResolutionEntity getResolution() {
-        return resolution;
-    }
+
 
     public Date getStartDate() {
         return startDate;
@@ -75,9 +62,6 @@ public class InstanceLegalCaseEntity {
         this.instanceLegalCaseId = instanceLegalCaseId;
     }
 
-    public void setAudience(AudienceEntity audience) {
-        this.audience = audience;
-    }
 
     public void setInstance(InstanceEntity instance) {
         this.instance = instance;
@@ -87,9 +71,6 @@ public class InstanceLegalCaseEntity {
         this.legalCase = legalCase;
     }
 
-    public void setResolution(ResolutionEntity resolution) {
-        this.resolution = resolution;
-    }
 
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
@@ -98,7 +79,8 @@ public class InstanceLegalCaseEntity {
     // toString
     @Override
     public String toString() {
-        return "InstanceLegalCaseEntity [instanceLegalCaseId=" + instanceLegalCaseId + ", audience=" + audience + ", instance=" + instance
-                + ", legalCase=" + legalCase + ", resolution=" + resolution + ", startDate=" + startDate + "]";
+        return "InstanceLegalCaseEntity [instanceLegalCaseId=" + instanceLegalCaseId +  ", instance=" + instance
+                + ", legalCase=" + legalCase +
+                ", startDate=" + startDate + "]";
     }
 }

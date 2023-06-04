@@ -81,7 +81,7 @@ public class UserBl {
         userRoleEntity.setTx_user("lawfinder");
         userRoleEntity.setTx_host("localhost");
         userRoleEntity.setTx_date(new Date());
-        userRoleRepository.save(userRoleEntity);
+        userRoleRepository.saveAndFlush(userRoleEntity);
 
 
 

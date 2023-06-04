@@ -32,7 +32,7 @@ public class UserApi {
     public ResponseDto<String> createUser(@RequestBody UserDto user) {
         ResponseDto<String> response = new ResponseDto<>();
         System.out.println(user.toString());
-        this.userBl.saveUser(user);
+        this.userBl.saveCustomer(user);
         PersonEntity person = new PersonEntity();
         person.setEmail(user.getPersonId().getEmail());
         MailDto mail = new MailDto();

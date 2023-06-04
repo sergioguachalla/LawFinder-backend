@@ -22,16 +22,21 @@ public class AudienceEntity {
     @Column(name = "VERDICT", nullable = false, columnDefinition = "TEXT")
     private String verdict;
 
+    @OneToOne
+    @JoinColumn(name = "INSTANCE_LEGAL_CASE_ID", nullable = false)
+    private InstanceLegalCaseEntity instanceLegalCase;
+
 
     // Constructor vacío
     public AudienceEntity() {
     }
 
     // Constructor con todos los atributos
-    public AudienceEntity(Date audienceDate, String description, String verdict) {
+    public AudienceEntity(Date audienceDate, String description, String verdict, InstanceLegalCaseEntity instanceLegalCase) {
         this.audienceDate = audienceDate;
         this.description = description;
         this.verdict = verdict;
+        this.instanceLegalCase = instanceLegalCase;
     }
 
     // Getters

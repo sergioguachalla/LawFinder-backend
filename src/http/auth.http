@@ -3,7 +3,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "username": "Prueba_Contraseña",
-    "password": "1234contraseña"
+    "username": "usuarios_testo22",
+    "password": "1234aa"
 }
 
