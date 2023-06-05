@@ -4,10 +4,7 @@ import com.lawfinder.backend.bl.UserBl;
 import com.lawfinder.backend.dto.DeviceIdDto;
 import com.lawfinder.backend.dto.ResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -17,7 +14,7 @@ public class RegistrationApi {
     private UserBl registrationBl;
 
 
-    @GetMapping("/api/v1/verification")
+    @PostMapping("/api/v1/verification")
     public ResponseDto<String> getVerification(@RequestBody DeviceIdDto deviceIdDto){
         ResponseDto<String> response = new ResponseDto<>();
         if(this.registrationBl.verifyUserByEmail(deviceIdDto)){
