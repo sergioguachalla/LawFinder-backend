@@ -14,6 +14,7 @@ public class VerificationEntity {
     @Column(name = "UUID")
     private String token;
 
+
     @Column(name = "EXPIRATION_DATE")
     private Date expirationDate;
 
