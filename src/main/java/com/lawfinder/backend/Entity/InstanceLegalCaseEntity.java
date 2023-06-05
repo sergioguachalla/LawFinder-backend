@@ -21,20 +21,25 @@ public class InstanceLegalCaseEntity {
     @JoinColumn(name = "LEGAL_CASE_ID", referencedColumnName = "LEGAL_CASE_ID", nullable = false)
     private LegalCaseEntity legalCase;
 
-
-
     @Column(name = "START_DATE", nullable = false)
     private Date startDate;
+
+    @Column(name = "END_DATE")
+    private Date endDate;
+
 
     // Constructor vacío
     public InstanceLegalCaseEntity() {
     }
 
     // Constructor con todos los atributos
+
     public InstanceLegalCaseEntity( InstanceEntity instance, LegalCaseEntity legalCase, ResolutionEntity resolution, Date startDate) {
+
         this.instance = instance;
         this.legalCase = legalCase;
         this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     // Getters
@@ -42,6 +47,10 @@ public class InstanceLegalCaseEntity {
         return instanceLegalCaseId;
     }
 
+
+    public Date getEndDate () {
+        return endDate;
+    }
 
     public InstanceEntity getInstance() {
         return instance;
@@ -51,8 +60,6 @@ public class InstanceLegalCaseEntity {
         return legalCase;
     }
 
-
-
     public Date getStartDate() {
         return startDate;
     }
@@ -61,6 +68,10 @@ public class InstanceLegalCaseEntity {
     public void setInstanceLegalCaseId(Long instanceLegalCaseId) {
         this.instanceLegalCaseId = instanceLegalCaseId;
     }
+
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
 
 
     public void setInstance(InstanceEntity instance) {
@@ -79,8 +90,10 @@ public class InstanceLegalCaseEntity {
     // toString
     @Override
     public String toString() {
+
         return "InstanceLegalCaseEntity [instanceLegalCaseId=" + instanceLegalCaseId +  ", instance=" + instance
                 + ", legalCase=" + legalCase +
                 ", startDate=" + startDate + "]";
+
     }
 }
