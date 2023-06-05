@@ -103,11 +103,11 @@ public class LegalFileEntity {
         this.courtId = courtId;
     }
 
-    public FileEntity getFileFileId() {
+    public FileEntity getFileId() {
         return fileFileId;
     }
 
-    public void setFileFileId(FileEntity fileFileId) {
+    public void setFileId(FileEntity fileFileId) {
         this.fileFileId = fileFileId;
     }
 
