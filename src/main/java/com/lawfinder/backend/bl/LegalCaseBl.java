@@ -84,14 +84,14 @@ public class LegalCaseBl {
         return instanceDtoList;
     }
 
-   /* public List<LegalCaseDto> findAllByUserId(Long userId){
+   public List<LegalCaseDto> findAllByUserId(Long userId){
         List<LegalCaseDto> legalCaseDtoList = new ArrayList<>();
         List<LegalCaseEntity> legalCaseEntityList = legalCaseRepository.findAllByUserId(userId);
         for (LegalCaseEntity legalCaseEntity : legalCaseEntityList) {
             LegalCaseDto legalCaseDto = new LegalCaseDto();
             legalCaseDto.setIdLegalCase(legalCaseEntity.getLegalCaseId());
             legalCaseDto.setIdProvince(legalCaseEntity.getProvince().getProvinceId().intValue());
-            legalCaseDto.setIdCrime(legalCaseEntity.getCrime().getCrimeId());
+            legalCaseDto.setIdCrime(legalCaseEntity.getCrime().getCrimeId().intValue());
             legalCaseDto.setUserId(legalCaseEntity.getUser().getId().intValue());
             legalCaseDto.setStartDate(legalCaseEntity.getStartDate());
             legalCaseDto.setTitle(legalCaseEntity.getTitle());
@@ -100,12 +100,13 @@ public class LegalCaseBl {
             legalCaseDtoList.add(legalCaseDto);
         }
         return legalCaseDtoList;
-    }*/
+    }
 
-    public Page<LegalCaseDto> findAllByUserIdPaginated(Long userId, Pageable pageable) {
+    /*public Page<LegalCaseDto> findAllByUserIdPaginated(Long userId, Pageable pageable) {
         Page<LegalCaseEntity> legalCasePage = legalCaseRepository.findAllByUserId(userId, pageable);
         return legalCasePage.map(this::convertToLegalCaseDto);
-    }
+    }*/
+
 
     private LegalCaseDto convertToLegalCaseDto(LegalCaseEntity legalCaseEntity) {
         LegalCaseDto legalCaseDto = new LegalCaseDto();

@@ -73,7 +73,7 @@ public class InstanceLegalCaseEntity {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
 
-
+    }
     public void setInstance(InstanceEntity instance) {
         this.instance = instance;
     }

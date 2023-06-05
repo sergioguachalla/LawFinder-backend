@@ -27,7 +27,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "userId": 11,
+    "userId": 15,
     "idSubCategory": 2,
     "idProvince": 3,
     "idCrime": 1,

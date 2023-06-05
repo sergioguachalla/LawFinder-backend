@@ -98,39 +98,40 @@ public class LegalCaseApi {
 
     }
 
-    /*@GetMapping("/api/v1/legalcase/user/{id}")
-    public ResponseDto<List<LegalCaseDto>> getLegalCasesByUserId(@PathVariable Long id *//* , @RequestHeader("Authorization") String token*//*) {
+    @GetMapping("/api/v1/legalcase/user/{id}")
+    public ResponseDto<List<LegalCaseDto>> getLegalCasesByUserId(@PathVariable Long id  /* , @RequestHeader("Authorization") String token*/)
+           {
         ResponseDto<List<LegalCaseDto>> response = new ResponseDto<>();
-       *//*  AuthBl authBl = new AuthBl();
+       /*  AuthBl authBl = new AuthBl();
         if (!authBl.validateToken(token)) {
             response.setCode("0001");
             response.setResponse(null);
             response.setErrorMessage("Invalid token");
             return response;
         }
-        *//*
+        */
         //this.categoryBl.findAllSubCategoriesByCategoryId(id);
         response.setCode("0000");
         response.setResponse(this.legalCaseBl.findAllByUserId(id));
         response.setErrorMessage(null);
         return response;
 
-    }*/
-    @GetMapping("/api/v1/legalcase/user/{id}")
+    }
+    /*@GetMapping("/api/v1/legalcase/user/{id}")
     public ResponseDto<Page<LegalCaseDto>> getLegalCasesByUserId(
             @PathVariable Long id,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
-            /* , @RequestHeader("Authorization") String token*/) {
+            *//* , @RequestHeader("Authorization") String token*//*) {
         ResponseDto<Page<LegalCaseDto>> response = new ResponseDto<>();
-   /*  AuthBl authBl = new AuthBl();
+   *//*  AuthBl authBl = new AuthBl();
     if (!authBl.validateToken(token)) {
         response.setCode("0001");
         response.setResponse(null);
         response.setErrorMessage("Invalid token");
         return response;
     }
-    */
+    *//*
         Pageable pageable = PageRequest.of(page, size);
         Page<LegalCaseDto> legalCasesPage = this.legalCaseBl.findAllByUserIdPaginated(id, pageable);
 
@@ -138,7 +139,7 @@ public class LegalCaseApi {
         response.setResponse(legalCasesPage);
         response.setErrorMessage(null);
         return response;
-    }
+    }*/
 
     
 }
