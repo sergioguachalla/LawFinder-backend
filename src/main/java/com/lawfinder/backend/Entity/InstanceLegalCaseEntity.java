@@ -21,20 +21,21 @@ public class InstanceLegalCaseEntity {
     @JoinColumn(name = "LEGAL_CASE_ID", referencedColumnName = "LEGAL_CASE_ID", nullable = false)
     private LegalCaseEntity legalCase;
 
-    @Column(name = "START_DATE")
+    @Column(name = "START_DATE", nullable = false)
     private Date startDate;
 
     @Column(name = "END_DATE")
     private Date endDate;
+
 
     // Constructor vacío
     public InstanceLegalCaseEntity() {
     }
 
     // Constructor con todos los atributos
-    public InstanceLegalCaseEntity( Long instanceLegalCaseId,AudienceEntity audience, InstanceEntity instance, 
-    LegalCaseEntity legalCase, ResolutionEntity resolution, Date startDate, Date endDate) {
-        this.instanceLegalCaseId = instanceLegalCaseId;
+
+    public InstanceLegalCaseEntity( InstanceEntity instance, LegalCaseEntity legalCase, ResolutionEntity resolution, Date startDate) {
+
         this.instance = instance;
         this.legalCase = legalCase;
         this.startDate = startDate;
@@ -46,11 +47,10 @@ public class InstanceLegalCaseEntity {
         return instanceLegalCaseId;
     }
 
+
     public Date getEndDate () {
         return endDate;
     }
-
-
 
     public InstanceEntity getInstance() {
         return instance;
@@ -69,10 +69,11 @@ public class InstanceLegalCaseEntity {
         this.instanceLegalCaseId = instanceLegalCaseId;
     }
 
+
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
-    }
 
+    }
     public void setInstance(InstanceEntity instance) {
         this.instance = instance;
     }
@@ -81,6 +82,7 @@ public class InstanceLegalCaseEntity {
         this.legalCase = legalCase;
     }
 
+
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
@@ -88,7 +90,10 @@ public class InstanceLegalCaseEntity {
     // toString
     @Override
     public String toString() {
-        return "InstanceLegalCaseEntity [instanceLegalCaseId=" + instanceLegalCaseId  + ", instance=" + instance
-                + ", legalCase=" + legalCase + ", startDate=" + startDate + ", endDate=" + endDate + "]";
+
+        return "InstanceLegalCaseEntity [instanceLegalCaseId=" + instanceLegalCaseId +  ", instance=" + instance
+                + ", legalCase=" + legalCase +
+                ", startDate=" + startDate + "]";
+
     }
 }

@@ -8,7 +8,7 @@ public class CrimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CRIME_ID")
-    private int crimeId;
+    private Long crimeId;
 
     @Column(name = "NAME")
     private String name;
@@ -31,11 +31,11 @@ public class CrimeEntity {
         this.subcategoryId = subcategoryId;
     }
 
-    public int getCrimeId() {
+    public Long getCrimeId() {
         return crimeId;
     }
 
-    public void setCrimeId(int crimeId) {
+    public void setCrimeId(Long crimeId) {
         this.crimeId = crimeId;
     }
 

@@ -32,12 +32,12 @@ public class UserApi {
     public ResponseDto<String> createUser(@RequestBody UserDto user) {
         ResponseDto<String> response = new ResponseDto<>();
         System.out.println(user.toString());
-        this.userBl.saveUser(user);
+        this.userBl.saveCustomer(user);
         PersonEntity person = new PersonEntity();
         person.setEmail(user.getPersonId().getEmail());
         MailDto mail = new MailDto();
         mail.setMail(user.getPersonId().getEmail());
-        this.userBl.sendmail(mail);
+        //this.userBl.sendmail(mail);
         response.setCode("0000");
         response.setResponse("user created");
         return response;
@@ -49,7 +49,7 @@ public class UserApi {
     public ResponseDto<String> sendMail(@RequestBody MailDto mail) {
         ResponseDto<String> response = new ResponseDto<>();
         //this.userBl.saveVerification(mail);
-        this.userBl.sendmail(mail);
+        //this.userBl.sendmail(mail);
         response.setCode("0000");
         response.setResponse("mail sended");
         return response;
@@ -74,25 +74,16 @@ public class UserApi {
     public ResponseDto<String> verifyMail(@RequestBody DeviceIdDto body) {
         ResponseDto<String> response = new ResponseDto<>();
         this.userBl.saveVerificationEntity(body);
+        //this.userBl.sendmail(body.getEmail());
         response.setCode("0000");
-        response.setResponse("mail verified");
-
-
-        /*if(this.userBl.verify(body)){
-            response.setCode("0000");
-            response.setResponse("mail verified");
-        }else{
-            response.setCode("0001");
-            response.setResponse("mail not verified");
-        }*/
+        response.setResponse("verification mail sent");
         return response;
-
     }
-    /* 
+
     @PutMapping("/api/v1/verify")
-    public ResponseDto<String> verifyMail(@RequestBody VerifyDto body) {
+    public ResponseDto<String> verifyMailCode(@RequestBody DeviceIdDto bodyFinal) {
         ResponseDto<String> response = new ResponseDto<>();
-        if(this.userBl.verify(body)){
+        if(this.userBl.verify(bodyFinal)){
             response.setCode("0000");
             response.setResponse("mail verified");
         }else{
@@ -102,7 +93,7 @@ public class UserApi {
         return response;
 
     }
-    */
+
 
 
 

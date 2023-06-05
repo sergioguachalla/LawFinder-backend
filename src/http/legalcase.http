@@ -27,16 +27,14 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "userId": 6,
+    "userId": 15,
     "idSubCategory": 2,
     "idProvince": 3,
     "idCrime": 1,
-    "part": "Parte demandante",
-    "contrapart": "Parte demandada",
-    "title": "Caso Legal 500",
+    "contrapart": "Parte sin conasd3232",
+    "title": "Caso Legal 2022",
     "startDate": "2023-05-23",
-    "summary": "Resumen del caso legal 1",
-    "user": 1,
+    "summary": "........caso.....",
     "idInstance": 1,
     "startDateInstance": "2023-05-23",
     "endDateInstance": "2023-05-23"
@@ -47,3 +45,6 @@ GET http://localhost:8080/api/v1/category/1/subcategory
 
 ###
 GET http://localhost:8080/api/v1/legalcase/instance
+
+###
+GET http://localhost:8080/api/v1/legalcase/user/6
