@@ -1,6 +1,7 @@
 package com.lawfinder.backend.Entity;
 
 import jakarta.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "SE_VERIFICATION")
@@ -8,46 +9,44 @@ public class VerificationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "VERIFICATION_ID")
-    private int verificationId;
+    private Long verificationId;
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PERSON_ID")
-    private PersonEntity personId;
-
-    @Column(name = "TOKEN")
+    @Column(name = "UUID")
     private String token;
 
-    // Constructor, getters, setters y otros métodos si es necesario
 
-    // Constructor vacío
+    @Column(name = "EXPIRATION_DATE")
+    private Date expirationDate;
+
+    @Column(name = "CODE_HASH")
+    private String codeHash;
+
+    @Column(name = "VC_TYPE")
+    private String vcType;
+
+    @Column(name = "DEVICE_ID")
+    private String deviceId;
+
+    // Constructores, getters y setters
+
     public VerificationEntity() {
-
     }
 
-
-    // Constructor con todos los atributos
-    public VerificationEntity(PersonEntity personId, String token) {
-        this.personId = personId;
+    public VerificationEntity(Long verificationId, String token, Date expirationDate, String codeHash, String vcType, String deviceId) {
+        this.verificationId = verificationId;
         this.token = token;
+        this.expirationDate = expirationDate;
+        this.codeHash = codeHash;
+        this.vcType = vcType;
+        this.deviceId = deviceId;
     }
 
-    // Getters y Setters
-
-    public int getVerificationId() {
+    public Long getVerificationId() {
         return verificationId;
     }
 
-    public void setVerificationId(int verificationId) {
+    public void setVerificationId(Long verificationId) {
         this.verificationId = verificationId;
-    }
-
-    public PersonEntity getPersonId() {
-        return personId;
-    }
-
-    public void setPersonId(PersonEntity personId) {
-        this.personId = personId;
     }
 
     public String getToken() {
@@ -56,5 +55,37 @@ public class VerificationEntity {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public Date getExpirationDate() {
+        return expirationDate;
+    }
+
+    public void setExpirationDate(Date expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+
+    public String getCodeHash() {
+        return codeHash;
+    }
+
+    public void setCodeHash(String codeHash) {
+        this.codeHash = codeHash;
+    }
+
+    public String getVcType() {
+        return vcType;
+    }
+
+    public void setVcType(String vcType) {
+        this.vcType = vcType;
+    }
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
     }
 }

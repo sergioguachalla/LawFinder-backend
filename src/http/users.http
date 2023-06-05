@@ -6,19 +6,17 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "username": "usuarios_testo",
+    "username": "usuarios_testo32",
     "secret": "1234",
-    "status": true,
+    "status": false,
     "personId": {
-        "personId": 6,
         "name": "ale",
+        "ci": "123456789",
+        "ciExpedition": "",
         "lastname": "que haces",
         "number": "123456789",
-        "email": "polfaalejandro@gmail.com",
-        "address": {
-            "addressInfo": "Villa sexo69",
-            "provId": 1
-        }
+        "email": "idontevenplaymm@gmail.com",
+        "address": "calle 1234"
     },
     "ImageId": 0
 }

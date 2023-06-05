@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.lawfinder.backend.bl.DepartmentBl;
 import com.lawfinder.backend.dto.*;
 import org.springframework.web.bind.annotation.*;
+@CrossOrigin(origins = "*")
 
 @RestController
 public class DepartmentApi {
@@ -18,8 +19,8 @@ public class DepartmentApi {
     }*/
 
     @GetMapping("/api/v1/department")
-    public ResponseDto<List<DepartmentDto>> getAllDepartments(@RequestHeader("Authorization") String token){
-
+    public ResponseDto<List<DepartmentDto>> getAllDepartments(/*@RequestHeader("Authorization")*/ String token){
+        /* 
         AuthBl authBl = new AuthBl();
         if (!authBl.validateToken(token)) {
             ResponseDto<List<DepartmentDto>> response = new ResponseDto<>();
@@ -28,6 +29,7 @@ public class DepartmentApi {
             response.setErrorMessage("Invalid token");
             return response;
         }
+        */
 
         ResponseDto<List<DepartmentDto>> response = new ResponseDto<>();
         response.setCode("0000");
@@ -56,8 +58,8 @@ public class DepartmentApi {
     }
 
     @GetMapping("/api/v1/department/{idDepartment}/province")
-    public ResponseDto<List<ProvinceDto>> getProvincesByDepartment(@RequestHeader("Authorization") String token, @PathVariable Long idDepartment){
-
+    public ResponseDto<List<ProvinceDto>> getProvincesByDepartment(/*@RequestHeader("Authorization") String token ,*/ @PathVariable Long idDepartment){
+        /* 
         AuthBl authBl = new AuthBl();
         if (!authBl.validateToken(token)) {
             ResponseDto<List<ProvinceDto>> response = new ResponseDto<>();
@@ -66,6 +68,7 @@ public class DepartmentApi {
             response.setErrorMessage("Invalid token");
             return response;
         }
+        */
 
         ResponseDto<List<ProvinceDto>> response = new ResponseDto<>();
         response.setCode("0000");

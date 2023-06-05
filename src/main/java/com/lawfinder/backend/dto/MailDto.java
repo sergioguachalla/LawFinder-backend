@@ -2,6 +2,7 @@ package com.lawfinder.backend.dto;
 
 public class MailDto {
     private String mail;
+    private String deviceId;
 
     public MailDto() {}
 

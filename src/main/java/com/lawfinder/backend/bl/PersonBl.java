@@ -13,32 +13,36 @@ import org.springframework.stereotype.Service;
 public class PersonBl {
     @Autowired
     private PersonRepository personRepository;
-    @Autowired
-    private final AddressRepository addressRepository;
 
-    public PersonBl(PersonRepository personRepository, AddressRepository addressRepository){
+
+    public PersonBl(PersonRepository personRepository){
         this.personRepository = personRepository;
-        this.addressRepository = addressRepository;
+
     }
 
     public void addPerson(PersonDto person){
         PersonEntity personEntity = new PersonEntity();
 
         // Convert AddressDto to AddressEntity
-        AddressDto addressDto = person.getAddress();
+        /*AddressDto addressDto = person.getAddress();
         AddressEntity addressEntity = new AddressEntity();
         addressEntity.setAddressInfo(addressDto.getAddressInfo());
         addressEntity.setProvId(addressDto.getProvId());
 
         // save the address before setting it to the person entity
-        addressEntity = addressRepository.save(addressEntity);
+        addressEntity = addressRepository.save(addressEntity);*/
 
         // Set properties from personDto to personEntity
         personEntity.setName(person.getName());
         personEntity.setLastname(person.getLastname());
         personEntity.setNumber(person.getNumber());
         personEntity.setEmail(person.getEmail());
-        personEntity.setAddress(addressEntity);
+        personEntity.setCi(person.getCi());
+        personEntity.setAddress(person.getAddress());
+        personEntity.setTx_user("admin");
+        personEntity.setTx_date(new java.util.Date());
+        personEntity.setTx_host("localhost");
+        System.out.println(personEntity);
 
         // Save personEntity in the database
         personEntity = personRepository.save(personEntity);

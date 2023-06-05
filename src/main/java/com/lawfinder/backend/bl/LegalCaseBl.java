@@ -3,64 +3,83 @@ import com.lawfinder.backend.Entity.*;
 import com.lawfinder.backend.dao.*;
 import com.lawfinder.backend.dto.*;
 
+import org.apache.tomcat.util.http.fileupload.MultipartStream.ProgressNotifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
 public class LegalCaseBl {
 
     private final LegalCaseRepository legalCaseRepository;
-    private final UserRepository userRepository;
+    private final InstanceLegalCaseRepository instanceLegalCaseRepository;
+    private final InstanceRepository instanceRepository;
 
-    public LegalCaseBl(LegalCaseRepository legalCaseRepository, UserRepository userRepository) {
+    public LegalCaseBl(LegalCaseRepository legalCaseRepository, InstanceLegalCaseRepository instanceLegalCaseRepository, InstanceRepository instanceRepository) {
         this.legalCaseRepository = legalCaseRepository;
-        this.userRepository = userRepository;
+        this.instanceLegalCaseRepository = instanceLegalCaseRepository;
+        this.instanceRepository = instanceRepository;
     }
 
     @Transactional
     public void saveLegalCase(LegalCaseDto legalCaseDto) {
         LegalCaseEntity legalCaseEntity = new LegalCaseEntity();
+        ProvinceEntity province = new ProvinceEntity();
+        DepartmentEntity department = new DepartmentEntity();
+        UserEntity user = new UserEntity();
+        PersonEntity person = new PersonEntity();
+        CrimeEntity crime = new CrimeEntity();
 
-        // Convert UserDto to UserEntity
-        UserDto userDto = legalCaseDto.getUser();
-        UserEntity userEntity = userRepository.findById(userDto.getId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // Set properties from legalCaseDto to legalCaseEntity
+
+        province.setProvinceId(Long.valueOf(legalCaseDto.getIdProvince()));
+        province.setDepartment(department);
+        user.setPersonId(person);
+        crime.setCrimeId(legalCaseDto.getIdCrime());
+        
+
+        user.setId(Long.valueOf(legalCaseDto.getUserId()));
+        legalCaseEntity.setUser(user);
+
         legalCaseEntity.setTitle(legalCaseDto.getTitle());
         legalCaseEntity.setStartDate(legalCaseDto.getStartDate());
         legalCaseEntity.setSummary(legalCaseDto.getSummary());
-        legalCaseEntity.setStatus(legalCaseDto.getStatus());
-        legalCaseEntity.setFirstInstanceCourt(legalCaseDto.getFirstInstanceCourt());
-        legalCaseEntity.setSecondInstanceCourt(legalCaseDto.getSecondInstanceCourt());
-        legalCaseEntity.setThirdInstanceCourt(legalCaseDto.getThirdInstanceCourt());
-        legalCaseEntity.setTxUser(legalCaseDto.getTxUser());
-        legalCaseEntity.setTxHost(legalCaseDto.getTxHost());
-        legalCaseEntity.setTxDate(legalCaseDto.getTxDate());
-        legalCaseEntity.setUser(userEntity);
+        legalCaseEntity.setCrime(crime);
+        legalCaseEntity.setStatus(true);
+        legalCaseEntity.setProvince(province);
+        legalCaseEntity.setTxUser("admin");
+        legalCaseEntity.setTxHost("192.128.12.3");
+        legalCaseEntity.setTxDate(new java.util.Date());
+        
+        legalCaseRepository.saveAndFlush(legalCaseEntity);
+        // Register the initial instance on db
+        
+        
+        InstanceLegalCaseEntity instanceCase= new InstanceLegalCaseEntity();
+        InstanceEntity instance = new InstanceEntity();
+        instance.setInstanceId((long) legalCaseDto.getIdInstance());
+        instanceCase.setInstance(instance);
+        instanceCase.setLegalCase(legalCaseEntity);
+        instanceCase.setStartDate(legalCaseDto.getStartDateInstance());
+        instanceCase.setEndDate(legalCaseDto.getEndDateInstance());
+        instanceLegalCaseRepository.saveAndFlush(instanceCase);
+        
+        
+    }
 
-        // Save legalCaseEntity in the database
-        legalCaseEntity = legalCaseRepository.save(legalCaseEntity);
-
-        // Convert legalCaseEntity back to legalCaseDto and return it
-        LegalCaseDto savedLegalCaseDto = new LegalCaseDto();
-        savedLegalCaseDto.setIdLegalCase(legalCaseEntity.getIdLegalCase());
-        savedLegalCaseDto.setTitle(legalCaseEntity.getTitle());
-        savedLegalCaseDto.setStartDate(legalCaseEntity.getStartDate());
-        savedLegalCaseDto.setSummary(legalCaseEntity.getSummary());
-        savedLegalCaseDto.setStatus(legalCaseEntity.getStatus());
-        savedLegalCaseDto.setFirstInstanceCourt(legalCaseEntity.getFirstInstanceCourt());
-        savedLegalCaseDto.setSecondInstanceCourt(legalCaseEntity.getSecondInstanceCourt());
-        savedLegalCaseDto.setThirdInstanceCourt(legalCaseEntity.getThirdInstanceCourt());
-        savedLegalCaseDto.setTxUser(legalCaseEntity.getTxUser());
-        savedLegalCaseDto.setTxHost(legalCaseEntity.getTxHost());
-        savedLegalCaseDto.setTxDate(legalCaseEntity.getTxDate());
-
-        // Use existing userDto, no need to convert again
-        savedLegalCaseDto.setUser(userDto);
-
+    public List<InstanceDto> findAllInstances(){
+        List<InstanceEntity> instanceEntityList = instanceRepository.findAll();
+        List<InstanceDto> instanceDtoList = new ArrayList<>();
+        for (InstanceEntity instanceEntity : instanceEntityList) {
+            InstanceDto instanceDto = new InstanceDto();
+            instanceDto.setInstanceId(instanceEntity.getInstanceId());
+            instanceDto.setInstanceName(instanceEntity.getInstanceName());
+            instanceDtoList.add(instanceDto);
+        }
+        return instanceDtoList;
     }
     
 }

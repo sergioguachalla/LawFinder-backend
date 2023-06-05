@@ -13,6 +13,6 @@ Content-Type: application/json
 Accept: application/json
 
 {
-   "mail":"polfaalejandro@gmail.com",
-   "token":"857480"
+    "deviceId": "1234567890",
+    "type": "email"
 }

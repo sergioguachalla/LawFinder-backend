@@ -16,9 +16,6 @@ public class TokenDto {
 
 
 
-
-
-
     public String getAuthToken() {
         return this.authToken;
     }

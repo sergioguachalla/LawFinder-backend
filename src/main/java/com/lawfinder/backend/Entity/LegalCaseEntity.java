@@ -1,14 +1,21 @@
 package com.lawfinder.backend.Entity;
+
 import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "LEGAL_CASE")
 public class LegalCaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_LEGAL_CASE")
-    private Long idLegalCase;
+    @Column(name = "LEGAL_CASE_ID")
+    private Long legalCaseId;
+
+    @ManyToOne
+    @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
+    private UserEntity user;
+
 
     @Column(name = "TITLE", length = 2000)
     private String title;
@@ -16,24 +23,21 @@ public class LegalCaseEntity {
     @Column(name = "START_DATE")
     private Date startDate;
 
-    @Column(name = "SUMMARY")
+    @Column(name = "SUMMARY", columnDefinition = "TEXT")
     private String summary;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CRIME_ID", referencedColumnName = "CRIME_ID")
+    private CrimeEntity crime;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PROVINCE_ID", nullable = false)
+    private ProvinceEntity province;
+
+
     @Column(name = "STATUS", length = 100)
-    private String status;
-
-    @Column(name = "FIRST_INSTANCE_COURT", length = 100)
-    private String firstInstanceCourt;
-
-    @Column(name = "SECOND_INSTANCE_COURT", length = 100)
-    private String secondInstanceCourt;
-
-    @Column(name = "THIRD_INSTANCE_COURT", length = 100)
-    private String thirdInstanceCourt;
-
-    @ManyToOne (fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
-    private UserEntity user;
+    private boolean status;
 
     @Column(name = "TX_USER", length = 100)
     private String txUser;
@@ -44,30 +48,46 @@ public class LegalCaseEntity {
     @Column(name = "TX_DATE")
     private Date txDate;
 
-    // Constructor vacio
-    public LegalCaseEntity() {}
+    // Constructor vacío
+    public LegalCaseEntity() {
+    }
 
     // Constructor con todos los atributos
+    public LegalCaseEntity( ProvinceEntity province, UserEntity user, CrimeEntity crime ,
+    String title, Date startDate, String summary, Boolean status, String txUser, String txHost, Date txDate) {
 
-    public LegalCaseEntity(String title, Date startDate, String summary, String status, String firstInstanceCourt, String secondInstanceCourt, String thirdInstanceCourt, UserEntity user, String txUser, String txHost, Date txDate) {
+        this.province = province;
+        this.user = user;
         this.title = title;
+        this.crime = crime;
         this.startDate = startDate;
         this.summary = summary;
         this.status = status;
-        this.firstInstanceCourt = firstInstanceCourt;
-        this.secondInstanceCourt = secondInstanceCourt;
-        this.thirdInstanceCourt = thirdInstanceCourt;
-        this.user = user;
         this.txUser = txUser;
         this.txHost = txHost;
         this.txDate = txDate;
     }
 
     // Getters
-
-    public Long getIdLegalCase() {
-        return idLegalCase;
+    public Long getLegalCaseId() {
+        return legalCaseId;
     }
+
+    public CrimeEntity getCrime() {
+        return crime;
+    }
+
+
+
+    public ProvinceEntity getProvince() {
+        return province;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+
 
     public String getTitle() {
         return title;
@@ -81,24 +101,8 @@ public class LegalCaseEntity {
         return summary;
     }
 
-    public String getStatus() {
+    public boolean getStatus() {
         return status;
-    }
-
-    public String getFirstInstanceCourt() {
-        return firstInstanceCourt;
-    }
-
-    public String getSecondInstanceCourt() {
-        return secondInstanceCourt;
-    }
-
-    public String getThirdInstanceCourt() {
-        return thirdInstanceCourt;
-    }
-
-    public UserEntity getUser() {
-        return user;
     }
 
     public String getTxUser() {
@@ -114,10 +118,26 @@ public class LegalCaseEntity {
     }
 
     // Setters
-
-    public void setIdLegalCase(Long idLegalCase) {
-        this.idLegalCase = idLegalCase;
+    public void setLegalCaseId(Long legalCaseId) {
+        this.legalCaseId = legalCaseId;
     }
+
+
+    public void setProvince(ProvinceEntity province) {
+        this.province = province;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+
+
+    public void setCrime(CrimeEntity crime) {
+        this.crime = crime;
+    }
+
+
+
 
     public void setTitle(String title) {
         this.title = title;
@@ -131,24 +151,8 @@ public class LegalCaseEntity {
         this.summary = summary;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Boolean status) {
         this.status = status;
-    }
-
-    public void setFirstInstanceCourt(String firstInstanceCourt) {
-        this.firstInstanceCourt = firstInstanceCourt;
-    }
-
-    public void setSecondInstanceCourt(String secondInstanceCourt) {
-        this.secondInstanceCourt = secondInstanceCourt;
-    }
-
-    public void setThirdInstanceCourt(String thirdInstanceCourt) {
-        this.thirdInstanceCourt = thirdInstanceCourt;
-    }
-
-    public void setUser(UserEntity user) {
-        this.user = user;
     }
 
     public void setTxUser(String txUser) {
@@ -166,11 +170,19 @@ public class LegalCaseEntity {
     // toString
 
     @Override
-
     public String toString() {
-        return "LegalCaseEntity [firstInstanceCourt=" + firstInstanceCourt + ", idLegalCase=" + idLegalCase
-                + ", secondInstanceCourt=" + secondInstanceCourt + ", startDate=" + startDate + ", status=" + status
-                + ", summary=" + summary + ", thirdInstanceCourt=" + thirdInstanceCourt + ", title=" + title
-                + ", txDate=" + txDate + ", txHost=" + txHost + ", txUser=" + txUser + ", user=" + user + "]";
+        return "LegalCaseEntity{" +
+                "legalCaseId=" + legalCaseId +
+                ", user=" + user +
+                ", title='" + title + '\'' +
+                ", startDate=" + startDate +
+                ", summary='" + summary + '\'' +
+                ", crime=" + crime +
+                ", province=" + province +
+                ", status='" + status + '\'' +
+                ", txUser='" + txUser + '\'' +
+                ", txHost='" + txHost + '\'' +
+                ", txDate=" + txDate +
+                '}';
     }
 }

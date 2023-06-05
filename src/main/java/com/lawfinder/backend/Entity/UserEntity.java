@@ -27,8 +27,8 @@ public class UserEntity {
     private PersonEntity personId;
    // @OneToOne (fetch = FetchType.LAZY)
     //@JoinColumn(name = "IMAGE_ID", nullable = false)
-    @Column(name = "IMAGE_ID", nullable = false)
-    private int imageId;
+   /* @Column(name = "IMAGE_ID", nullable = false)
+    private int imageId;*/
 
     @Column(name = "TX_USER", length = 100, nullable = false)
     private String txUser;
@@ -49,14 +49,15 @@ public class UserEntity {
 
 
     public UserEntity(Long id, String username, String secret, 
-    Boolean status, PersonEntity personId, int imageId, String txUser, 
+    Boolean status, PersonEntity personId, //int imageId,
+                       String txUser,
     String txHost, Date txDate) {
         this.id = id;
         this.username = username;
         this.secret = secret;
         this.status = status;
         this.personId = personId;
-        this.imageId = imageId;
+        //this.imageId = imageId;
         this.txUser = txUser;
         this.txHost = txHost;
         this.txDate = txDate;
@@ -104,14 +105,14 @@ public class UserEntity {
         this.personId = personId;
     }
 
-    public int getImageId() {
+    /*public int getImageId() {
         return imageId;
     }
 
     public void setImageId(int imageId) {
         this.imageId = imageId;
     }
-
+*/
     public String getTxUser() {
         return txUser;
     }
@@ -144,7 +145,7 @@ public class UserEntity {
                 ", secret='" + secret + '\'' +
                 ", status=" + status +
                 ", personId=" + personId +
-                ", imageId=" + imageId +
+
                 ", txUser='" + txUser + '\'' +
                 ", txHost='" + txHost + '\'' +
                 ", txDate=" + txDate +
