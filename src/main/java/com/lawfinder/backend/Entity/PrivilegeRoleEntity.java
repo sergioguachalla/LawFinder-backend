@@ -17,6 +17,8 @@ public class PrivilegeRoleEntity {
     @JoinColumn(name = "ROLE_ID", referencedColumnName = "ROLE_ID")
     private RoleEntity role;
 
+    @Column(name = "STATUS", length = 1)
+    private int status;
     // Constructor
     public PrivilegeRoleEntity() {
     }

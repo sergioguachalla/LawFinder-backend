@@ -13,6 +13,8 @@ public class PrivilegeEntity {
     @Column(name = "PRIVILEGE", length = 100)
     private String priv;
 
+    @Column(name = "STATUS", length = 1)
+    private int status;
     // Constructor
     public PrivilegeEntity() {
     }

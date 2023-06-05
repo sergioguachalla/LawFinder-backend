@@ -12,6 +12,9 @@ public class RoleEntity {
     @Column(name = "ROLENAME", nullable = false, length = 100)
     private String roleName;
 
+    @Column(name = "STATUS", nullable = false, length = 1)
+    private int status;
+
     // Constructor
     public RoleEntity() {
     }

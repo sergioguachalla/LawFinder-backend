@@ -4,13 +4,15 @@ public class DeviceIdDto {
     private String deviceId;
     private String type;
     private String code;
+    private String email;
 
     public DeviceIdDto() {}
 
-    public DeviceIdDto(String deviceId, String type, String code) {
+    public DeviceIdDto(String deviceId, String type, String code, String email) {
         this.deviceId = deviceId;
         this.type = type;
         this.code = code;
+        this.email = email;
     }
 
     //getters
@@ -38,6 +40,14 @@ public class DeviceIdDto {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
