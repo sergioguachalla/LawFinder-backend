@@ -50,7 +50,7 @@ public class LegalCaseBl {
         legalCaseEntity.setStartDate(legalCaseDto.getStartDate());
         legalCaseEntity.setSummary(legalCaseDto.getSummary());
         legalCaseEntity.setCrime(crime);
-        legalCaseEntity.setStatus(true);
+        legalCaseEntity.setStatus(true);    
         legalCaseEntity.setProvince(province);
         legalCaseEntity.setTxUser("admin");
         legalCaseEntity.setTxHost("192.128.12.3");

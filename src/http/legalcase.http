@@ -35,7 +35,6 @@ Accept: application/json
     "title": "Caso Legal 2022",
     "startDate": "2023-05-23",
     "summary": "........caso.....",
-    "user": 1,
     "idInstance": 1,
     "startDateInstance": "2023-05-23",
     "endDateInstance": "2023-05-23"
