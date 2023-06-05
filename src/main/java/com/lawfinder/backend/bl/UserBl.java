@@ -74,7 +74,6 @@ public class UserBl {
         // Create UserRoleEntity
         UserRoleEntity userRoleEntity = new UserRoleEntity();
         RoleEntity roleEntity = roleRepository.findByRole("CUSTOMER");
-
         userRoleEntity.setRole(roleEntity);
         userRoleEntity.setUser(userEntity);
         userRoleEntity.setStatus(1);
@@ -82,9 +81,6 @@ public class UserBl {
         userRoleEntity.setTx_host("localhost");
         userRoleEntity.setTx_date(new Date());
         userRoleRepository.saveAndFlush(userRoleEntity);
-
-
-
 
     }
 
@@ -102,7 +98,16 @@ public class UserBl {
         VerificationEntity verificationEntity = verificationRepository.findByDeviceId(deviceIdDto.getDeviceId());
         String codeHash = verificationEntity.getCodeHash();
         return PasswordService.checkPassword(deviceIdDto.getCode(), codeHash);
+    }
 
+    public Boolean verifyUserByEmail(DeviceIdDto deviceIdDto) {
+        UserEntity userEntity = new UserEntity();
+        userEntity = userRepository.findByEmail(deviceIdDto.getEmail());
+        if (userEntity != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 
