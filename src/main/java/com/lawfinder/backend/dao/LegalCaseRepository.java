@@ -9,12 +9,12 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface LegalCaseRepository extends  JpaRepository<LegalCaseEntity,Long>{
-    @Query(value = "select * from legal_case where user_id = :userId",nativeQuery = true)
-    List<LegalCaseEntity> findAllByUserId(@Param("userId") Long userId);
+    /*@Query(value = "select * from legal_case where user_id = :userId",nativeQuery = true)
+    List<LegalCaseEntity> findAllByUserId(@Param("userId") Long userId);*/
 
-   /* @Query(value = "SELECT * FROM legal_case WHERE user_id = :userId",
+   @Query(value = "SELECT * FROM legal_case WHERE user_id = :userId",
             countQuery = "SELECT COUNT(*) FROM legal_case WHERE user_id = :userId",
             nativeQuery = true)
-    Page<LegalCaseEntity> findAllByUserId(@Param("userId") Long userId, Pageable pageable);*/
+    Page<LegalCaseEntity> findAllByUserId(@Param("userId") Long userId, Pageable pageable);
 }
 
