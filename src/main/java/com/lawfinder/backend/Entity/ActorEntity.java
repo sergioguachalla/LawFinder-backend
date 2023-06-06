@@ -18,19 +18,19 @@ public class ActorEntity {
     @JoinColumn(name = "LEGAL_CASE_ID", nullable = false)
     private LegalCaseEntity legalCaseId;
 
-    @Column(name = "ROLE_CASE")
-    private String roleCase;
+    @Column(name = "STATUS")
+    private Boolean status;
 
     // Constructores, getters y setters
 
     public ActorEntity() {
     }
 
-    public ActorEntity(Long id, UserEntity userId, LegalCaseEntity legalCaseId, String roleCase) {
+    public ActorEntity(Long id, UserEntity userId, LegalCaseEntity legalCaseId, boolean status) {
         this.actorId = id;
         this.userId = userId;
         this.legalCaseId = legalCaseId;
-        this.roleCase = roleCase;
+        this.status = status;
     }
 
     public Long getActorId() {
@@ -57,11 +57,11 @@ public class ActorEntity {
         this.legalCaseId = legalCaseId;
     }
 
-    public String getRoleCase() {
-        return roleCase;
+    public boolean getStatus() {
+        return status;
     }
 
-    public void setRoleCase(String roleCase) {
-        this.roleCase = roleCase;
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 }
