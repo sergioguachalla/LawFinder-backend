@@ -43,6 +43,7 @@ public class LegalFileBl{
                 File file1 = convertMultiPartToFile(file);
                 PutObjectResult putObjectResult = s3.putObject(bucketName, originalFilename, file1);
                 String contentMd5 = putObjectResult.getContentMd5();
+
     
                 // Obtener la URL del archivo en Amazon S3
 
@@ -59,6 +60,7 @@ public class LegalFileBl{
                 fileEntity.setUrl(fileUrl);
                 fileEntity.setMimeType(mimeType);
                 fileEntity.setSize(String.valueOf(fileSize)+" mb");
+                fileEntity.setMd5(contentMd5);
                 fileEntity.setTxUser("admin");
                 fileEntity.setTxHost("localhost");
                 fileEntity.setTxDate(new java.util.Date());
@@ -79,7 +81,7 @@ public class LegalFileBl{
                 legalFileEntity.setLegalFileTypeId(legalFileTypeEntity);
                 legalFileEntity.setInstanceLegalCaseId(instanceLegalCaseEntity);
                 legalFileEntity.setResolutionDate(new java.util.Date());
-               // legalFileEntity.setSummary(summary);
+                legalFileEntity.setSummary(summary);
                 legalFileEntity.setTxUser("admin");
                 legalFileEntity.setTxHost("localhost");
                 legalFileEntity.setTxDate(new java.util.Date());

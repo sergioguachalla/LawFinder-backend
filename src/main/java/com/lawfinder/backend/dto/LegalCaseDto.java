@@ -13,8 +13,12 @@ public class LegalCaseDto {
     private String title;
     private Date startDate;
     private String summary;
+
+    private boolean complaint;
     //Para guardar la instancia
     private int idInstance;
+
+
 
     private Date startDateInstance;
     private Date endDateInstance;
@@ -26,7 +30,8 @@ public class LegalCaseDto {
     }
 
     public LegalCaseDto(Long idLegalCase, int idSubCategory, int idProvince, int idCrime ,int userId, String part, String contrapart,
-                        String title, Date startDate, String summary, int idInstance, Date startDateInstance, Date endDateInstance, Date lastUpdate ) {
+                        String title, Date startDate, String summary, int idInstance, Date startDateInstance, Date endDateInstance,
+                        Date lastUpdate, boolean complaint ) {
         this.idLegalCase = idLegalCase;
         this.idProvince = idProvince;
         this.idCrime = idCrime;
@@ -40,6 +45,8 @@ public class LegalCaseDto {
         this.startDateInstance = startDateInstance;
         this.endDateInstance = endDateInstance;
         this.lastUpdate = lastUpdate;
+        this.complaint = complaint;
+
     }
 
     public Long getIdLegalCase() {
@@ -144,6 +151,14 @@ public class LegalCaseDto {
 
     public Date getEndDateInstance() {
         return endDateInstance;
+    }
+
+    public boolean isComplaint() {
+        return complaint;
+    }
+
+    public void setComplaint(boolean complaint) {
+        this.complaint = complaint;
     }
 
     public void setEndDateInstance(Date endDateInstance) {

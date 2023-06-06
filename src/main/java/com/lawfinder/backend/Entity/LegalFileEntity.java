@@ -39,12 +39,16 @@ public class LegalFileEntity {
     @JoinColumn(name = "LEGAL_FILE_TYPE_ID", referencedColumnName = "LEGAL_FILE_TYPE_ID")
     private LegalFileTypeEntity legalFileTypeId;
 
+    @Column(name = "SUMMARY")
+    private String summary;
+
     // Constructores, getters y setters
 
     public LegalFileEntity() {
     }
 
-    public LegalFileEntity(Date resolutionDate, String txUser, String txHost, Date txDate, CourtEntity courtId, FileEntity fileFileId, InstanceLegalCaseEntity instanceLegalCaseId, LegalFileTypeEntity legalFileTypeId) {
+    public LegalFileEntity(Date resolutionDate, String txUser, String txHost, Date txDate, CourtEntity courtId,
+                           FileEntity fileFileId, InstanceLegalCaseEntity instanceLegalCaseId, LegalFileTypeEntity legalFileTypeId, String summary){
         this.resolutionDate = resolutionDate;
         this.txUser = txUser;
         this.txHost = txHost;
@@ -53,6 +57,7 @@ public class LegalFileEntity {
         this.fileFileId = fileFileId;
         this.instanceLegalCaseId = instanceLegalCaseId;
         this.legalFileTypeId = legalFileTypeId;
+        this.summary = summary;
     }
 
     public int getLegalFileId() {
@@ -125,6 +130,22 @@ public class LegalFileEntity {
 
     public void setLegalFileTypeId(LegalFileTypeEntity legalFileTypeId) {
         this.legalFileTypeId = legalFileTypeId;
+    }
+
+    public FileEntity getFileFileId() {
+        return fileFileId;
+    }
+
+    public void setFileFileId(FileEntity fileFileId) {
+        this.fileFileId = fileFileId;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     @Override

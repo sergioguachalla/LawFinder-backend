@@ -30,6 +30,8 @@ public class LegalCaseEntity {
     @JoinColumn(name = "CRIME_ID", referencedColumnName = "CRIME_ID")
     private CrimeEntity crime;
 
+    @Column(name = "COMPLAINANT" )
+    private boolean complainant;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PROVINCE_ID", nullable = false)

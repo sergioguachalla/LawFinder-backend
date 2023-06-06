@@ -31,4 +31,15 @@ public class InstanceLegalCaseBl {
         }
         return instanceLegalCaseDtoList;
     }
+    public InstanceLegalCaseDto findByInstanceLegalCaseId(Long instanceLegalCaseId){
+        InstanceLegalCaseEntity instanceLegalCaseEntity = instanceLegalCaseRepository.findByInstanceLegalCaseId(instanceLegalCaseId);
+        InstanceLegalCaseDto instanceLegalCaseDto = new InstanceLegalCaseDto();
+
+        instanceLegalCaseDto.setInstanceLegalCaseId(instanceLegalCaseEntity.getInstanceLegalCaseId());
+        instanceLegalCaseDto.setInstanceId(instanceLegalCaseEntity.getInstance().getInstanceId());
+        instanceLegalCaseDto.setLegalCaseId(instanceLegalCaseEntity.getLegalCase().getLegalCaseId());
+        instanceLegalCaseDto.setStartDate(instanceLegalCaseEntity.getStartDate());
+
+        return instanceLegalCaseDto;
+    }
 }

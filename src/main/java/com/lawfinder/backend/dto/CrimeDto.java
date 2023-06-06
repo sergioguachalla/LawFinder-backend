@@ -6,13 +6,13 @@ import org.springframework.stereotype.Service;
 public class CrimeDto {
     private Long crimeId;
     private String name;
-    private int prisonSentence;
+    private String prisonSentence;
     private Long subcategoryId;
 
     public CrimeDto() {
     }
 
-    public CrimeDto(Long crimeId, String name, int prisonSentence, Long subcategoryId) {
+    public CrimeDto(Long crimeId, String name, String prisonSentence, Long subcategoryId) {
         this.crimeId = crimeId;
         this.name = name;
         this.prisonSentence = prisonSentence;
@@ -35,11 +35,11 @@ public class CrimeDto {
         this.name = name;
     }
 
-    public int getPrisonSentence() {
+    public String getPrisonSentence() {
         return prisonSentence;
     }
 
-    public void setPrisonSentence(int prisonSentence) {
+    public void setPrisonSentence(String prisonSentence) {
         this.prisonSentence = prisonSentence;
     }
 

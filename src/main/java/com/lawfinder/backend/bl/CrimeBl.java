@@ -22,7 +22,7 @@ public class CrimeBl {
             CrimeDto crimeDto = new CrimeDto();
             crimeDto.setCrimeId(crimeEntity.getCrimeId());
             crimeDto.setName(crimeEntity.getName());
-            crimeDto.setPrisonSentence(Integer.parseInt(crimeEntity.getPrisonSentence()));
+            crimeDto.setPrisonSentence((crimeEntity.getPrisonSentence()));
             crimeDto.setSubcategoryId(crimeEntity.getSubcategoryId().getSubCategoryId());
             crimeDtos.add(crimeDto);
         }

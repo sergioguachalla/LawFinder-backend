@@ -76,7 +76,7 @@ public class UserBl {
         RoleEntity roleEntity = roleRepository.findByRole("CUSTOMER");
         userRoleEntity.setRole(roleEntity);
         userRoleEntity.setUser(userEntity);
-        userRoleEntity.setStatus(1);
+        userRoleEntity.setStatus(true);
         userRoleEntity.setTx_user("lawfinder");
         userRoleEntity.setTx_host("localhost");
         userRoleEntity.setTx_date(new Date());
