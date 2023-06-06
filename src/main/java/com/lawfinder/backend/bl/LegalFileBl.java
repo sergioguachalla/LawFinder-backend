@@ -94,7 +94,7 @@ public class LegalFileBl{
 
 
 
-    private File convertMultiPartToFile(MultipartFile file ) throws IOException
+    public File convertMultiPartToFile(MultipartFile file ) throws IOException
     {
         File convFile = new File( file.getOriginalFilename() );
         FileOutputStream fos = new FileOutputStream( convFile );
@@ -102,4 +102,10 @@ public class LegalFileBl{
         fos.close();
         return convFile;
     }
+    public List<String>findByCaseId(Long id){
+        return legalFileRepository.findByCaseId(id);
+
+    }
+
+
 }

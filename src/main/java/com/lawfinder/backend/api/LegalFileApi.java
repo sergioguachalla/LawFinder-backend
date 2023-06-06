@@ -1,4 +1,5 @@
 package com.lawfinder.backend.api;
+import com.lawfinder.backend.dto.ResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -28,5 +29,16 @@ public class LegalFileApi {
                      @RequestParam("documentTypeId") Integer documentTypeId){
     s3Service.saveFile(file, instanceCaseId, summary, dueDate, courtId, documentTypeId);
 }
+
+    @GetMapping("/api/v1/case/{caseId}/files")
+    public ResponseDto<List<String>> getFiles(@PathVariable("caseId") Long caseId){
+        ResponseDto<List<String>> responseDto = new ResponseDto<>();
+        List<String> files = s3Service.findByCaseId(caseId);
+        responseDto.setCode("0000");
+        responseDto.setResponse(files);
+        responseDto.setErrorMessage(null);
+        return responseDto;
+    }
+
 
 }
