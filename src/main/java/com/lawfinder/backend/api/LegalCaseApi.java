@@ -8,18 +8,56 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import com.lawfinder.backend.bl.LegalCaseBl;
+import com.lawfinder.backend.bl.UserBl;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.Stack;
 
 @CrossOrigin(origins = "*")
 @RestController
 public class LegalCaseApi {
     @Autowired
     private LegalCaseBl legalCaseBl;
+    
     @Autowired
     private CategoryBl categoryBl;
+
+    @Autowired
+    private UserBl registrationBl;
+
+    private Stack<String> pendingInvitations = new Stack<>();
+    Set<Integer> conjunto = new HashSet<>();
+    
+
+
+    
+
+
+    @PostMapping("/api/v1/userverification")
+    public ResponseDto<String> getVerification(@RequestBody DeviceIdDto deviceIdDto){
+        ResponseDto<String> response = new ResponseDto<>();
+        if(this.registrationBl.verifyUserByEmail(deviceIdDto)){
+            System.out.println(deviceIdDto.getEmail());
+            pendingInvitations.push(deviceIdDto.getEmail());
+            response.setCode("0001");
+            response.setResponse("User Already Exists");
+            response.setErrorMessage(null);
+        }
+        else{
+            response.setCode("0000");
+            response.setResponse("User Does Not Exist");
+            response.setErrorMessage(null);
+        }
+
+        return response;
+
+    }
+    
     @PostMapping("/api/v1/legalcase")
     public ResponseDto<String> createUser(@RequestBody LegalCaseDto legalcase /* , @RequestHeader("Authorization") String token*/) {
         ResponseDto<String> response = new ResponseDto<>();
@@ -33,7 +71,7 @@ public class LegalCaseApi {
         
         */
         System.out.println(legalcase.toString());
-        this.legalCaseBl.saveLegalCase(legalcase);;
+        this.legalCaseBl.saveLegalCase(legalcase,pendingInvitations);
         response.setCode("0000");
         response.setResponse("Task created");
         return response;

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 
 @Service
@@ -19,15 +20,20 @@ public class LegalCaseBl {
     private final LegalCaseRepository legalCaseRepository;
     private final InstanceLegalCaseRepository instanceLegalCaseRepository;
     private final InstanceRepository instanceRepository;
+    private final UserRepository userRepository;
+    private final ActorRepository actorRepository;
 
-    public LegalCaseBl(LegalCaseRepository legalCaseRepository, InstanceLegalCaseRepository instanceLegalCaseRepository, InstanceRepository instanceRepository) {
+    public LegalCaseBl(LegalCaseRepository legalCaseRepository, InstanceLegalCaseRepository instanceLegalCaseRepository, 
+                        InstanceRepository instanceRepository, UserRepository userRepository, ActorRepository actorRepository) {
         this.legalCaseRepository = legalCaseRepository;
         this.instanceLegalCaseRepository = instanceLegalCaseRepository;
         this.instanceRepository = instanceRepository;
+        this.userRepository = userRepository;
+        this.actorRepository = actorRepository;
     }
 
     @Transactional
-    public void saveLegalCase(LegalCaseDto legalCaseDto) {
+    public void saveLegalCase(LegalCaseDto legalCaseDto, Stack<String> pendingInvitations) {
         LegalCaseEntity legalCaseEntity = new LegalCaseEntity();
         ProvinceEntity province = new ProvinceEntity();
         DepartmentEntity department = new DepartmentEntity();
@@ -68,6 +74,36 @@ public class LegalCaseBl {
         instanceCase.setStartDate(legalCaseDto.getStartDateInstance());
         instanceCase.setEndDate(legalCaseDto.getEndDateInstance());
         instanceLegalCaseRepository.saveAndFlush(instanceCase);
+
+        
+        
+        // Send invitation to the user
+       
+        UserEntity userEntity = new UserEntity();
+        String email="";
+        System.out.println("#######################################################");
+        System.out.println(pendingInvitations.size());
+        System.out.println("#######################################################");
+
+
+        for (int i = 0; i < pendingInvitations.size(); i++) {
+            ActorEntity actor = new ActorEntity();
+            System.out.println("9999999999999999999999999999999999999");
+        
+            // Find the user by email
+            email = pendingInvitations.get(i); // Accede al elemento en la posición i sin extraerlo de la pila
+            System.out.println("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu");
+            System.out.println(email);
+            System.out.println("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu");
+        
+            userEntity = userRepository.findByEmail(email);
+            actor.setLegalCaseId(legalCaseEntity);
+            actor.setUserId(userEntity);
+            actor.setStatus(false);
+            actorRepository.saveAndFlush(actor);
+        }
+        
+
         
         
     }
