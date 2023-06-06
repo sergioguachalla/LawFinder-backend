@@ -27,10 +27,7 @@ public class AuthBl {
     private final UserRoleRepository userRoleRepository;
 
 
-    public AuthBl() {
-        this.userRepository = null;
-        this.userRoleRepository = null;
-    }
+
     public AuthBl(UserRepository userRepository, UserRoleRepository userRoleRepository) {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
@@ -40,10 +37,12 @@ public class AuthBl {
 
 
     public TokenDto login(LoginDto login) {
+
         UserEntity userEntity = userRepository.findAllByUsername(login.getUsername());
 
-
-        System.out.println(login.getPassword());
+        if(userEntity == null) {
+            return null;
+        }
 
         List<String> roles = getRoles(userEntity.getId());
         for (String role : roles) {

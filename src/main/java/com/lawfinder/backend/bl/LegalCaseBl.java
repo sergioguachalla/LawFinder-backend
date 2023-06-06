@@ -94,6 +94,7 @@ public class LegalCaseBl {
             email = pendingInvitations.get(i); // Accede al elemento en la posición i sin extraerlo de la pila
             System.out.println("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu");
             System.out.println(email);
+            System.out.println("Iteracion: "+i);
             System.out.println("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu");
         
             userEntity = userRepository.findByEmail(email);
@@ -102,10 +103,11 @@ public class LegalCaseBl {
             actor.setStatus(false);
             actorRepository.saveAndFlush(actor);
         }
-        
 
-        
-        
+
+
+
+
     }
 
     public List<InstanceDto> findAllInstances(){

@@ -74,6 +74,8 @@ public class LegalCaseApi {
         this.legalCaseBl.saveLegalCase(legalcase,pendingInvitations);
         response.setCode("0000");
         response.setResponse("Task created");
+        pendingInvitations.clear();
+
         return response;
 
         

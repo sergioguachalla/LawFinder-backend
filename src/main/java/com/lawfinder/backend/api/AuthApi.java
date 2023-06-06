@@ -17,15 +17,13 @@ class AuthApi {
 
 
     @Autowired
-    private UserRoleRepository userRoleRepository;
-    @Autowired
-    private UserRepository userRepository;
+    AuthBl authBl;
 
     @PostMapping("/api/v1/auth/login")
     public ResponseDto<TokenDto> login(@RequestBody LoginDto login) {
         ResponseDto<TokenDto> response = new ResponseDto<>();
-        AuthBl authBl = new AuthBl(userRepository, userRoleRepository);
-        TokenDto tokenDto = authBl.login(login);
+
+        TokenDto tokenDto = this.authBl.login(login);
         if (tokenDto == null) {
             response.setCode("0001");
             response.setResponse(null);

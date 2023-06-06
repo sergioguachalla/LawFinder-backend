@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 public class DepartmentApi {
     @Autowired
     private DepartmentBl departmentBl;
+    @Autowired
+    private AuthBl authBl;
 
     /*public DepartmentApi(DepartmentBl departmentBl){
         this.departmentBl = departmentBl;
@@ -40,7 +42,7 @@ public class DepartmentApi {
     @GetMapping("/api/v1/department/{idDepartment}")
     public ResponseDto<DepartmentDto> getDepartmentById(@RequestHeader("Authorization") String token, @PathVariable Long idDepartment){
 
-        AuthBl authBl = new AuthBl();
+
         if (!authBl.validateToken(token)) {
             ResponseDto<DepartmentDto> response = new ResponseDto<>();
             response.setCode("0001");
