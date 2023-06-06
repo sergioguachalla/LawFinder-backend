@@ -11,6 +11,7 @@ import com.lawfinder.backend.Entity.LegalFileTypeEntity;
 import com.lawfinder.backend.dao.FileRepository;
 import com.lawfinder.backend.dao.LegalFileRepository;
 
+import com.lawfinder.backend.dto.LegalFileDto;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
@@ -35,7 +36,7 @@ public class LegalFileBl{
     }
 
     
-    public void saveFile(MultipartFile file,Integer instanceCaseId ,String summary, String dueDate, Integer courtId, Integer documentTypeId ) {
+    public void saveFile(MultipartFile file,Integer     instanceCaseId ,String summary, String dueDate, Integer courtId, Integer documentTypeId ) {
         String originalFilename = file.getOriginalFilename();
         
             try {
@@ -88,7 +89,11 @@ public class LegalFileBl{
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        
+    }
+
+    public List<String> findByCaseId(Long id){
+        return legalFileRepository.findByCaseId(id);
+
     }
 
 
@@ -102,10 +107,7 @@ public class LegalFileBl{
         fos.close();
         return convFile;
     }
-    public List<String>findByCaseId(Long id){
-        return legalFileRepository.findByCaseId(id);
 
-    }
 
 
 }

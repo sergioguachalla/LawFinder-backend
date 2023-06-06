@@ -7,7 +7,6 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-
 public interface LegalFileRepository extends JpaRepository<LegalFileEntity, Long> {
     @Query(value = "SELECT f.url " +
             "FROM file f " +

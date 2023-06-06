@@ -28,8 +28,8 @@ public class LegalFileTypeBl {
         List<LegalFileTypeEntity> LegalFileType = legalFileTypeRepository.findAll();
         List<LegalFileTypeDto> res = new ArrayList<>();
         
-        LegalFileType.forEach(task -> {
-            res.add(new LegalFileTypeDto(task.getLegalFileTypeId(), task.getName()));
+        LegalFileType.forEach(file -> {
+            res.add(new LegalFileTypeDto(file.getLegalFileTypeId(), file.getName()));
         });
         return res;
 
