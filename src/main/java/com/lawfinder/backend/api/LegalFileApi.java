@@ -1,4 +1,5 @@
 package com.lawfinder.backend.api;
+import com.lawfinder.backend.dto.FileQueryDto;
 import com.lawfinder.backend.dto.ResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
