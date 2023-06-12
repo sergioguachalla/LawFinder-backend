@@ -1,6 +1,7 @@
 package com.lawfinder.backend.dao;
 
 import com.lawfinder.backend.Entity.LegalFileEntity;
+import com.lawfinder.backend.dto.FileQueryDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -8,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface LegalFileRepository extends JpaRepository<LegalFileEntity, Long> {
-    @Query(value = "SELECT f.url " +
+    @Query(value = "SELECT f.url, f.tx_date, lf.summary " +
             "FROM file f " +
             "JOIN legal_file lf ON f.file_id = lf.file_id " +
             "JOIN instance_legal_case il ON lf.instance_legal_case_id = il.instance_legal_case_id " +

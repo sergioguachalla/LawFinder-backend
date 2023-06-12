@@ -11,6 +11,7 @@ import com.lawfinder.backend.Entity.LegalFileTypeEntity;
 import com.lawfinder.backend.dao.FileRepository;
 import com.lawfinder.backend.dao.LegalFileRepository;
 
+import com.lawfinder.backend.dto.FileQueryDto;
 import com.lawfinder.backend.dto.LegalFileDto;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
