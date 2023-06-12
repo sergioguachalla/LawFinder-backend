@@ -100,7 +100,7 @@ public class LegalFileBl{
 
 
 
-
+    /*
     public File convertMultiPartToFile(MultipartFile file ) throws IOException
     {
         File convFile = new File( file.getOriginalFilename() );
@@ -109,6 +109,13 @@ public class LegalFileBl{
         fos.close();
         return convFile;
     }
+    */
+    public File convertMultiPartToFile(MultipartFile file) throws IOException {
+    File convFile = File.createTempFile("temp", null);
+    file.transferTo(convFile);
+    return convFile;
+}
+
 
 
 

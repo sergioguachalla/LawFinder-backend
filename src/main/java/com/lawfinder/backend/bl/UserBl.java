@@ -70,7 +70,7 @@ public class UserBl {
        // userEntity.setImageId(1);
         // Save userEntity in the database
         userRepository.save(userEntity);
-
+        /* 
         // Create UserRoleEntity
         UserRoleEntity userRoleEntity = new UserRoleEntity();
         RoleEntity roleEntity = roleRepository.findByRole("CUSTOMER");
@@ -81,7 +81,7 @@ public class UserBl {
         userRoleEntity.setTx_host("localhost");
         userRoleEntity.setTx_date(new Date());
         userRoleRepository.saveAndFlush(userRoleEntity);
-
+        */
     }
 
     public void sendmail(String email, String code) {
