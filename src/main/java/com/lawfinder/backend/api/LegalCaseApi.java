@@ -5,6 +5,7 @@ import com.lawfinder.backend.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.repository.query.Param;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import com.lawfinder.backend.bl.LegalCaseBl;
@@ -13,6 +14,7 @@ import com.lawfinder.backend.bl.UserBl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -158,8 +160,8 @@ public class LegalCaseApi {
         response.setErrorMessage(null);
         return response;
 
-    }*/
-        @GetMapping("/api/v1/legalcase/user/{id}")
+    }
+    @GetMapping("/api/v1/legalcase/user/{id}")
         public ResponseDto<Page<LegalCaseDto>> getLegalCasesByUserId(
             @PathVariable Long id,
         @RequestParam(defaultValue = "0") int page,
@@ -173,7 +175,31 @@ public class LegalCaseApi {
         response.setResponse(legalCasesPage);
         response.setErrorMessage(null);
         return response;
+    }*/
+
+    @GetMapping("/api/v1/legalcase/user/{id}")
+    public ResponseDto<Page<LegalCaseDto>> getLegalCasesByUserId(
+            @PathVariable Long id,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date from,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date to,
+            @RequestParam(required = false) Long crimeId,
+            @RequestParam(required = false) Long instanceId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size){
+
+        ResponseDto<Page<LegalCaseDto>> response = new ResponseDto<>();
+        System.out.println("WTFFFFFFFFFFFFFFFFFFFFFFFF");
+        System.out.println(instanceId);
+        System.out.println("WTFFFFFFFFFFFFFFFFFFFFFFFF");
+        Pageable pageable = PageRequest.of(page, size);
+        Page<LegalCaseDto> legalCasesPage = legalCaseBl.findAllByUserIdWithFilters(id, from, to, crimeId, instanceId ,pageable);
+        response.setCode("0000");
+        System.out.println(legalCasesPage.getNumberOfElements());
+        response.setResponse(legalCasesPage);
+        response.setErrorMessage(null);
+        return response;
     }
+
 
 }
 
