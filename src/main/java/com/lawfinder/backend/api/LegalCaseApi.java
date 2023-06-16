@@ -184,12 +184,16 @@ public class LegalCaseApi {
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date to,
             @RequestParam(required = false) Long crimeId,
             @RequestParam(required = false) Long instanceId,
+            @RequestParam(required = false) Boolean inProgress,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size){
 
         ResponseDto<Page<LegalCaseDto>> response = new ResponseDto<>();
         Pageable pageable = PageRequest.of(page, size);
-        Page<LegalCaseDto> legalCasesPage = legalCaseBl.findAllByUserIdWithFilters(id, from, to, crimeId, instanceId ,pageable);
+        Page<LegalCaseDto> legalCasesPage = legalCaseBl.findAllByUserIdWithFilters(id, from, to, crimeId, instanceId, inProgress ,pageable);
+        System.out.println("###########################################");
+        System.out.println(inProgress);
+        System.out.println("###########################################");
         response.setCode("0000");
         response.setResponse(legalCasesPage);
         response.setErrorMessage(null);

@@ -75,6 +75,10 @@ public class LegalCaseSpecifications {
             return cb.equal(join.get("instance").get("instanceId"), instanceId);
         };
     }
+    // por el estado del caso
+    public static Specification<LegalCaseEntity> hasStatus(boolean status) {
+        return (root, query, cb) -> cb.equal(root.get("status"), status);
+    }
 
 
 }
