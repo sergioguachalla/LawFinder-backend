@@ -80,5 +80,10 @@ public class LegalCaseSpecifications {
         return (root, query, cb) -> cb.equal(root.get("status"), status);
     }
 
+    //Del searcher por titulo
+    public static Specification<LegalCaseEntity> titleContains(String keyword) {
+        return (root, query, cb) -> cb.like(cb.lower(root.get("title")), "%" + keyword.toLowerCase() + "%");
+    }
+
 
 }

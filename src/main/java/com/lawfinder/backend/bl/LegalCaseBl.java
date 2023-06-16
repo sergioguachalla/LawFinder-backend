@@ -159,12 +159,13 @@ public class LegalCaseBl {
     }
     */
 
-    public Page<LegalCaseDto> findAllByUserIdWithFilters(Long userId, Date from, Date to, Long crimeId, Long instanceId, Boolean status ,Pageable pageable) {
+    public Page<LegalCaseDto> findAllByUserIdWithFilters(Long userId, Date from, Date to, Long crimeId, Long instanceId, Boolean status, String title  ,Pageable pageable) {
         Specification<LegalCaseEntity> spec = Specification.where(LegalCaseSpecifications.hasUserId(userId));
 
         if (from != null && to != null) {
             spec = spec.and(LegalCaseSpecifications.startDateBetween(from, to));
         }
+
         if (crimeId != null) {
             CrimeEntity crime = crimeRepository.findByCrimeId(crimeId); 
             spec = spec.and(LegalCaseSpecifications.hasCrime(crime));
@@ -176,6 +177,10 @@ public class LegalCaseBl {
 
         if(status!= null){
             spec = spec.and(LegalCaseSpecifications.hasStatus(status));
+        }
+
+        if(title != null && !title.isEmpty()){
+            spec = spec.and(LegalCaseSpecifications.titleContains(title));
         }
 
         Page<LegalCaseEntity> legalCasePage = legalCaseRepository.findAll(spec, pageable);

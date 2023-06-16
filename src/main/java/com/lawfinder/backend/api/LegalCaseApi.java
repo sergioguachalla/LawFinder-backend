@@ -140,27 +140,7 @@ public class LegalCaseApi {
 
     }
 
-    /*@GetMapping("/api/v1/legalcase/user/{id}")
-    public ResponseDto<List<LegalCaseDto>> getLegalCasesByUserId(@PathVariable Long id  /* , @RequestHeader("Authorization") String token*/
-    //)
-
-    //{
-        //ResponseDto<List<LegalCaseDto>> response = new ResponseDto<>();
-       /*  AuthBl authBl = new AuthBl();
-        if (!authBl.validateToken(token)) {
-            response.setCode("0001");
-            response.setResponse(null);
-            response.setErrorMessage("Invalid token");
-            return response;
-        }
-        */
-        //this.categoryBl.findAllSubCategoriesByCategoryId(id);
-        /*response.setCode("0000");
-        response.setResponse(this.legalCaseBl.findAllByUserId(id));
-        response.setErrorMessage(null);
-        return response;
-
-    }
+    /*
     @GetMapping("/api/v1/legalcase/user/{id}")
         public ResponseDto<Page<LegalCaseDto>> getLegalCasesByUserId(
             @PathVariable Long id,
@@ -185,14 +165,15 @@ public class LegalCaseApi {
             @RequestParam(required = false) Long crimeId,
             @RequestParam(required = false) Long instanceId,
             @RequestParam(required = false) Boolean inProgress,
+            @RequestParam(required = false) String title,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size){
 
         ResponseDto<Page<LegalCaseDto>> response = new ResponseDto<>();
         Pageable pageable = PageRequest.of(page, size);
-        Page<LegalCaseDto> legalCasesPage = legalCaseBl.findAllByUserIdWithFilters(id, from, to, crimeId, instanceId, inProgress ,pageable);
+        Page<LegalCaseDto> legalCasesPage = legalCaseBl.findAllByUserIdWithFilters(id, from, to, crimeId, instanceId, inProgress,title ,pageable);
         System.out.println("###########################################");
-        System.out.println(inProgress);
+        System.out.println(title);
         System.out.println("###########################################");
         response.setCode("0000");
         response.setResponse(legalCasesPage);
@@ -204,7 +185,7 @@ public class LegalCaseApi {
     public ResponseDto<String> updateLegalCase(@PathVariable Long id/* , @RequestHeader("Authorization") String token*/) {
         ResponseDto<String> response = new ResponseDto<>();
        /*  AuthBl authBl = new AuthBl();
-        if (!authBl.validateToken(token)) {
+        if (!authBl.validateToken(token)) { 
             response.setCode("0001");
             response.setResponse(null);
             response.setErrorMessage("Invalid token");
