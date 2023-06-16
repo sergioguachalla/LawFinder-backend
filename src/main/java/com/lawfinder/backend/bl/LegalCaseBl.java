@@ -194,5 +194,12 @@ public class LegalCaseBl {
         legalCaseDto.setLastUpdate(legalCaseEntity.getTxDate());
         return legalCaseDto;
     }
+
+    public void updateLegalCase(Long caseId){
+        LegalCaseEntity legalCaseEntity = legalCaseRepository.findById(caseId).orElse(null);
+        legalCaseEntity.setStatus(false);
+        legalCaseRepository.save(legalCaseEntity);
+    }
+    
     
 }

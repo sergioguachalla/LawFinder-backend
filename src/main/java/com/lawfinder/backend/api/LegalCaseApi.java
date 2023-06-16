@@ -188,14 +188,28 @@ public class LegalCaseApi {
             @RequestParam(defaultValue = "10") int size){
 
         ResponseDto<Page<LegalCaseDto>> response = new ResponseDto<>();
-        System.out.println("WTFFFFFFFFFFFFFFFFFFFFFFFF");
-        System.out.println(instanceId);
-        System.out.println("WTFFFFFFFFFFFFFFFFFFFFFFFF");
         Pageable pageable = PageRequest.of(page, size);
         Page<LegalCaseDto> legalCasesPage = legalCaseBl.findAllByUserIdWithFilters(id, from, to, crimeId, instanceId ,pageable);
         response.setCode("0000");
-        System.out.println(legalCasesPage.getNumberOfElements());
         response.setResponse(legalCasesPage);
+        response.setErrorMessage(null);
+        return response;
+    }
+
+    @PutMapping("/api/v1/legalcase/{id}")
+    public ResponseDto<String> updateLegalCase(@PathVariable Long id/* , @RequestHeader("Authorization") String token*/) {
+        ResponseDto<String> response = new ResponseDto<>();
+       /*  AuthBl authBl = new AuthBl();
+        if (!authBl.validateToken(token)) {
+            response.setCode("0001");
+            response.setResponse(null);
+            response.setErrorMessage("Invalid token");
+            return response;
+        }
+        */
+        this.legalCaseBl.updateLegalCase(id);
+        response.setCode("0000");
+        response.setResponse("Task updated");
         response.setErrorMessage(null);
         return response;
     }
