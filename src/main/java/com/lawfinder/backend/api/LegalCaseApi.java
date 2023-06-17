@@ -121,24 +121,7 @@ public class LegalCaseApi {
 
     }
 
-    @GetMapping("/api/v1/category")
-    public ResponseDto<List<CategoryDto>> getCategories( /* , @RequestHeader("Authorization") String token*/) {
-        ResponseDto<List<CategoryDto>> response = new ResponseDto<>();
-       /*  AuthBl authBl = new AuthBl();
-        if (!authBl.validateToken(token)) {
-            response.setCode("0001");
-            response.setResponse(null);
-            response.setErrorMessage("Invalid token");
-            return response;
-        }
-        */
-        //this.categoryBl.findAllSubCategoriesByCategoryId(id);
-        response.setCode("0000");
-        response.setResponse(this.categoryBl.findAll());
-        response.setErrorMessage(null);
-        return response;
 
-    }
 
     /*
     @GetMapping("/api/v1/legalcase/user/{id}")
@@ -162,7 +145,7 @@ public class LegalCaseApi {
             @PathVariable Long id,
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date from,
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date to,
-            @RequestParam(required = false) Long crimeId,
+            @RequestParam(required = false) Long categoryId,
             @RequestParam(required = false) Long instanceId,
             @RequestParam(required = false) Boolean inProgress,
             @RequestParam(required = false) String title,
@@ -171,7 +154,7 @@ public class LegalCaseApi {
 
         ResponseDto<Page<LegalCaseDto>> response = new ResponseDto<>();
         Pageable pageable = PageRequest.of(page, size);
-        Page<LegalCaseDto> legalCasesPage = legalCaseBl.findAllByUserIdWithFilters(id, from, to, crimeId, instanceId, inProgress,title ,pageable);
+        Page<LegalCaseDto> legalCasesPage = legalCaseBl.findAllByUserIdWithFilters(id, from, to, categoryId, instanceId, inProgress,title ,pageable);
         System.out.println("###########################################");
         System.out.println(title);
         System.out.println("###########################################");
