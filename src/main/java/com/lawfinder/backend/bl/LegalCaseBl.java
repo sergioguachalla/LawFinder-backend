@@ -163,6 +163,7 @@ public class LegalCaseBl {
     public CaseInformationDto getCaseInformationByCaseId(Long caseId) {
         CaseInformationDto caseInformationDto = new CaseInformationDto();
         List<String> caseInformation = legalCaseRepository.caseInformationByCaseId(caseId);
+        String caseSummary = legalCaseRepository.caseSummaryByCaseId(caseId);
         System.out.println("caseInformation: " + caseInformation);
         if (!caseInformation.isEmpty()) {
 
@@ -173,11 +174,12 @@ public class LegalCaseBl {
                 caseInformationDto.setProvinceName(elements[0].trim());
                 caseInformationDto.setTitle(elements[1].trim());
 
-                caseInformationDto.setUsername(elements[3].trim());
-                caseInformationDto.setInstanceName(elements[4].trim());
-                caseInformationDto.setTxDate(elements[5].trim());
+                caseInformationDto.setUsername(elements[2].trim());
+                caseInformationDto.setInstanceName(elements[3].trim());
+                caseInformationDto.setTxDate(elements[4].trim());
                 caseInformationDto.setSubCategoryName(elements[6].trim());
-                caseInformationDto.setCrimeName(elements[2].trim());
+                caseInformationDto.setCrimeName(elements[5].trim());
+                caseInformationDto.setSummary(caseSummary);
 
             }
 
@@ -185,6 +187,7 @@ public class LegalCaseBl {
 
         return caseInformationDto;
     }
+
 
 
 
