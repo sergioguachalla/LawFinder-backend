@@ -9,16 +9,22 @@ public class CaseInformationDto {
     String instanceName;
     String txDate;
 
+    String subCategoryName;
+
+    String crimeName;
+
     public CaseInformationDto() {
     }
 
-    public CaseInformationDto(String provinceName, String title, String summary, String username, String instanceName, String txDate) {
+    public CaseInformationDto(String provinceName, String title, String summary, String username, String instanceName, String txDate, String subCategoryName, String crimeName) {
         this.provinceName = provinceName;
         this.title = title;
         this.summary = summary;
         this.username = username;
         this.instanceName = instanceName;
         this.txDate = txDate;
+        this.subCategoryName = subCategoryName;
+        this.crimeName = crimeName;
     }
 
     public String getProvinceName() {
@@ -68,4 +74,21 @@ public class CaseInformationDto {
     public void setTxDate(String txDate) {
         this.txDate = txDate;
     }
+
+    public String getSubCategoryName() {
+        return subCategoryName;
+    }
+
+    public void setSubCategoryName(String subCategoryName) {
+        this.subCategoryName = subCategoryName;
+    }
+
+    public String getCrimeName() {
+        return crimeName;
+    }
+
+    public void setCrimeName(String crimeName) {
+        this.crimeName = crimeName;
+    }
 }
+

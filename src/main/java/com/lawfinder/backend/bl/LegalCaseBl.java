@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
@@ -162,18 +163,24 @@ public class LegalCaseBl {
     public CaseInformationDto getCaseInformationByCaseId(Long caseId) {
         CaseInformationDto caseInformationDto = new CaseInformationDto();
         List<String> caseInformation = legalCaseRepository.caseInformationByCaseId(caseId);
-
+        System.out.println("caseInformation: " + caseInformation);
         if (!caseInformation.isEmpty()) {
+
             String[] elements = caseInformation.get(0).split(",");
+
 
             if (elements.length >= 6) {
                 caseInformationDto.setProvinceName(elements[0].trim());
                 caseInformationDto.setTitle(elements[1].trim());
-                caseInformationDto.setSummary(elements[2].trim());
+
                 caseInformationDto.setUsername(elements[3].trim());
                 caseInformationDto.setInstanceName(elements[4].trim());
                 caseInformationDto.setTxDate(elements[5].trim());
+                caseInformationDto.setSubCategoryName(elements[6].trim());
+                caseInformationDto.setCrimeName(elements[2].trim());
+
             }
+
         }
 
         return caseInformationDto;
