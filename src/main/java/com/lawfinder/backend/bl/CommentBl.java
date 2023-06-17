@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class CommentBl {
 
@@ -42,6 +45,19 @@ public class CommentBl {
         commentRepository.save(commentEntity);
 
 
+    }
+    public List<CommentDto> getCommentsByLegalCaseId(Long legalCaseId){
+        List<CommentEntity> commentEntities = commentRepository.findByLegalCaseId(legalCaseId);
+        List<CommentDto> commentDtoList = new ArrayList<>();
+        for(CommentEntity commentEntity : commentEntities){
+            CommentDto commentDto = new CommentDto();
+            commentDto.setCommentId(commentEntity.getCommentId());
+            commentDto.setActorId(commentEntity.getActorId().getActorId());
+            commentDto.setLegalCaseId(commentEntity.getLegalCaseId().getLegalCaseId());
+            commentDto.setCommentContent(commentEntity.getCommentContent());
+            commentDtoList.add(commentDto);
+        }
+        return commentDtoList;
     }
 
 

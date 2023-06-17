@@ -10,6 +10,8 @@ public class CommentDto {
 
     private String commentContent;
 
+    public CommentDto() {
+    }
     public CommentDto(Long commentId, Long actorId, Long legalCaseId, String commentContent) {
         this.commentId = commentId;
         this.actorId = actorId;
