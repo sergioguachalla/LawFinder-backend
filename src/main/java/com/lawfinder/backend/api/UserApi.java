@@ -44,7 +44,23 @@ public class UserApi {
 
         
     }
-
+    
+    @PostMapping("/api/v1/lawyer")
+    public ResponseDto<String> createLawyer(@RequestBody UserDto lawyer){
+        ResponseDto<String> response = new ResponseDto<>();
+        System.out.println(lawyer.toString());
+        this.userBl.saveLawyer(lawyer);
+        PersonEntity person = new PersonEntity();
+        person.setEmail(lawyer.getPersonId().getEmail());
+        MailDto mail = new MailDto();
+        mail.setMail(lawyer.getPersonId().getEmail());
+        //this.userBl.sendmail(mail);
+        response.setCode("0000");
+        response.setResponse("lawyer created");
+        return response;
+    }
+    
+    
     @PostMapping("/api/v1/sendmail")
     public ResponseDto<String> sendMail(@RequestBody MailDto mail) {
         ResponseDto<String> response = new ResponseDto<>();

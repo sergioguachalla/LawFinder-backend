@@ -175,6 +175,15 @@ public class LegalCaseApi {
         return response;
     }
 
+    @GetMapping("api/v1/legalcase/{id}/information")
+    public ResponseDto<CaseInformationDto> getCaseInformation(@PathVariable Long id){
+        ResponseDto<CaseInformationDto> response = new ResponseDto<>();
+        response.setCode("0000");
+        response.setResponse(this.legalCaseBl.getCaseInformationByCaseId(id));
+        response.setErrorMessage(null);
+        return response;
+    }
+
 }
 
 
