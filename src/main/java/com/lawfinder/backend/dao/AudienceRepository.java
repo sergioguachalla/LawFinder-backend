@@ -25,16 +25,16 @@ OR INSTANCE_LEGAL_CASE_ID IN (
 ); */
     
     @Query("SELECT a " +
-       "FROM Audience a " +
-       "WHERE a.instanceLegalCaseId IN (" +
+       "FROM AudienceEntity a " +
+       "WHERE a.instanceLegalCase IN (" +
        "    SELECT lc.legalCaseId " +
-       "    FROM LegalCase lc " +
-       "    WHERE lc.userId = :userId" +
+       "    FROM LegalCaseEntity lc " +
+       "    WHERE lc.user.id = :userId" +
        ") " +
-       "OR a.instanceLegalCaseId IN (" +
+       "OR a.instanceLegalCase IN (" +
        "    SELECT ac.legalCaseId " +
-       "    FROM Actor ac " +
-       "    WHERE ac.userId = userId" +
+       "    FROM ActorEntity ac " +
+       "    WHERE ac.userId.id = :userId" +
     ")")
     List<AudienceEntity> findaudienceByuserId(@Param ("userId") Long userId);
      
