@@ -13,10 +13,9 @@ public class AudienceApi {
     @Autowired
     private AudienceBl audienceBl;
 
-    /* 
-    @GetMapping("/api/v1/legalcase/{idCase}/audience")
-    public ResponseDto<List<AudienceDto>> getAudiencesByIdCase(@RequestHeader("Authorization") String token, @PathVariable Long idCase){
-    
+    @GetMapping("/api/v1/audience/user/{idUser}")
+    public ResponseDto<List<AudienceDto>> getAudiencesByIdCase(/*@RequestHeader("Authorization") String token ,*/ @PathVariable Long id){
+        /* 
         AuthBl authBl = new AuthBl();
         if (!authBl.validateToken(token)) {
             ResponseDto<DepartmentDto> response = new ResponseDto<>();
@@ -25,15 +24,16 @@ public class AudienceApi {
             response.setErrorMessage("Invalid token");
             return response;
         }
+        */
         
 
         ResponseDto<List<AudienceDto>> response = new ResponseDto<>();
         response.setCode("0000");
-        response.setResponse(this.audienceBl.findByLegalCaseId(idCase));
+        //response.setResponse(this.audienceBl.findByuserId(id));
         response.setErrorMessage(null);
         return response;
 
-    }*/
+    }
 
    
     @PostMapping("/api/v1/legalcase/{idCase}/audience")
