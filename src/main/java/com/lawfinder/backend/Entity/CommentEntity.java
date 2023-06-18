@@ -1,6 +1,7 @@
 package com.lawfinder.backend.Entity;
 
 import jakarta.persistence.*;
+import org.apache.catalina.User;
 
 @Entity
 @Table(name = "COMMENT")
@@ -13,8 +14,8 @@ public class CommentEntity {
 
 
     @ManyToOne
-    @JoinColumn(name = "ACTOR_ID", referencedColumnName = "ACTOR_ID")
-    private ActorEntity actorId;
+    @JoinColumn(name = "SE_USER_ID", referencedColumnName = "USER_ID")
+    private UserEntity userId;
 
     @ManyToOne
     @JoinColumn(name = "LEGAL_CASE_ID", referencedColumnName = "LEGAL_CASE_ID")
@@ -29,15 +30,12 @@ public class CommentEntity {
     public CommentEntity() {
     }
 
-    public CommentEntity(ActorEntity actorId, LegalCaseEntity legalCaseId, String commentContent) {
-        this.actorId = actorId;
+    public CommentEntity(Long commentId, UserEntity userId, LegalCaseEntity legalCaseId, String commentContent) {
+        this.commentId = commentId;
+        this.userId = userId;
         this.legalCaseId = legalCaseId;
         this.commentContent = commentContent;
     }
-
-    // Getters and setters
-    // ...
-
 
     public Long getCommentId() {
         return commentId;
@@ -47,12 +45,12 @@ public class CommentEntity {
         this.commentId = commentId;
     }
 
-    public ActorEntity getActorId() {
-        return actorId;
+    public UserEntity getUserId() {
+        return userId;
     }
 
-    public void setActorId(ActorEntity actorId) {
-        this.actorId = actorId;
+    public void setUserId(UserEntity userId) {
+        this.userId = userId;
     }
 
     public LegalCaseEntity getLegalCaseId() {

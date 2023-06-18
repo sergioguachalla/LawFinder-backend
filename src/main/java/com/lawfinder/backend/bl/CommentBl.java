@@ -3,9 +3,11 @@ package com.lawfinder.backend.bl;
 import com.lawfinder.backend.Entity.ActorEntity;
 import com.lawfinder.backend.Entity.CommentEntity;
 import com.lawfinder.backend.Entity.LegalCaseEntity;
+import com.lawfinder.backend.Entity.UserEntity;
 import com.lawfinder.backend.dao.ActorRepository;
 import com.lawfinder.backend.dao.CommentRepository;
 import com.lawfinder.backend.dao.LegalCaseRepository;
+import com.lawfinder.backend.dao.UserRepository;
 import com.lawfinder.backend.dto.CommentDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,16 +22,16 @@ public class CommentBl {
     @Autowired
     private CommentRepository commentRepository;
     @Autowired
-    private ActorRepository actorRepository;
+    private UserRepository userRepository;
 
     private LegalCaseRepository legalCaseRepository;
 
 
 
 
-    public CommentBl(CommentRepository commentRepository, ActorRepository actorRepository, LegalCaseRepository legalCaseRepository){
+    public CommentBl(CommentRepository commentRepository, UserRepository userRepository, LegalCaseRepository legalCaseRepository){
         this.commentRepository = commentRepository;
-        this.actorRepository = actorRepository;
+        this.userRepository = userRepository;
         this.legalCaseRepository = legalCaseRepository;
 
     }
@@ -37,10 +39,10 @@ public class CommentBl {
     @Transactional
     public void saveComment(CommentDto commentDto){
         CommentEntity commentEntity = new CommentEntity();
-        ActorEntity actorEntity = actorRepository.findByActorId(commentDto.getActorId());
+        UserEntity userEntity = userRepository.findByUserId(commentDto.getUserId());
         LegalCaseEntity legalCaseEntity = legalCaseRepository.findByLegalCaseId(commentDto.getLegalCaseId());
         commentEntity.setCommentContent(commentDto.getCommentContent());
-        commentEntity.setActorId(actorEntity);
+        commentEntity.setUserId(userEntity);
         commentEntity.setLegalCaseId(legalCaseEntity);
         commentRepository.save(commentEntity);
 
@@ -52,9 +54,10 @@ public class CommentBl {
         for(CommentEntity commentEntity : commentEntities){
             CommentDto commentDto = new CommentDto();
             commentDto.setCommentId(commentEntity.getCommentId());
-            commentDto.setActorId(commentEntity.getActorId().getActorId());
+            commentDto.setUserId(commentEntity.getUserId().getId());
             commentDto.setLegalCaseId(commentEntity.getLegalCaseId().getLegalCaseId());
             commentDto.setCommentContent(commentEntity.getCommentContent());
+            commentDto.setUserName(commentEntity.getUserId().getUsername());
             commentDtoList.add(commentDto);
         }
         return commentDtoList;
