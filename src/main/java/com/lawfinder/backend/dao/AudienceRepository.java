@@ -24,7 +24,7 @@ OR INSTANCE_LEGAL_CASE_ID IN (
     WHERE USER_ID = 3
 ); */
     
-   @Query("SELECT a " +
+    @Query("SELECT a " +
        "FROM AudienceEntity a " +
        "WHERE a.instanceLegalCase IN (" +
        "    SELECT lc.legalCaseId " +

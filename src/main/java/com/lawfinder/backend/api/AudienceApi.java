@@ -14,7 +14,7 @@ public class AudienceApi {
     private AudienceBl audienceBl;
 
     @GetMapping("/api/v1/audience/user/{idUser}")
-    public ResponseDto<List<AudienceDto>> getAudiencesByIdCase(/*@RequestHeader("Authorization") String token ,*/ @PathVariable Long id){
+    public ResponseDto<List<AudienceDto>> getAudiencesByIdCase(/*@RequestHeader("Authorization") String token ,*/ @PathVariable Long idUser){
         /* 
         AuthBl authBl = new AuthBl();
         if (!authBl.validateToken(token)) {
@@ -29,7 +29,7 @@ public class AudienceApi {
 
         ResponseDto<List<AudienceDto>> response = new ResponseDto<>();
         response.setCode("0000");
-        //response.setResponse(this.audienceBl.findByuserId(id));
+        response.setResponse(this.audienceBl.findByuserId(idUser));
         response.setErrorMessage(null);
         return response;
 
