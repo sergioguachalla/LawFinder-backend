@@ -8,20 +8,11 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Date;
 import java.util.List;
 
 
 
-public interface LegalCaseRepository extends  JpaRepository<LegalCaseEntity,Long>, JpaSpecificationExecutor<LegalCaseEntity> {
-   /*@Query(value = """
-           SELECT *
-           FROM LEGAL_CASE
-           WHERE USER_ID = :userId
-              OR LEGAL_CASE_ID IN (SELECT LEGAL_CASE_ID FROM ACTOR WHERE USER_ID = :userId)""",
-
-           countQuery = "SELECT COUNT(*) FROM legal_case lc, actor a WHERE lc.user_id = :userId or a.user_id = :userId and status = true",
-           nativeQuery = true)
-   Page<LegalCaseEntity> findAllByUserId(@Param("userId") Long userId, Pageable pageable);*/
    @Query(value = """
            SELECT lc.*
            FROM legal_case lc
@@ -31,6 +22,17 @@ public interface LegalCaseRepository extends  JpaRepository<LegalCaseEntity,Long
            countQuery = "SELECT COUNT(*) FROM legal_case lc, actor a WHERE lc.user_id = :userId or a.user_id = :userId and a.status = true",
            nativeQuery = true)
    Page<LegalCaseEntity> findAllByUserId(@Param("userId") Long userId, Pageable pageable);
+
+    @Query(value = """
+       SELECT lc.*
+       FROM legal_case lc
+       WHERE (lc.user_id = :userId
+          OR lc.legal_case_id IN (SELECT a.legal_case_id FROM actor a WHERE a.user_id = :userId and a.status = true))
+          AND (CAST(lc.start_date AS DATE) BETWEEN :from AND :to)
+""",
+       countQuery = "SELECT COUNT(*) FROM legal_case lc, actor a WHERE (lc.user_id = :userId or a.user_id = :userId and a.status = true) and (CAST(lc.start_date AS DATE) BETWEEN :from AND :to)",
+       nativeQuery = true)
+Page<LegalCaseEntity> findAllByUserIdAndStartDateBetween(@Param("userId") Long userId, @Param("from") Date from, @Param("to") Date to, Pageable pageable);
 
 
 
@@ -65,4 +67,9 @@ public interface LegalCaseRepository extends  JpaRepository<LegalCaseEntity,Long
   LegalCaseEntity findByLegalCaseId(@Param("legalCaseId") Long legalCaseId);
 
 
+
 }
+
+public interface LegalCaseRepository extends JpaRepository<LegalCaseEntity, Long>, JpaSpecificationExecutor<LegalCaseEntity> {
+}
+

@@ -2,6 +2,7 @@ package com.lawfinder.backend.Entity;
 
 import jakarta.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "LEGAL_CASE")
@@ -49,6 +50,15 @@ public class LegalCaseEntity {
 
     @Column(name = "TX_DATE")
     private Date txDate;
+
+    //Para los filtros
+    @OneToMany(mappedBy = "legalCase")
+    private List<InstanceLegalCaseEntity> instanceLegalCases;
+
+    // para los actores 
+
+    @OneToMany(mappedBy = "legalCaseId")
+    private List<ActorEntity> actors;
 
     // Constructor vacío
     public LegalCaseEntity() {
@@ -169,6 +179,23 @@ public class LegalCaseEntity {
         this.txDate = txDate;
     }
 
+ // para los filtros
+    public List<InstanceLegalCaseEntity> getInstanceLegalCases() {
+        return instanceLegalCases;
+    }
+
+    public void setInstanceLegalCases(List<InstanceLegalCaseEntity> instanceLegalCases) {
+        this.instanceLegalCases = instanceLegalCases;
+    }
+// para los actores
+
+    public List<ActorEntity> getActors() {
+        return actors;
+    }
+
+    public void setActors(List<ActorEntity> actors) {
+        this.actors = actors;
+    }
     // toString
 
     @Override
