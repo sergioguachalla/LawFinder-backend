@@ -29,7 +29,7 @@ public class AudienceApi {
 
         ResponseDto<List<AudienceDto>> response = new ResponseDto<>();
         response.setCode("0000");
-        //response.setResponse(this.audienceBl.findByuserId(id));
+        response.setResponse(this.audienceBl.findByuserId(id));
         response.setErrorMessage(null);
         return response;
 

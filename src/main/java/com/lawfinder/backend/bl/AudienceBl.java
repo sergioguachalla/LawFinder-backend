@@ -30,11 +30,11 @@ public class AudienceBl {
     }
 
     // obtener audiencias
-    /*
+
     public List<AudienceDto> findByuserId(Long id){
         List<AudienceEntity> audienceEntity = audienceRepository.findaudienceByuserId(id);
         return convertToDto(audienceEntity);
-    }*/
+    }
 
 
 
