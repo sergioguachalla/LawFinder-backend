@@ -1,8 +1,8 @@
 package com.lawfinder.backend.Entity;
 
-
 import jakarta.persistence.*;
 import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "AUDIENCE")
@@ -13,16 +13,20 @@ public class AudienceEntity {
     @Column(name = "AUDIENCE_ID")
     private Long audienceId;
 
+
     @Column(name = "AUDIENCE_DATE", nullable = false)
-    private Date audienceDate;
+    private LocalDateTime audienceDate;
 
     @Column(name = "DESCRIPTION", nullable = false, columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "VERDICT", nullable = false, columnDefinition = "TEXT")
-    private String verdict;
+    @Column(name = "LINK", columnDefinition = "TEXT")
+    private String link;
 
-    @OneToOne
+    @Column(name = "ADDRESS", nullable = false, columnDefinition = "TEXT")
+    private String address;
+
+    @ManyToOne
     @JoinColumn(name = "INSTANCE_LEGAL_CASE_ID", nullable = false)
     private InstanceLegalCaseEntity instanceLegalCase;
 
@@ -32,10 +36,11 @@ public class AudienceEntity {
     }
 
     // Constructor con todos los atributos
-    public AudienceEntity(Date audienceDate, String description, String verdict, InstanceLegalCaseEntity instanceLegalCase) {
+    public AudienceEntity(LocalDateTime audienceDate, String description, String link, String address, InstanceLegalCaseEntity instanceLegalCase) {
         this.audienceDate = audienceDate;
         this.description = description;
-        this.verdict = verdict;
+        this.link = link;
+        this.address = address;
         this.instanceLegalCase = instanceLegalCase;
     }
 
@@ -44,39 +49,54 @@ public class AudienceEntity {
         return audienceId;
     }
 
-    public Date getAudienceDate() {
-        return audienceDate;
-    }
-
     public String getDescription() {
         return description;
     }
 
-    public String getVerdict() {
-        return verdict;
+    public String getLink() {
+        return link;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public InstanceLegalCaseEntity getInstanceLegalCase() {
+        return instanceLegalCase;
+    }
+
+    public LocalDateTime getAudienceDate() {
+        return audienceDate;
+    }
+
+    public void setAudienceDate(LocalDateTime audienceDate) {
+        this.audienceDate = audienceDate;
+    }
     // Setters
     public void setAudienceId(Long audienceId) {
         this.audienceId = audienceId;
-    }
-
-    public void setAudienceDate(Date audienceDate) {
-        this.audienceDate = audienceDate;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public void setVerdict(String verdict) {
-        this.verdict = verdict;
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setInstanceLegalCase(InstanceLegalCaseEntity instanceLegalCase) {
+        this.instanceLegalCase = instanceLegalCase;
     }
 
     // toString
     @Override
     public String toString() {
         return "AudienceEntity [audienceId=" + audienceId + ", audienceDate=" + audienceDate + ", description=" + description
-                + ", verdict=" + verdict + "]";
+                + ", link=" + link + ", address=" + address + "]";
     }
 }
