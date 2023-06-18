@@ -92,6 +92,11 @@ public class LegalFileBl{
 
     }
 
+    public List<String[]> findByCaseIdAndInstanceName(Long id, String instanceName){
+        return legalFileRepository.findByLegalCaseIdAndInstanceName(id, instanceName);
+
+    }
+
 
 
 

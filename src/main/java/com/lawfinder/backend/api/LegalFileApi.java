@@ -39,4 +39,14 @@ public class LegalFileApi {
         return responseDto;
     }
 
+    @GetMapping("/api/v1/case/{caseId}/instance/{instanceName}")
+    public ResponseDto<List<String[]>> getFilesByInstance(@PathVariable("caseId") Long caseId, @PathVariable("instanceName") String instanceName){
+        ResponseDto<List<String[]>> responseDto = new ResponseDto<>();
+        List<String[]> files = s3Service.findByCaseIdAndInstanceName(caseId, instanceName);
+        responseDto.setCode("0000");
+        responseDto.setResponse(files);
+        responseDto.setErrorMessage(null);
+        return responseDto;
+    }
+
 }
