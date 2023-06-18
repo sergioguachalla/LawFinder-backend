@@ -1,6 +1,7 @@
 package com.lawfinder.backend.api;
 
 import com.lawfinder.backend.bl.CategoryBl;
+import com.lawfinder.backend.bl.CommentBl;
 import com.lawfinder.backend.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -30,12 +31,11 @@ public class LegalCaseApi {
     @Autowired
     private UserBl registrationBl;
 
+    @Autowired
+    private CommentBl commentBl;
+
     private Stack<String> pendingInvitations = new Stack<>();
     Set<Integer> conjunto = new HashSet<>();
-    
-
-
-    
 
 
     @PostMapping("/api/v1/userverification")
@@ -175,6 +175,33 @@ public class LegalCaseApi {
         return response;
     }
 
+    @GetMapping("api/v1/legalcase/{id}/information")
+    public ResponseDto<CaseInformationDto> getCaseInformation(@PathVariable Long id){
+        ResponseDto<CaseInformationDto> response = new ResponseDto<>();
+        response.setCode("0000");
+        response.setResponse(this.legalCaseBl.getCaseInformationByCaseId(id));
+        response.setErrorMessage(null);
+        return response;
+    }
+
+    @PostMapping("/api/v1/legalcase/{id}/comment")
+    public ResponseDto<String> createComment(@PathVariable Long id, @RequestBody CommentDto commentDto){
+        ResponseDto<String> response = new ResponseDto<>();
+        this.commentBl.saveComment(commentDto);
+        response.setCode("0000");
+        response.setResponse("Comment created");
+        response.setErrorMessage(null);
+        return response;
+    }
+
+    @GetMapping("/api/v1/legalcase/{id}/comments")
+    public ResponseDto<List<CommentDto>> getComments(@PathVariable Long id){
+        ResponseDto<List<CommentDto>> response = new ResponseDto<>();
+        response.setCode("0000");
+        response.setResponse(this.commentBl.getCommentsByLegalCaseId(id));
+        response.setErrorMessage(null);
+        return response;
+    }
 }
 
 
