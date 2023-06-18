@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 
+public interface LegalCaseRepository extends JpaRepository<LegalCaseEntity, Long>, JpaSpecificationExecutor<LegalCaseEntity> {
 
    @Query(value = """
            SELECT lc.*
@@ -68,8 +69,5 @@ Page<LegalCaseEntity> findAllByUserIdAndStartDateBetween(@Param("userId") Long u
 
 
 
-}
-
-public interface LegalCaseRepository extends JpaRepository<LegalCaseEntity, Long>, JpaSpecificationExecutor<LegalCaseEntity> {
 }
 
