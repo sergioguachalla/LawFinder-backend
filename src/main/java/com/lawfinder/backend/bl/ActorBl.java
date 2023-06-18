@@ -38,9 +38,12 @@ public class ActorBl {
 
     public void acceptInvitation(Long actorId){
         ActorEntity actorEntity= actorRepository.findById(actorId).orElse(null);
+        assert actorEntity != null;
         actorEntity.setStatus(true);
         actorRepository.save(actorEntity);
     }
+
+
 
 
 }
