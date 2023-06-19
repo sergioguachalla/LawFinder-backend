@@ -18,16 +18,17 @@ public interface LegalFileRepository extends JpaRepository<LegalFileEntity, Long
     List<String> findByCaseId(@Param("caseId") Long caseId);
 
     @Query(value = """
-            SELECT f.url, lf.summary, i.instance_name
+            SELECT f.url, lf.summary, i.instance_name, f.tx_date
             FROM file AS f
             JOIN legal_file AS lf ON f.file_id = lf.file_id
             JOIN instance_legal_case AS ilc ON lf.instance_legal_case_id = ilc.instance_legal_case_id
             JOIN instance AS i ON i.instance_id = ilc.instance_id
             JOIN legal_case AS lc ON lc.legal_case_id = ilc.legal_case_id
-            WHERE lc.legal_case_id = 8
-            AND i.instance_name = 'Instancia Preliminar'
+            WHERE lc.legal_case_id = :legalCaseId
+            AND i.instance_name = :instanceName
             """, nativeQuery = true)
 
     List<String[]> findByLegalCaseIdAndInstanceName(@Param("legalCaseId") Long legalCaseId, @Param("instanceName") String instanceName);
+
 
 }
