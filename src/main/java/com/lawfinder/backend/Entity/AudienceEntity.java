@@ -27,8 +27,8 @@ public class AudienceEntity {
     private String address;
 
     @ManyToOne
-    @JoinColumn(name = "INSTANCE_LEGAL_CASE_ID", nullable = false)
-    private InstanceLegalCaseEntity instanceLegalCase;
+    @JoinColumn(name = "LEGAL_CASE_ID", nullable = false)
+    private LegalCaseEntity legalCaseId;
 
 
     // Constructor vacío
@@ -36,12 +36,12 @@ public class AudienceEntity {
     }
 
     // Constructor con todos los atributos
-    public AudienceEntity(LocalDateTime audienceDate, String description, String link, String address, InstanceLegalCaseEntity instanceLegalCase) {
+    public AudienceEntity(LocalDateTime audienceDate, String description, String link, String address, LegalCaseEntity legalCaseEntity) {
         this.audienceDate = audienceDate;
         this.description = description;
         this.link = link;
         this.address = address;
-        this.instanceLegalCase = instanceLegalCase;
+        this.legalCaseId = legalCaseEntity;
     }
 
     // Getters
@@ -61,8 +61,9 @@ public class AudienceEntity {
         return address;
     }
 
-    public InstanceLegalCaseEntity getInstanceLegalCase() {
-        return instanceLegalCase;
+    public LegalCaseEntity getLegalCaseId() {
+        return
+                legalCaseId;
     }
 
     public LocalDateTime getAudienceDate() {
@@ -89,8 +90,8 @@ public class AudienceEntity {
         this.address = address;
     }
 
-    public void setInstanceLegalCase(InstanceLegalCaseEntity instanceLegalCase) {
-        this.instanceLegalCase = instanceLegalCase;
+    public void setLegalCaseId(LegalCaseEntity legalCaseId) {
+        this.legalCaseId = legalCaseId;
     }
 
     // toString

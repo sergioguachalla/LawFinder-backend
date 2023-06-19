@@ -3,6 +3,7 @@ package com.lawfinder.backend.bl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.lawfinder.backend.Entity.LegalCaseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,20 +20,21 @@ public class AudienceBl {
     //Save audience
     public void saveAudience(Long idCase,AudienceDto audienceDto){
         AudienceEntity audienceEntity = new AudienceEntity();
-        InstanceLegalCaseEntity instanceLegalCaseEntity = new InstanceLegalCaseEntity();
-        instanceLegalCaseEntity.setInstanceLegalCaseId(idCase);
+
+        LegalCaseEntity legalCaseEntity = new LegalCaseEntity();
+        legalCaseEntity.setLegalCaseId(idCase);
         audienceEntity.setAudienceDate(audienceDto.getAudienceDate());
         audienceEntity.setDescription(audienceDto.getDescription());
         audienceEntity.setLink(audienceDto.getLink());
         audienceEntity.setAddress(audienceDto.getAddress());
-        audienceEntity.setInstanceLegalCase(instanceLegalCaseEntity);        
+        audienceEntity.setLegalCaseId(legalCaseEntity);
         audienceRepository.saveAndFlush(audienceEntity);
     }
 
     // obtener audiencias
 
     public List<AudienceDto> findByuserId(Long id){
-        List<AudienceEntity> audienceEntity = audienceRepository.findaudienceByuserId(id);
+        List<AudienceEntity> audienceEntity = audienceRepository.findAudienceByUserId(id);
         return convertToDto(audienceEntity);
     }
 
@@ -48,7 +50,7 @@ public class AudienceBl {
             audienceDto1.setDescription(audienceEntity1.getDescription());
             audienceDto1.setLink(audienceEntity1.getLink());
             audienceDto1.setAddress(audienceEntity1.getAddress());
-            audienceDto1.setInstanceLegalCaseId(audienceEntity1.getInstanceLegalCase().getInstanceLegalCaseId());
+            audienceDto1.setInstanceLegalCaseId(audienceEntity1.getLegalCaseId().getLegalCaseId());
             audienceDto.add(audienceDto1);
         });
         return audienceDto;
