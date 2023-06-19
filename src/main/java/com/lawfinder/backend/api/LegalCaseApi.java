@@ -211,6 +211,16 @@ public class LegalCaseApi {
         return response;
     }
 
+    @PostMapping("/api/v1/legalcase/{id}/instance")
+    public ResponseDto<String> createInstance(@PathVariable Long id, @RequestBody InstanceLegalCaseDto instanceLegalCaseDto){
+        ResponseDto<String> response = new ResponseDto<>();
+        this.legalCaseBl.updateInstanceLegalCase(id, instanceLegalCaseDto);
+        response.setCode("0000");
+        response.setResponse("Instance created");
+        response.setErrorMessage(null);
+        return response;
+    }
+
 }
 
 

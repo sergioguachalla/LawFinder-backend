@@ -85,6 +85,7 @@ public class LegalCaseBl {
         instanceCase.setLegalCase(legalCaseEntity);
         instanceCase.setStartDate(legalCaseDto.getStartDateInstance());
         instanceCase.setEndDate(legalCaseDto.getEndDateInstance());
+        instanceCase.setStatus(true);
         instanceLegalCaseRepository.saveAndFlush(instanceCase);
 
         
@@ -214,6 +215,7 @@ public class LegalCaseBl {
     public void updateLegalCase(Long caseId){
         LegalCaseEntity legalCaseEntity = legalCaseRepository.findById(caseId).orElse(null);
         legalCaseEntity.setStatus(false);
+        legalCaseEntity.setTxDate(new Date());
         legalCaseRepository.save(legalCaseEntity);
     }
     
@@ -245,6 +247,25 @@ public class LegalCaseBl {
         }
 
         return caseInformationDto;
+    }
+
+    public void updateInstanceLegalCase(Long caseId, InstanceLegalCaseDto instanceLegalCaseDto){
+        LegalCaseEntity legalCaseEntity = legalCaseRepository.findById(caseId).orElse(null);
+        InstanceEntity instanceEntity = instanceRepository.findById(instanceLegalCaseDto.getInstanceId()).orElse(null);
+        List<InstanceLegalCaseEntity> instancePrevious = instanceLegalCaseRepository.getPreviousInstances(caseId);
+        for (InstanceLegalCaseEntity instanceLegalCaseEntity : instancePrevious) {
+            instanceLegalCaseEntity.setStatus(false);
+            instanceLegalCaseRepository.save(instanceLegalCaseEntity);
+        }
+        InstanceLegalCaseEntity instanceLegalCaseEntity = new InstanceLegalCaseEntity();
+        instanceLegalCaseEntity.setLegalCase(legalCaseEntity);
+        instanceLegalCaseEntity.setInstance(instanceEntity);
+        instanceLegalCaseEntity.setStatus(true);
+        instanceLegalCaseEntity.setStartDate(instanceLegalCaseDto.getStartDate());
+        instanceLegalCaseEntity.setEndDate(instanceLegalCaseDto.getEndDate());
+        instanceLegalCaseRepository.saveAndFlush(instanceLegalCaseEntity);
+
+
     }
 
 }
