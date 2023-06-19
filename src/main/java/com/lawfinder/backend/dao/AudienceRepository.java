@@ -27,7 +27,7 @@ OR INSTANCE_LEGAL_CASE_ID IN (
     @Query("SELECT a " +
             "FROM AudienceEntity a " +
             "JOIN a.legalCaseId lc " +
-            "WHERE lc.user = :userId " +
+            "WHERE lc.user.id = :userId " +
             "OR a.legalCaseId IN (SELECT ac.legalCaseId FROM ActorEntity ac WHERE ac.userId.id = :userId)")
     List<AudienceEntity> findAudienceByUserId(@Param("userId") Long userId);
 
