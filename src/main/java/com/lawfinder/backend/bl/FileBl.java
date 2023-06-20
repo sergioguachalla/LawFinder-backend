@@ -2,7 +2,6 @@ package com.lawfinder.backend.bl;
 
 import com.lawfinder.backend.Entity.FileEntity;
 import com.lawfinder.backend.dao.FileRepository;
-import com.lawfinder.backend.dao.LegalFileRepository;
 import com.lawfinder.backend.dto.FileDto;
 
 import org.springframework.stereotype.Service;
@@ -13,10 +12,8 @@ import java.util.List;
 @Service
 public class FileBl {
     private final FileRepository fileRepository;
-    private final LegalFileRepository legalFileRepository;
-    public FileBl(FileRepository fileRepository, LegalFileRepository legalFileRepository){
+    public FileBl(FileRepository fileRepository){
         this.fileRepository = fileRepository;
-        this.legalFileRepository = legalFileRepository;
     }
 
     public void saveFile(FileDto file){

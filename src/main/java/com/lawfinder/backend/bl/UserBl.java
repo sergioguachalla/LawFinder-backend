@@ -7,12 +7,8 @@ import java.util.*;
 
 import com.lawfinder.backend.services.EmailService;
 import com.lawfinder.backend.services.PasswordService;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.management.relation.Role;
 
 @Service
 public class UserBl {

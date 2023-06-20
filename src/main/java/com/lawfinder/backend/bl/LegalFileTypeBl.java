@@ -3,8 +3,6 @@ package com.lawfinder.backend.bl;
 import com.lawfinder.backend.Entity.LegalFileTypeEntity;
 import com.lawfinder.backend.dao.LegalFileTypeRepository;
 import com.lawfinder.backend.dto.LegalFileTypeDto;
-
-import com.lawfinder.backend.dto.ProvinceDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

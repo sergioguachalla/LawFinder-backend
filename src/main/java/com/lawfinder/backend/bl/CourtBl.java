@@ -19,8 +19,6 @@ public class CourtBl {
         this.courtRepository = courtRepository;
     }
 
-    //find all
-
     public List<CourtDto> findAll(){
         
         List<CourtEntity> Court = courtRepository.findAll();
