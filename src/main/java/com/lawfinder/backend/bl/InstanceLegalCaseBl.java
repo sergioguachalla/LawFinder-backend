@@ -39,6 +39,8 @@ public class InstanceLegalCaseBl {
         instanceLegalCaseDto.setInstanceId(instanceLegalCaseEntity.getInstance().getInstanceId());
         instanceLegalCaseDto.setLegalCaseId(instanceLegalCaseEntity.getLegalCase().getLegalCaseId());
         instanceLegalCaseDto.setStartDate(instanceLegalCaseEntity.getStartDate());
+        instanceLegalCaseDto.setEndDate(instanceLegalCaseEntity.getEndDate());
+
 
         return instanceLegalCaseDto;
     }

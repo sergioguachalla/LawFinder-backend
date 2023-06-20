@@ -27,6 +27,8 @@ public class InstanceLegalCaseEntity {
     @Column(name = "END_DATE")
     private Date endDate;
 
+    @Column(name = "STATUS")
+    private boolean status;
 
     // Constructor vacío
     public InstanceLegalCaseEntity() {
@@ -34,12 +36,13 @@ public class InstanceLegalCaseEntity {
 
     // Constructor con todos los atributos
 
-    public InstanceLegalCaseEntity( InstanceEntity instance, LegalCaseEntity legalCase, ResolutionEntity resolution, Date startDate) {
+    public InstanceLegalCaseEntity( InstanceEntity instance, LegalCaseEntity legalCase, ResolutionEntity resolution, Date startDate, Date endDate, boolean status) {
 
         this.instance = instance;
         this.legalCase = legalCase;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.status = status;
     }
 
     // Getters
@@ -85,6 +88,14 @@ public class InstanceLegalCaseEntity {
 
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     // toString

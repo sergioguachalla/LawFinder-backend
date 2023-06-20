@@ -1,0 +1,15 @@
+
+POST http://localhost:8080/api/v1/legalcase/24/audience
+
+Content-Type: application/json
+Accept: application/json
+
+{
+  "audienceDate": "2023-06-18T10:30:00",
+  "description": "Descripción de la audiencia",
+  "link": "https://www.example.com",
+  "address": "Dirección de la audiencia"
+}
+###
+
+GET http://localhost:8080/api/v1/audience/user/3
