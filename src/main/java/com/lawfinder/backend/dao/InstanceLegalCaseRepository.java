@@ -11,7 +11,10 @@ public interface InstanceLegalCaseRepository extends JpaRepository<InstanceLegal
 
     List<InstanceLegalCaseEntity> findAll();
 
-    @Query("SELECT i FROM InstanceLegalCaseEntity i WHERE i.legalCase.legalCaseId = :legalCaseId")
+    @Query("SELECT i FROM InstanceLegalCaseEntity i WHERE i.legalCase.legalCaseId = :legalCaseId AND i.status = TRUE")
     InstanceLegalCaseEntity findByInstanceLegalCaseId(@Param("legalCaseId") Long legalCaseId);
+
+    @Query("SELECT i FROM InstanceLegalCaseEntity i WHERE i.legalCase.legalCaseId = :legalCaseId AND i.status = TRUE")
+    List<InstanceLegalCaseEntity> getPreviousInstances(@Param("legalCaseId") Long legalCaseId);
 
 }

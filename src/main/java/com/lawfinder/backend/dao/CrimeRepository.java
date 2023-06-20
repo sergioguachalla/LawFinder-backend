@@ -10,4 +10,8 @@ public interface CrimeRepository extends JpaRepository<CrimeEntity,Long> {
 
     @Query("SELECT c FROM CrimeEntity c WHERE c.subcategoryId.subCategoryId = :subcategoryId")
     List<CrimeEntity> findAllBySubcategoryId(Long subcategoryId);
+
+    //encontrar un crimen por id
+    @Query("SELECT c FROM CrimeEntity c WHERE c.crimeId = :crimeId")
+    CrimeEntity findByCrimeId(Long crimeId);
 }

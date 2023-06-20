@@ -1,8 +1,6 @@
 package com.lawfinder.backend.bl;
-import com.amazonaws.auth.SdkClock.Instance;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
-import com.amazonaws.util.IOUtils;
 import com.lawfinder.backend.Entity.CourtEntity;
 import com.lawfinder.backend.Entity.FileEntity;
 import com.lawfinder.backend.Entity.InstanceLegalCaseEntity;
@@ -10,16 +8,11 @@ import com.lawfinder.backend.Entity.LegalFileEntity;
 import com.lawfinder.backend.Entity.LegalFileTypeEntity;
 import com.lawfinder.backend.dao.FileRepository;
 import com.lawfinder.backend.dao.LegalFileRepository;
-
-import com.lawfinder.backend.dto.FileQueryDto;
-import com.lawfinder.backend.dto.LegalFileDto;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class LegalFileBl{
@@ -99,8 +92,13 @@ public class LegalFileBl{
 
     }
 
+    public List<String[]> findByCaseIdAndInstanceName(Long id, String instanceName){
+        return legalFileRepository.findByLegalCaseIdAndInstanceName(id, instanceName);
+
+    }
 
 
+<<<<<<< HEAD
     /*
     public File convertMultiPartToFile(MultipartFile file ) throws IOException
     {
@@ -108,6 +106,13 @@ public class LegalFileBl{
         FileOutputStream fos = new FileOutputStream( convFile );
         fos.write( file.getBytes() );
         fos.close();
+=======
+
+
+    public File convertMultiPartToFile(MultipartFile file) throws IOException {
+        File convFile = File.createTempFile("temp", null);  
+        file.transferTo(convFile); 
+>>>>>>> f57f3c964b35bfcf17674f1ee464832cee0f917a
         return convFile;
     }
     */
@@ -116,6 +121,7 @@ public class LegalFileBl{
     file.transferTo(convFile);
     return convFile;
 }
+
 
 
 

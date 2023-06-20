@@ -1,4 +1,7 @@
 
+GET http://localhost:8080/api/v1/category
+###
+PUT http://localhost:8080/api/v1/legalcase/1
 ###
 POST http://localhost:8080/api/v1/legalcase
 Content-Type: application/json
@@ -48,5 +51,9 @@ GET http://localhost:8080/api/v1/instanceLegal/8
 
 ###
 
+<<<<<<< HEAD
 GET http://localhost:8080/api/v1/invitation/51
 
+=======
+GET http://localhost:8080/api/v1/legalcase/26/information
+>>>>>>> f57f3c964b35bfcf17674f1ee464832cee0f917a

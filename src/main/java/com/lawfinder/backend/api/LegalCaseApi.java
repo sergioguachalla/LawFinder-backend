@@ -1,18 +1,17 @@
 package com.lawfinder.backend.api;
 
-import com.lawfinder.backend.bl.CategoryBl;
+import com.lawfinder.backend.bl.*;
 import com.lawfinder.backend.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.repository.query.Param;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
-
-import com.lawfinder.backend.bl.LegalCaseBl;
-import com.lawfinder.backend.bl.UserBl;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -30,12 +29,13 @@ public class LegalCaseApi {
     @Autowired
     private UserBl registrationBl;
 
+    @Autowired
+    private CommentBl commentBl;
+    @Autowired
+    private AuthBl authBl;
+
     private Stack<String> pendingInvitations = new Stack<>();
     Set<Integer> conjunto = new HashSet<>();
-    
-
-
-    
 
 
     @PostMapping("/api/v1/userverification")
@@ -59,9 +59,9 @@ public class LegalCaseApi {
     }
     
     @PostMapping("/api/v1/legalcase")
-    public ResponseDto<String> createUser(@RequestBody LegalCaseDto legalcase /* , @RequestHeader("Authorization") String token*/) {
+    public ResponseDto<String> createCase(@RequestBody LegalCaseDto legalCase , @RequestHeader("Authorization") String token) {
         ResponseDto<String> response = new ResponseDto<>();
-       /*  AuthBl authBl = new AuthBl();
+
         if (!authBl.validateToken(token)) {
             response.setCode("0001");
             response.setResponse(null);
@@ -69,9 +69,9 @@ public class LegalCaseApi {
             return response;
         }
         
-        */
-        System.out.println(legalcase.toString());
-        this.legalCaseBl.saveLegalCase(legalcase,pendingInvitations);
+
+        System.out.println(legalCase.toString());
+        this.legalCaseBl.saveLegalCase(legalCase,pendingInvitations);
         response.setCode("0000");
         response.setResponse("Task created");
         pendingInvitations.clear();
@@ -82,16 +82,15 @@ public class LegalCaseApi {
     }
 
     @GetMapping("/api/v1/category/{id}/subcategory")
-    public ResponseDto<List<SubCategoryDto>> getSubcategories(@PathVariable Long id /* , @RequestHeader("Authorization") String token*/) {
+    public ResponseDto<List<SubCategoryDto>> getSubcategories(@PathVariable Long id, @RequestHeader("Authorization") String token) {
         ResponseDto<List<SubCategoryDto>> response = new ResponseDto<>();
-       /*  AuthBl authBl = new AuthBl();
         if (!authBl.validateToken(token)) {
             response.setCode("0001");
             response.setResponse(null);
             response.setErrorMessage("Invalid token");
             return response;
         }
-        */
+
         //this.categoryBl.findAllSubCategoriesByCategoryId(id);
         response.setCode("0000");
         response.setResponse(this.categoryBl.findAllSubCategoriesByCategoryId(id));
@@ -119,47 +118,10 @@ public class LegalCaseApi {
 
     }
 
-    @GetMapping("/api/v1/category")
-    public ResponseDto<List<CategoryDto>> getCategories( /* , @RequestHeader("Authorization") String token*/) {
-        ResponseDto<List<CategoryDto>> response = new ResponseDto<>();
-       /*  AuthBl authBl = new AuthBl();
-        if (!authBl.validateToken(token)) {
-            response.setCode("0001");
-            response.setResponse(null);
-            response.setErrorMessage("Invalid token");
-            return response;
-        }
-        */
-        //this.categoryBl.findAllSubCategoriesByCategoryId(id);
-        response.setCode("0000");
-        response.setResponse(this.categoryBl.findAll());
-        response.setErrorMessage(null);
-        return response;
 
-    }
 
-    /*@GetMapping("/api/v1/legalcase/user/{id}")
-    public ResponseDto<List<LegalCaseDto>> getLegalCasesByUserId(@PathVariable Long id  /* , @RequestHeader("Authorization") String token*/
-    //)
-
-    //{
-        //ResponseDto<List<LegalCaseDto>> response = new ResponseDto<>();
-       /*  AuthBl authBl = new AuthBl();
-        if (!authBl.validateToken(token)) {
-            response.setCode("0001");
-            response.setResponse(null);
-            response.setErrorMessage("Invalid token");
-            return response;
-        }
-        */
-        //this.categoryBl.findAllSubCategoriesByCategoryId(id);
-        /*response.setCode("0000");
-        response.setResponse(this.legalCaseBl.findAllByUserId(id));
-        response.setErrorMessage(null);
-        return response;
-
-    }*/
-        @GetMapping("/api/v1/legalcase/user/{id}")
+    /*
+    @GetMapping("/api/v1/legalcase/user/{id}")
         public ResponseDto<Page<LegalCaseDto>> getLegalCasesByUserId(
             @PathVariable Long id,
         @RequestParam(defaultValue = "0") int page,
@@ -171,6 +133,100 @@ public class LegalCaseApi {
 
         response.setCode("0000");
         response.setResponse(legalCasesPage);
+        response.setErrorMessage(null);
+        return response;
+    }*/
+
+    @GetMapping("/api/v1/legalcase/user/{id}")
+    public ResponseDto<Page<LegalCaseDto>> getLegalCasesByUserId(
+            @PathVariable Long id,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date from,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date to,
+            @RequestParam(required = false) Long categoryId,
+            @RequestParam(required = false) Long instanceId,
+            @RequestParam(required = false) Boolean inProgress,
+            @RequestParam(required = false) String title,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size){
+
+        ResponseDto<Page<LegalCaseDto>> response = new ResponseDto<>();
+        Pageable pageable = PageRequest.of(page, size);
+        Page<LegalCaseDto> legalCasesPage = legalCaseBl.findAllByUserIdWithFilters(id, from, to, categoryId, instanceId, inProgress,title ,pageable);
+        System.out.println("###########################################");
+        System.out.println(title);
+        System.out.println("###########################################");
+        response.setCode("0000");
+        response.setResponse(legalCasesPage);
+        response.setErrorMessage(null);
+        return response;
+    }
+
+    @PutMapping("/api/v1/legalcase/{id}")
+    public ResponseDto<String> updateLegalCase(@PathVariable Long id, @RequestHeader("Authorization") String token) {
+        ResponseDto<String> response = new ResponseDto<>();
+        if (!authBl.validateToken(token)) {
+            response.setCode("0001");
+            response.setResponse(null);
+            response.setErrorMessage("Invalid token");
+            return response;
+        }
+
+        this.legalCaseBl.updateLegalCase(id);
+        response.setCode("0000");
+        response.setResponse("Case updated");
+        response.setErrorMessage(null);
+        return response;
+    }
+
+
+    @GetMapping("api/v1/legalcase/{id}/information")
+    public ResponseDto<CaseInformationDto> getCaseInformation(@PathVariable Long id){
+        ResponseDto<CaseInformationDto> response = new ResponseDto<>();
+        response.setCode("0000");
+        response.setResponse(this.legalCaseBl.getCaseInformationByCaseId(id));
+        response.setErrorMessage(null);
+        return response;
+    }
+
+    @PostMapping("/api/v1/legalcase/{id}/comment")
+    public ResponseDto<String> createComment(@PathVariable Long id, @RequestBody CommentDto commentDto){
+        ResponseDto<String> response = new ResponseDto<>();
+        this.commentBl.saveComment(commentDto);
+        response.setCode("0000");
+        response.setResponse("Comment created");
+        response.setErrorMessage(null);
+        return response;
+    }
+
+    /* 
+    @GetMapping("/api/v1/legalcase/{id}/comments")
+    public ResponseDto<List<CommentDto>> getComments(@PathVariable Long id){
+        ResponseDto<List<CommentDto>> response = new ResponseDto<>();
+        response.setCode("0000");
+        response.setResponse(this.commentBl.getCommentsByLegalCaseId(id));
+        response.setErrorMessage(null);
+        return response;
+    }
+    */
+    @GetMapping("/api/v1/legalcase/{id}/comments")
+    public ResponseDto<Page<CommentDto>> getComments(@PathVariable Long id, @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size){
+
+        ResponseDto<Page<CommentDto>> response = new ResponseDto<>();
+        Pageable pageable = PageRequest.of(page, size);
+        Page<CommentDto> commentsPage = this.commentBl.getCommentsByLegalCaseId(id, pageable);
+        response.setCode("0000");
+        response.setResponse(commentsPage);
+        response.setErrorMessage(null);
+        return response;
+    }
+
+    @PostMapping("/api/v1/legalcase/{id}/instance")
+    public ResponseDto<String> createInstance(@PathVariable Long id, @RequestBody InstanceLegalCaseDto instanceLegalCaseDto){
+        ResponseDto<String> response = new ResponseDto<>();
+        this.legalCaseBl.updateInstanceLegalCase(id, instanceLegalCaseDto);
+        response.setCode("0000");
+        response.setResponse("Instance created");
         response.setErrorMessage(null);
         return response;
     }

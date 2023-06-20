@@ -1,6 +1,7 @@
 package com.lawfinder.backend.dto;
 
 import java.util.Date;
+import java.util.List;
 
 public class LegalCaseDto {
 
@@ -17,6 +18,7 @@ public class LegalCaseDto {
     private boolean complaint;
     //Para guardar la instancia
     private int idInstance;
+    private String counterpartName;
 
 
 
@@ -31,7 +33,7 @@ public class LegalCaseDto {
 
     public LegalCaseDto(Long idLegalCase, int idSubCategory, int idProvince, int idCrime ,int userId, String part, String contrapart,
                         String title, Date startDate, String summary, int idInstance, Date startDateInstance, Date endDateInstance,
-                        Date lastUpdate, boolean complaint ) {
+                        Date lastUpdate, boolean complaint, String counterpartName) {
         this.idLegalCase = idLegalCase;
         this.idProvince = idProvince;
         this.idCrime = idCrime;
@@ -46,6 +48,9 @@ public class LegalCaseDto {
         this.endDateInstance = endDateInstance;
         this.lastUpdate = lastUpdate;
         this.complaint = complaint;
+        this.counterpartName = counterpartName;
+        
+        
 
     }
 
@@ -164,4 +169,14 @@ public class LegalCaseDto {
     public void setEndDateInstance(Date endDateInstance) {
         this.endDateInstance = endDateInstance;
     }
+
+    public String getCounterpartName() {
+        return counterpartName;
+    }
+
+    public void setCounterpartName(String counterpartName) {
+        this.counterpartName = counterpartName;
+    }
+
+
 }

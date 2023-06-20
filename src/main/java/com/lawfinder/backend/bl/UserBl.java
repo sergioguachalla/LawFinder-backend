@@ -59,7 +59,7 @@ public class UserBl {
 
         // Set properties from userDto to userEntity
         userEntity.setUsername(userDto.getUsername());
-        System.out.println("Contraseña" + userDto.getSecret());
+        //System.out.println("Contraseña" + userDto.getSecret());
         userEntity.setSecret(PasswordService.hashPassword(userDto.getSecret()));
         userEntity.setStatus(false);
         userEntity.setPersonId(person);
@@ -80,9 +80,58 @@ public class UserBl {
         userRoleEntity.setTx_user("lawfinder");
         userRoleEntity.setTx_host("localhost");
         userRoleEntity.setTx_date(new Date());
+        userRoleRepository.saveAndFlush(userRoleEntity);*/
+
+    }
+
+    @Transactional
+    public void saveLawyer(UserDto userDto) {
+        UserEntity userEntity = new UserEntity();
+
+        // Convert PersonDto to PersonEntity
+        PersonDto personDto = userDto.getPersonId();
+        PersonEntity person = new PersonEntity();
+        personMemory.setPersonId(Long.valueOf(1));
+        // Convert AddressDto to AddressEntity
+
+        person.setName(personDto.getName());
+        person.setLastname(personDto.getLastname());
+        person.setNumber(personDto.getNumber());
+        person.setEmail(personDto.getEmail());
+        person.setAddress(personDto.getAddress());
+        person.setCi(personDto.getCi());
+        person.setTx_user("lawfinder");
+        person.setTx_date(new java.util.Date());
+        person.setTx_host("localhost");
+        personMemory = personRepository.save(person);
+
+        // Set properties from userDto to userEntity
+        userEntity.setUsername(userDto.getUsername());
+        //System.out.println("Contraseña" + userDto.getSecret());
+        userEntity.setSecret(PasswordService.hashPassword(userDto.getSecret()));
+        userEntity.setStatus(false);
+        userEntity.setPersonId(person);
+        //userEntity.setImageId(1);
+        userEntity.setTxUser("lawfinder");
+        userEntity.setTxHost("localhost");
+        userEntity.setTxDate(new Date());
+        // userEntity.setImageId(1);
+        // Save userEntity in the database
+        userRepository.save(userEntity);
+
+        // Create UserRoleEntity
+        UserRoleEntity userRoleEntity = new UserRoleEntity();
+        RoleEntity roleEntity = roleRepository.findByRole("LAWYER");
+        userRoleEntity.setRole(roleEntity);
+        userRoleEntity.setUser(userEntity);
+        userRoleEntity.setStatus(true);
+        userRoleEntity.setTx_user("lawfinder");
+        userRoleEntity.setTx_host("localhost");
+        userRoleEntity.setTx_date(new Date());
         userRoleRepository.saveAndFlush(userRoleEntity);
         */
     }
+
 
     public void sendmail(String email, String code) {
 

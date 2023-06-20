@@ -10,18 +10,22 @@ public class InstanceLegalCaseDto {
     private Long resolutionId;
     private Date startDate;
 
+    private Date endDate;
+
     // Constructor vacío
     public InstanceLegalCaseDto() {
     }
 
     // Constructor con todos los atributos
-    public InstanceLegalCaseDto(Long instanceLegalCaseId, Long audienceId, Long instanceId, Long legalCaseId, Long resolutionId, Date startDate) {
+    public InstanceLegalCaseDto(Long instanceLegalCaseId, Long audienceId, Long instanceId, Long legalCaseId, Long resolutionId, Date startDate, Date endDate) {
         this.instanceLegalCaseId = instanceLegalCaseId;
         this.audienceId = audienceId;
         this.instanceId = instanceId;
         this.legalCaseId = legalCaseId;
         this.resolutionId = resolutionId;
         this.startDate = startDate;
+        this.endDate = endDate;
+
     }
 
     // Getters y Setters
@@ -72,6 +76,14 @@ public class InstanceLegalCaseDto {
 
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     // toString
