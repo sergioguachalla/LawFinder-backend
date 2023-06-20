@@ -98,7 +98,7 @@ public class LegalFileBl{
     }
 
 
-<<<<<<< HEAD
+
     /*
     public File convertMultiPartToFile(MultipartFile file ) throws IOException
     {
@@ -106,13 +106,12 @@ public class LegalFileBl{
         FileOutputStream fos = new FileOutputStream( convFile );
         fos.write( file.getBytes() );
         fos.close();
-=======
+
 
 
     public File convertMultiPartToFile(MultipartFile file) throws IOException {
         File convFile = File.createTempFile("temp", null);  
         file.transferTo(convFile); 
->>>>>>> f57f3c964b35bfcf17674f1ee464832cee0f917a
         return convFile;
     }
     */

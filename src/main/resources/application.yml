@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/lawfinder
+    url: jdbc:postgresql://localhost:5432/law_finder_test
     username: postgres
-    password: 1234
+    password: admin
     driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
