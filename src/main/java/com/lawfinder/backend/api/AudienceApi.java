@@ -1,7 +1,6 @@
 package com.lawfinder.backend.api;
 import java.util.*;
 
-import com.lawfinder.backend.bl.AuthBl;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.lawfinder.backend.bl.AudienceBl;
 import com.lawfinder.backend.dto.*;

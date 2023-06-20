@@ -1,9 +1,6 @@
 package com.lawfinder.backend.api;
 
 import com.lawfinder.backend.bl.AuthBl;
-import com.lawfinder.backend.dao.InstanceLegalCaseRepository;
-import com.lawfinder.backend.dao.UserRepository;
-import com.lawfinder.backend.dao.UserRoleRepository;
 import com.lawfinder.backend.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;

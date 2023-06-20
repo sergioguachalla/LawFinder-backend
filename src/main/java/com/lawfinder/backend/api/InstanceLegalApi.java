@@ -1,6 +1,5 @@
 package com.lawfinder.backend.api;
 import com.lawfinder.backend.bl.InstanceLegalCaseBl;
-import com.lawfinder.backend.dto.InstanceDto;
 import com.lawfinder.backend.dto.InstanceLegalCaseDto;
 import com.lawfinder.backend.dto.ResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
