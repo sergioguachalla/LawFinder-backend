@@ -1,8 +1,6 @@
 package com.lawfinder.backend.Entity;
 
 import jakarta.persistence.*;
-import org.apache.catalina.User;
-
 import java.util.Date;
 
 @Entity

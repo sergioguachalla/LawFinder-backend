@@ -3,7 +3,6 @@ package com.lawfinder.backend.api;
 import com.lawfinder.backend.bl.CrimeBl;
 import com.lawfinder.backend.dto.CrimeDto;
 import com.lawfinder.backend.dto.ResponseDto;
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

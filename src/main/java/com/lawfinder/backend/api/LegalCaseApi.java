@@ -4,7 +4,6 @@ import com.lawfinder.backend.bl.*;
 import com.lawfinder.backend.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.repository.query.Param;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,7 +41,6 @@ public class LegalCaseApi {
     public ResponseDto<String> getVerification(@RequestBody DeviceIdDto deviceIdDto){
         ResponseDto<String> response = new ResponseDto<>();
         if(this.registrationBl.verifyUserByEmail(deviceIdDto)){
-            System.out.println(deviceIdDto.getEmail());
             pendingInvitations.push(deviceIdDto.getEmail());
             response.setCode("0001");
             response.setResponse("User Already Exists");
@@ -68,9 +66,7 @@ public class LegalCaseApi {
             response.setErrorMessage("Invalid token");
             return response;
         }
-        
 
-        System.out.println(legalCase.toString());
         this.legalCaseBl.saveLegalCase(legalCase,pendingInvitations);
         response.setCode("0000");
         response.setResponse("Task created");
@@ -90,8 +86,6 @@ public class LegalCaseApi {
             response.setErrorMessage("Invalid token");
             return response;
         }
-
-        //this.categoryBl.findAllSubCategoriesByCategoryId(id);
         response.setCode("0000");
         response.setResponse(this.categoryBl.findAllSubCategoriesByCategoryId(id));
         response.setErrorMessage(null);
@@ -119,24 +113,6 @@ public class LegalCaseApi {
     }
 
 
-
-    /*
-    @GetMapping("/api/v1/legalcase/user/{id}")
-        public ResponseDto<Page<LegalCaseDto>> getLegalCasesByUserId(
-            @PathVariable Long id,
-        @RequestParam(defaultValue = "0") int page,
-        @RequestParam(defaultValue = "10") int size){
-        ResponseDto<Page<LegalCaseDto>> response = new ResponseDto<>();
-
-        Pageable pageable = PageRequest.of(page, size);
-        Page<LegalCaseDto> legalCasesPage = this.legalCaseBl.findAllByUserIdPaginated(id, pageable);
-
-        response.setCode("0000");
-        response.setResponse(legalCasesPage);
-        response.setErrorMessage(null);
-        return response;
-    }*/
-
     @GetMapping("/api/v1/legalcase/user/{id}")
     public ResponseDto<Page<LegalCaseDto>> getLegalCasesByUserId(
             @PathVariable Long id,
@@ -152,9 +128,6 @@ public class LegalCaseApi {
         ResponseDto<Page<LegalCaseDto>> response = new ResponseDto<>();
         Pageable pageable = PageRequest.of(page, size);
         Page<LegalCaseDto> legalCasesPage = legalCaseBl.findAllByUserIdWithFilters(id, from, to, categoryId, instanceId, inProgress,title ,pageable);
-        System.out.println("###########################################");
-        System.out.println(title);
-        System.out.println("###########################################");
         response.setCode("0000");
         response.setResponse(legalCasesPage);
         response.setErrorMessage(null);
@@ -198,16 +171,7 @@ public class LegalCaseApi {
         return response;
     }
 
-    /* 
-    @GetMapping("/api/v1/legalcase/{id}/comments")
-    public ResponseDto<List<CommentDto>> getComments(@PathVariable Long id){
-        ResponseDto<List<CommentDto>> response = new ResponseDto<>();
-        response.setCode("0000");
-        response.setResponse(this.commentBl.getCommentsByLegalCaseId(id));
-        response.setErrorMessage(null);
-        return response;
-    }
-    */
+
     @GetMapping("/api/v1/legalcase/{id}/comments")
     public ResponseDto<Page<CommentDto>> getComments(@PathVariable Long id, @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size){

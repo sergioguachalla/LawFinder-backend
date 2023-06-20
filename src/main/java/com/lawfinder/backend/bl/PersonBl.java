@@ -23,16 +23,6 @@ public class PersonBl {
     public void addPerson(PersonDto person){
         PersonEntity personEntity = new PersonEntity();
 
-        // Convert AddressDto to AddressEntity
-        /*AddressDto addressDto = person.getAddress();
-        AddressEntity addressEntity = new AddressEntity();
-        addressEntity.setAddressInfo(addressDto.getAddressInfo());
-        addressEntity.setProvId(addressDto.getProvId());
-
-        // save the address before setting it to the person entity
-        addressEntity = addressRepository.save(addressEntity);*/
-
-        // Set properties from personDto to personEntity
         personEntity.setName(person.getName());
         personEntity.setLastname(person.getLastname());
         personEntity.setNumber(person.getNumber());
@@ -42,7 +32,6 @@ public class PersonBl {
         personEntity.setTx_user("admin");
         personEntity.setTx_date(new java.util.Date());
         personEntity.setTx_host("localhost");
-        System.out.println(personEntity);
 
         // Save personEntity in the database
         personEntity = personRepository.save(personEntity);

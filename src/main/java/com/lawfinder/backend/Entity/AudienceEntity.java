@@ -1,7 +1,6 @@
 package com.lawfinder.backend.Entity;
 
 import jakarta.persistence.*;
-import java.util.Date;
 import java.time.LocalDateTime;
 
 @Entity

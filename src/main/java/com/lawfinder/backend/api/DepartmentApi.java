@@ -15,9 +15,6 @@ public class DepartmentApi {
     @Autowired
     private AuthBl authBl;
 
-    /*public DepartmentApi(DepartmentBl departmentBl){
-        this.departmentBl = departmentBl;
-    }*/
 
     @GetMapping("/api/v1/department")
     public ResponseDto<List<DepartmentDto>> getAllDepartments(/*@RequestHeader("Authorization")*/ String token){

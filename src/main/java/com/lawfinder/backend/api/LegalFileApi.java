@@ -1,17 +1,11 @@
 package com.lawfinder.backend.api;
-import com.lawfinder.backend.dto.FileQueryDto;
 import com.lawfinder.backend.dto.ResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import com.lawfinder.backend.bl.LegalFileBl;
 
 import java.util.List;
-
-import static java.net.HttpURLConnection.HTTP_OK;
 
 @CrossOrigin(origins = "*")
 @RestController

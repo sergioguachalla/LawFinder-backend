@@ -7,7 +7,6 @@ import com.lawfinder.backend.dto.DepartmentDto;
 
 import com.lawfinder.backend.dto.ProvinceDto;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -59,11 +58,5 @@ public class DepartmentBl {
         });
         return provinceDtoList;
     }
-
-
-    /*@Query("SELECT d FROM DEPARTMENT d WHERE d.department_id = departmentId")
-    public List<DepartmentEntity> findAllByDepartmentId(Long departmentId){
-
-    }*/
 
 }

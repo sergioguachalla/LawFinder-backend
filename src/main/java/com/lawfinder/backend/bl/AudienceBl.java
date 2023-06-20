@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lawfinder.backend.Entity.AudienceEntity;
-import com.lawfinder.backend.Entity.InstanceLegalCaseEntity;
 import com.lawfinder.backend.dao.AudienceRepository;
 import com.lawfinder.backend.dto.AudienceDto;
 

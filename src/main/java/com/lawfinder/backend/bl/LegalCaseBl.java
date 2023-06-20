@@ -3,8 +3,6 @@ import com.lawfinder.backend.Entity.*;
 import com.lawfinder.backend.dao.*;
 import com.lawfinder.backend.dto.*;
 import com.lawfinder.backend.specifications.LegalCaseSpecifications;
-
-import org.apache.tomcat.util.http.fileupload.MultipartStream.ProgressNotifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +14,6 @@ import java.util.ArrayList;
 
 import java.util.Date;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
@@ -31,8 +28,6 @@ public class LegalCaseBl {
     private final ActorRepository actorRepository;
     private final CounterpartRepository counterpartRepository;
 
-    @Autowired
-    private CrimeRepository crimeRepository;
 
     public LegalCaseBl(LegalCaseRepository legalCaseRepository, InstanceLegalCaseRepository instanceLegalCaseRepository, 
                         InstanceRepository instanceRepository, UserRepository userRepository, ActorRepository actorRepository, CounterpartRepository counterpartRepository) {
@@ -94,22 +89,11 @@ public class LegalCaseBl {
        
         UserEntity userEntity = new UserEntity();
         String email="";
-        System.out.println("#######################################################");
-        System.out.println(pendingInvitations.size());
-        System.out.println("#######################################################");
-
 
         for (int i = 0; i < pendingInvitations.size(); i++) {
-            ActorEntity actor = new ActorEntity();
-            System.out.println("9999999999999999999999999999999999999");
-        
+            ActorEntity actor = new ActorEntity();        
             // Find the user by email
-            email = pendingInvitations.get(i); // Accede al elemento en la posición i sin extraerlo de la pila
-            System.out.println("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu");
-            System.out.println(email);
-            System.out.println("Iteracion: "+i);
-            System.out.println("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu");
-        
+            email = pendingInvitations.get(i);        
             userEntity = userRepository.findByEmail(email);
             actor.setLegalCaseId(legalCaseEntity);
             actor.setUserId(userEntity);
@@ -136,36 +120,6 @@ public class LegalCaseBl {
         }
         return instanceDtoList;
     }
-
-   /*public List<LegalCaseDto> findAllByUserId(Long userId){
-        List<LegalCaseDto> legalCaseDtoList = new ArrayList<>();
-        List<LegalCaseEntity> legalCaseEntityList = legalCaseRepository.findAllByUserId(userId, pageable);
-        for (LegalCaseEntity legalCaseEntity : legalCaseEntityList) {
-            LegalCaseDto legalCaseDto = new LegalCaseDto();
-            legalCaseDto.setIdLegalCase(legalCaseEntity.getLegalCaseId());
-            legalCaseDto.setIdProvince(legalCaseEntity.getProvince().getProvinceId().intValue());
-            legalCaseDto.setIdCrime(legalCaseEntity.getCrime().getCrimeId().intValue());
-            legalCaseDto.setUserId(legalCaseEntity.getUser().getId().intValue());
-            legalCaseDto.setStartDate(legalC    aseEntity.getStartDate());
-            legalCaseDto.setTitle(legalCaseEntity.getTitle());
-            legalCaseDto.setSummary(legalCaseEntity.getSummary());
-            legalCaseDto.setLastUpdate(legalCaseEntity.getTxDate());
-            legalCaseDtoList.add(legalCaseDto);
-        }
-        return legalCaseDtoList;
-    }*/
-
-    /* 
-    public Page<LegalCaseDto> findAllByUserIdPaginated(Long userId, Pageable pageable) {
-        Page<LegalCaseEntity> legalCasePage = legalCaseRepository.findAllByUserId(userId, pageable);
-        return legalCasePage.map(this::convertToLegalCaseDto);
-    }
-
-    public Page<LegalCaseDto> findAllByUserIdAndStartDateBetween(Long userId, Date from, Date to, Pageable pageable) {
-        Page<LegalCaseEntity> legalCasePage = legalCaseRepository.findAllByUserIdAndStartDateBetween(userId, from, to, pageable);
-        return legalCasePage.map(this::convertToLegalCaseDto);
-    }
-    */
 
     public Page<LegalCaseDto> findAllByUserIdWithFilters(Long userId, Date from, Date to, Long categoryId, Long instanceId, Boolean status, String title  ,Pageable pageable) {
         Specification<LegalCaseEntity> spec = Specification.where(LegalCaseSpecifications.hasUserId(userId));
@@ -225,7 +179,6 @@ public class LegalCaseBl {
         CaseInformationDto caseInformationDto = new CaseInformationDto();
         List<String> caseInformation = legalCaseRepository.caseInformationByCaseId(caseId);
         String caseSummary = legalCaseRepository.caseSummaryByCaseId(caseId);
-        System.out.println("caseInformation: " + caseInformation);
         if (!caseInformation.isEmpty()) {
 
             String[] elements = caseInformation.get(0).split(",");

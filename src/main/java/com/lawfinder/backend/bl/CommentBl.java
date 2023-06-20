@@ -1,10 +1,8 @@
 package com.lawfinder.backend.bl;
 
-import com.lawfinder.backend.Entity.ActorEntity;
 import com.lawfinder.backend.Entity.CommentEntity;
 import com.lawfinder.backend.Entity.LegalCaseEntity;
 import com.lawfinder.backend.Entity.UserEntity;
-import com.lawfinder.backend.dao.ActorRepository;
 import com.lawfinder.backend.dao.CommentRepository;
 import com.lawfinder.backend.dao.LegalCaseRepository;
 import com.lawfinder.backend.dao.UserRepository;
@@ -14,9 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class CommentBl {

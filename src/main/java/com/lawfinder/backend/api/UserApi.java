@@ -1,16 +1,12 @@
 package com.lawfinder.backend.api;
 
 import com.lawfinder.backend.Entity.PersonEntity;
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.*;
 import com.lawfinder.backend.bl.*;
 import com.lawfinder.backend.dto.*;
 @CrossOrigin(origins = "*")
@@ -19,19 +15,15 @@ import com.lawfinder.backend.dto.*;
 public class UserApi {
     @Autowired
     private UserBl userBl;
-    @Autowired
-    private PersonBl personBl;
     // Constructor
 
-    public UserApi(UserBl userBl, PersonBl personBl) {
+    public UserApi(UserBl userBl) {
         this.userBl = userBl;
-        this.personBl = personBl;
     }
 
     @PostMapping("/api/v1/user")
     public ResponseDto<String> createUser(@RequestBody UserDto user) {
         ResponseDto<String> response = new ResponseDto<>();
-        System.out.println(user.toString());
         this.userBl.saveCustomer(user);
         PersonEntity person = new PersonEntity();
         person.setEmail(user.getPersonId().getEmail());
@@ -48,7 +40,6 @@ public class UserApi {
     @PostMapping("/api/v1/lawyer")
     public ResponseDto<String> createLawyer(@RequestBody UserDto lawyer){
         ResponseDto<String> response = new ResponseDto<>();
-        System.out.println(lawyer.toString());
         this.userBl.saveLawyer(lawyer);
         PersonEntity person = new PersonEntity();
         person.setEmail(lawyer.getPersonId().getEmail());
@@ -71,20 +62,6 @@ public class UserApi {
         return response;
    
     }
-
-    /*@PostMapping("/api/v1/verify")
-    public ResponseDto<String> verifyMail(@RequestBody VerifyDto mail) {
-        ResponseDto<String> response = new ResponseDto<>();
-        if(this.userBl.verify(mail)){
-            response.setCode("0000");
-            response.setResponse("mail verified");
-        }else{
-            response.setCode("0001");
-            response.setResponse("mail not verified");
-        }
-        return response;
-
-    } */
 
     @PostMapping("/api/v1/verify")
     public ResponseDto<String> verifyMail(@RequestBody DeviceIdDto body) {
