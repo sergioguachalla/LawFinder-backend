@@ -46,6 +46,7 @@ public class CommentBl {
         commentEntity.setCommentContent(commentDto.getCommentContent());
         commentEntity.setUserId(userEntity);
         commentEntity.setLegalCaseId(legalCaseEntity);
+        commentEntity.setCommentDate(commentDto.getCommentDate());
         commentRepository.save(commentEntity);
 
 
@@ -65,6 +66,7 @@ public class CommentBl {
         commentDto.setLegalCaseId(commentEntity.getLegalCaseId().getLegalCaseId());
         commentDto.setCommentContent(commentEntity.getCommentContent());
         commentDto.setUserName(commentEntity.getUserId().getUsername());
+        commentDto.setCommentDate(commentEntity.getCommentDate());
         return commentDto;
     }
 

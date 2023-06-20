@@ -3,6 +3,8 @@ package com.lawfinder.backend.Entity;
 import jakarta.persistence.*;
 import org.apache.catalina.User;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "COMMENT")
 public class CommentEntity {
@@ -24,17 +26,24 @@ public class CommentEntity {
     @Column(name = "COMMENT_CONTENT", columnDefinition = "Text")
     private String commentContent;
 
+
+    @Column(name = "COMMENT_DATE")
+    private Date commentDate;
+
+
+
     // Constructor, getters, and setters
     // ...
 
     public CommentEntity() {
     }
 
-    public CommentEntity(Long commentId, UserEntity userId, LegalCaseEntity legalCaseId, String commentContent) {
+    public CommentEntity(Long commentId, UserEntity userId, LegalCaseEntity legalCaseId, String commentContent, Date commentDate) {
         this.commentId = commentId;
         this.userId = userId;
         this.legalCaseId = legalCaseId;
         this.commentContent = commentContent;
+        this.commentDate = commentDate;
     }
 
     public Long getCommentId() {
@@ -67,5 +76,13 @@ public class CommentEntity {
 
     public void setCommentContent(String commentContent) {
         this.commentContent = commentContent;
+    }
+
+    public Date getCommentDate() {
+        return commentDate;
+    }
+
+    public void setCommentDate(Date commentDate) {
+        this.commentDate = commentDate;
     }
 }
