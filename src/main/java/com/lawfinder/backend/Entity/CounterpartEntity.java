@@ -9,7 +9,7 @@ public class CounterpartEntity {
     @Column(name = "COUNTERPART_ID")
     private Long counterpartId;
 
-    @Column(name = "COUNTERPART_NAME", length = 2000, nullable = false)
+    @Column(name = "COUNTERPART_NAME", length = 2000)
     private String counterpartName;
 
     @ManyToOne

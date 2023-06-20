@@ -29,17 +29,19 @@ public class LegalCaseBl {
     private final InstanceRepository instanceRepository;
     private final UserRepository userRepository;
     private final ActorRepository actorRepository;
+    private final CounterpartRepository counterpartRepository;
 
     @Autowired
     private CrimeRepository crimeRepository;
 
     public LegalCaseBl(LegalCaseRepository legalCaseRepository, InstanceLegalCaseRepository instanceLegalCaseRepository, 
-                        InstanceRepository instanceRepository, UserRepository userRepository, ActorRepository actorRepository) {
+                        InstanceRepository instanceRepository, UserRepository userRepository, ActorRepository actorRepository, CounterpartRepository counterpartRepository) {
         this.legalCaseRepository = legalCaseRepository;
         this.instanceLegalCaseRepository = instanceLegalCaseRepository;
         this.instanceRepository = instanceRepository;
         this.userRepository = userRepository;
         this.actorRepository = actorRepository;
+        this.counterpartRepository = counterpartRepository;
     }
 
     @Transactional
@@ -114,9 +116,11 @@ public class LegalCaseBl {
             actor.setStatus(false);
             actorRepository.saveAndFlush(actor);
         }
-
-
-
+        
+        CounterpartEntity counterpart = new CounterpartEntity();
+        counterpart.setLegalCaseId(legalCaseEntity);
+        counterpart.setCounterpartName(legalCaseDto.getCounterpartName());
+        counterpartRepository.saveAndFlush(counterpart);
 
 
     }

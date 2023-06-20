@@ -198,11 +198,25 @@ public class LegalCaseApi {
         return response;
     }
 
+    /* 
     @GetMapping("/api/v1/legalcase/{id}/comments")
     public ResponseDto<List<CommentDto>> getComments(@PathVariable Long id){
         ResponseDto<List<CommentDto>> response = new ResponseDto<>();
         response.setCode("0000");
         response.setResponse(this.commentBl.getCommentsByLegalCaseId(id));
+        response.setErrorMessage(null);
+        return response;
+    }
+    */
+    @GetMapping("/api/v1/legalcase/{id}/comments")
+    public ResponseDto<Page<CommentDto>> getComments(@PathVariable Long id, @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size){
+
+        ResponseDto<Page<CommentDto>> response = new ResponseDto<>();
+        Pageable pageable = PageRequest.of(page, size);
+        Page<CommentDto> commentsPage = this.commentBl.getCommentsByLegalCaseId(id, pageable);
+        response.setCode("0000");
+        response.setResponse(commentsPage);
         response.setErrorMessage(null);
         return response;
     }

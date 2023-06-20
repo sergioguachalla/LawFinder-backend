@@ -8,8 +8,10 @@ import com.lawfinder.backend.dao.ActorRepository;
 import com.lawfinder.backend.dao.CommentRepository;
 import com.lawfinder.backend.dao.LegalCaseRepository;
 import com.lawfinder.backend.dao.UserRepository;
+import org.springframework.data.domain.Pageable;
 import com.lawfinder.backend.dto.CommentDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,19 +50,22 @@ public class CommentBl {
 
 
     }
-    public List<CommentDto> getCommentsByLegalCaseId(Long legalCaseId){
-        List<CommentEntity> commentEntities = commentRepository.findByLegalCaseId(legalCaseId);
-        List<CommentDto> commentDtoList = new ArrayList<>();
-        for(CommentEntity commentEntity : commentEntities){
-            CommentDto commentDto = new CommentDto();
-            commentDto.setCommentId(commentEntity.getCommentId());
-            commentDto.setUserId(commentEntity.getUserId().getId());
-            commentDto.setLegalCaseId(commentEntity.getLegalCaseId().getLegalCaseId());
-            commentDto.setCommentContent(commentEntity.getCommentContent());
-            commentDto.setUserName(commentEntity.getUserId().getUsername());
-            commentDtoList.add(commentDto);
-        }
-        return commentDtoList;
+    public Page<CommentDto> getCommentsByLegalCaseId(Long legalCaseId, Pageable pageable){
+        Page<CommentEntity> commentEntities = commentRepository.findByLegalCaseId(legalCaseId, pageable);
+        
+
+        return commentEntities.map(this::convertToDto);
+    }
+
+    // metodo convertir a dto
+    public CommentDto convertToDto(CommentEntity commentEntity){
+        CommentDto commentDto = new CommentDto();
+        commentDto.setCommentId(commentEntity.getCommentId());
+        commentDto.setUserId(commentEntity.getUserId().getId());
+        commentDto.setLegalCaseId(commentEntity.getLegalCaseId().getLegalCaseId());
+        commentDto.setCommentContent(commentEntity.getCommentContent());
+        commentDto.setUserName(commentEntity.getUserId().getUsername());
+        return commentDto;
     }
 
 
