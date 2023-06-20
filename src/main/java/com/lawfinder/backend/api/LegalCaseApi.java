@@ -1,16 +1,12 @@
 package com.lawfinder.backend.api;
 
-import com.lawfinder.backend.bl.CategoryBl;
-import com.lawfinder.backend.bl.CommentBl;
+import com.lawfinder.backend.bl.*;
 import com.lawfinder.backend.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.repository.query.Param;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
-
-import com.lawfinder.backend.bl.LegalCaseBl;
-import com.lawfinder.backend.bl.UserBl;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,6 +31,8 @@ public class LegalCaseApi {
 
     @Autowired
     private CommentBl commentBl;
+    @Autowired
+    private AuthBl authBl;
 
     private Stack<String> pendingInvitations = new Stack<>();
     Set<Integer> conjunto = new HashSet<>();
@@ -61,9 +59,9 @@ public class LegalCaseApi {
     }
     
     @PostMapping("/api/v1/legalcase")
-    public ResponseDto<String> createUser(@RequestBody LegalCaseDto legalcase /* , @RequestHeader("Authorization") String token*/) {
+    public ResponseDto<String> createCase(@RequestBody LegalCaseDto legalCase , @RequestHeader("Authorization") String token) {
         ResponseDto<String> response = new ResponseDto<>();
-       /*  AuthBl authBl = new AuthBl();
+
         if (!authBl.validateToken(token)) {
             response.setCode("0001");
             response.setResponse(null);
@@ -71,9 +69,9 @@ public class LegalCaseApi {
             return response;
         }
         
-        */
-        System.out.println(legalcase.toString());
-        this.legalCaseBl.saveLegalCase(legalcase,pendingInvitations);
+
+        System.out.println(legalCase.toString());
+        this.legalCaseBl.saveLegalCase(legalCase,pendingInvitations);
         response.setCode("0000");
         response.setResponse("Task created");
         pendingInvitations.clear();
@@ -84,16 +82,15 @@ public class LegalCaseApi {
     }
 
     @GetMapping("/api/v1/category/{id}/subcategory")
-    public ResponseDto<List<SubCategoryDto>> getSubcategories(@PathVariable Long id /* , @RequestHeader("Authorization") String token*/) {
+    public ResponseDto<List<SubCategoryDto>> getSubcategories(@PathVariable Long id, @RequestHeader("Authorization") String token) {
         ResponseDto<List<SubCategoryDto>> response = new ResponseDto<>();
-       /*  AuthBl authBl = new AuthBl();
         if (!authBl.validateToken(token)) {
             response.setCode("0001");
             response.setResponse(null);
             response.setErrorMessage("Invalid token");
             return response;
         }
-        */
+
         //this.categoryBl.findAllSubCategoriesByCategoryId(id);
         response.setCode("0000");
         response.setResponse(this.categoryBl.findAllSubCategoriesByCategoryId(id));
@@ -165,19 +162,18 @@ public class LegalCaseApi {
     }
 
     @PutMapping("/api/v1/legalcase/{id}")
-    public ResponseDto<String> updateLegalCase(@PathVariable Long id/* , @RequestHeader("Authorization") String token*/) {
+    public ResponseDto<String> updateLegalCase(@PathVariable Long id, @RequestHeader("Authorization") String token) {
         ResponseDto<String> response = new ResponseDto<>();
-       /*  AuthBl authBl = new AuthBl();
-        if (!authBl.validateToken(token)) { 
+        if (!authBl.validateToken(token)) {
             response.setCode("0001");
             response.setResponse(null);
             response.setErrorMessage("Invalid token");
             return response;
         }
-        */
+
         this.legalCaseBl.updateLegalCase(id);
         response.setCode("0000");
-        response.setResponse("Task updated");
+        response.setResponse("Case updated");
         response.setErrorMessage(null);
         return response;
     }

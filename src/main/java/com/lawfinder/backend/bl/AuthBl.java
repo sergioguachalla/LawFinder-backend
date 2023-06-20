@@ -77,7 +77,7 @@ public class AuthBl {
                     .withClaim("type", type)
                     .withClaim("name", name)
                     .withClaim("roles", roles)
-                    .withExpiresAt(new Date(System.currentTimeMillis() + 1000L * 60 * minutes)) // 24 horas
+                    .withExpiresAt(new Date(System.currentTimeMillis() + 1000L * 60 * minutes))
                     .sign(algorithm);
         } catch (JWTCreationException exception){
             System.out.println("Error al generar el token " + userId + " " + name + " " + type + " " + minutes);
