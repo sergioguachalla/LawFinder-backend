@@ -24,7 +24,6 @@ public class UserApi {
     @PostMapping("/api/v1/user")
     public ResponseDto<String> createUser(@RequestBody UserDto user) {
         ResponseDto<String> response = new ResponseDto<>();
-        System.out.println(user.toString());
         this.userBl.saveCustomer(user);
         PersonEntity person = new PersonEntity();
         person.setEmail(user.getPersonId().getEmail());
@@ -41,7 +40,6 @@ public class UserApi {
     @PostMapping("/api/v1/lawyer")
     public ResponseDto<String> createLawyer(@RequestBody UserDto lawyer){
         ResponseDto<String> response = new ResponseDto<>();
-        System.out.println(lawyer.toString());
         this.userBl.saveLawyer(lawyer);
         PersonEntity person = new PersonEntity();
         person.setEmail(lawyer.getPersonId().getEmail());

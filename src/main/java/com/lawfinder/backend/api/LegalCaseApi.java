@@ -41,7 +41,6 @@ public class LegalCaseApi {
     public ResponseDto<String> getVerification(@RequestBody DeviceIdDto deviceIdDto){
         ResponseDto<String> response = new ResponseDto<>();
         if(this.registrationBl.verifyUserByEmail(deviceIdDto)){
-            System.out.println(deviceIdDto.getEmail());
             pendingInvitations.push(deviceIdDto.getEmail());
             response.setCode("0001");
             response.setResponse("User Already Exists");
@@ -67,9 +66,7 @@ public class LegalCaseApi {
             response.setErrorMessage("Invalid token");
             return response;
         }
-        
 
-        System.out.println(legalCase.toString());
         this.legalCaseBl.saveLegalCase(legalCase,pendingInvitations);
         response.setCode("0000");
         response.setResponse("Task created");
@@ -131,9 +128,6 @@ public class LegalCaseApi {
         ResponseDto<Page<LegalCaseDto>> response = new ResponseDto<>();
         Pageable pageable = PageRequest.of(page, size);
         Page<LegalCaseDto> legalCasesPage = legalCaseBl.findAllByUserIdWithFilters(id, from, to, categoryId, instanceId, inProgress,title ,pageable);
-        System.out.println("###########################################");
-        System.out.println(title);
-        System.out.println("###########################################");
         response.setCode("0000");
         response.setResponse(legalCasesPage);
         response.setErrorMessage(null);

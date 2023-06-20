@@ -23,7 +23,6 @@ public class PersonApi {
     @PostMapping("/api/v1/person")
     public ResponseDto<String> createPerson(@RequestBody PersonDto person) {
         ResponseDto<String> response = new ResponseDto<>();
-        System.out.println(person.toString());
         this.personBl.addPerson(person);
         response.setCode("0000");
         response.setResponse("person created");
