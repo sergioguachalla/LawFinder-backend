@@ -1,6 +1,6 @@
 package com.lawfinder.backend.dto;
 
-import org.springframework.stereotype.Service;
+
 
 
 public class CrimeDto {

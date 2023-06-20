@@ -1,10 +1,5 @@
 package com.lawfinder.backend.dto;
 
-import com.lawfinder.backend.Entity.CourtEntity;
-import com.lawfinder.backend.Entity.FileEntity;
-import com.lawfinder.backend.Entity.InstanceLegalCaseEntity;
-import com.lawfinder.backend.Entity.LegalFileTypeEntity;
-
 import java.util.Date;
 
 public class LegalFileDto {
