@@ -16,6 +16,7 @@ import java.util.List;
 public class CrimeApi {
     @Autowired
     private CrimeBl crimeBl;
+
     @GetMapping("/api/v1/subcategory/{id}/crime")
     public ResponseDto<List<CrimeDto>> crimesBySubcategoryId(@PathVariable Long id) {
         ResponseDto<List<CrimeDto>> responseDto = new ResponseDto<>();
@@ -26,5 +27,15 @@ public class CrimeApi {
 
     }
 
+    @GetMapping("/api/v1/crime/{id}")
+    public ResponseDto<CrimeDto> crimeById(@PathVariable Long id) {
+        ResponseDto<CrimeDto> responseDto = new ResponseDto<>();
+        responseDto.setCode("0000");
+        responseDto.setResponse(crimeBl.getCrimeById(id));
+        responseDto.setErrorMessage(null);
+        return responseDto;
+
+
     }
+}
 

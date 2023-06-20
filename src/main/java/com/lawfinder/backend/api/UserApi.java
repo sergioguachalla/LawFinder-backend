@@ -66,6 +66,7 @@ public class UserApi {
     @PostMapping("/api/v1/verify")
     public ResponseDto<String> verifyMail(@RequestBody DeviceIdDto body) {
         ResponseDto<String> response = new ResponseDto<>();
+
         this.userBl.saveVerificationEntity(body);
         //this.userBl.sendmail(body.getEmail());
         response.setCode("0000");

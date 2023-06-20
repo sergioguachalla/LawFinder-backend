@@ -29,6 +29,15 @@ public class CrimeBl {
         return crimeDtos;
 
     }
+    public CrimeDto getCrimeById(Long crimeId){
+        CrimeEntity crimeEntity = crimeRepository.findByCrimeId(crimeId);
+        CrimeDto crimeDto = new CrimeDto();
+        crimeDto.setCrimeId(crimeEntity.getCrimeId());
+        crimeDto.setName(crimeEntity.getName());
+        crimeDto.setPrisonSentence((crimeEntity.getPrisonSentence()));
+
+        return crimeDto;
+    }
 
 
 }
