@@ -1,6 +1,5 @@
 package com.lawfinder.backend.dao;
 import com.lawfinder.backend.Entity.LegalCaseEntity;
-import com.lawfinder.backend.dto.CaseInformationDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
