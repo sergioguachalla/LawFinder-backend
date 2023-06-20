@@ -56,5 +56,12 @@ public class PersonBl {
         return personRepository.save(personEntity);
     }
 
+    public boolean getPersonByFullName(String name, String lastname){
+
+        PersonEntity personEntity = personRepository.findByName(name, lastname);
+
+        return personEntity != null;
+
+    }
 }
 
