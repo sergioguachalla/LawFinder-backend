@@ -3,7 +3,6 @@ package com.lawfinder.backend.api;
 import com.lawfinder.backend.bl.PersonBl;
 import com.lawfinder.backend.bl.UserBl;
 import com.lawfinder.backend.dto.DeviceIdDto;
-import com.lawfinder.backend.dto.PersonDto;
 import com.lawfinder.backend.dto.ResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

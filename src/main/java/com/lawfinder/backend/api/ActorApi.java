@@ -18,10 +18,10 @@ public class ActorApi {
     private AuthBl authBl;
 
     @GetMapping("/api/v1/invitation/{idUser}")
-    public ResponseDto<List<ActorDto>> getInvitationsById(@RequestHeader("Authorization") String token, @PathVariable Long idUser){
+    public ResponseDto<List<InvitationDto>> getInvitationsById(@RequestHeader("Authorization") String token, @PathVariable Long idUser){
 
         if (!authBl.validateToken(token)) {
-            ResponseDto<List<ActorDto>> response = new ResponseDto<>();
+            ResponseDto<List<InvitationDto>> response = new ResponseDto<>();
             response.setCode("0001");
             response.setResponse(null);
             response.setErrorMessage("Invalid token");
@@ -29,7 +29,7 @@ public class ActorApi {
         }
 
 
-        ResponseDto<List<ActorDto>> response = new ResponseDto<>();
+        ResponseDto<List<InvitationDto>> response = new ResponseDto<>();
         response.setCode("0000");
         response.setResponse(this.actorBl.findByInvitationsId(idUser));
         response.setErrorMessage(null);
