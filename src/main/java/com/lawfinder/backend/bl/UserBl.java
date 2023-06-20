@@ -129,7 +129,7 @@ public class UserBl {
         userRoleEntity.setTx_host("localhost");
         userRoleEntity.setTx_date(new Date());
         userRoleRepository.saveAndFlush(userRoleEntity);
-        */
+        
     }
 
 
