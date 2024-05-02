@@ -136,7 +136,7 @@ public class UserBl {
                 + "Gracias por registrarte en LawFinder. Tu código de verificación es: " + code + "\n\n"
                 + "Utiliza este código para completar tu registro en LawFinder.\n\n"
                 + "¡Bienvenido y que tengas una excelente experiencia con nuestra plataforma!";
-        emailService.sendEmail(email, subject, message);
+        emailService.sendEmailMime(email, subject, message);
     }
 
     public Boolean verify(DeviceIdDto deviceIdDto) {

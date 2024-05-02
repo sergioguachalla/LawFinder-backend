@@ -17,12 +17,12 @@ public class ActorBl {
     @Autowired
     private final ActorRepository actorRepository;
 
-    public ActorBl( ActorRepository actorRepository){
-        this.actorRepository= actorRepository;
+    public ActorBl(ActorRepository actorRepository) {
+        this.actorRepository = actorRepository;
 
     }
 
-        public List<InvitationDto> findByInvitationsId(Long personId){
+    public List<InvitationDto> findByInvitationsId(Long personId) {
         List<ActorEntity> actorEntity = actorRepository.findInvitationByUserId(personId);
         // transformar actorEntity a actorDto
         List<InvitationDto> ListinvitationDto = new ArrayList<>();
@@ -36,7 +36,7 @@ public class ActorBl {
 
             String title = actorEntity1.getLegalCaseId().getTitle();
             Date startDate = actorEntity1.getLegalCaseId().getStartDate();
-            
+
             invitationDto.setActorId(actorEntity1.getActorId());
             invitationDto.setUserId((actorEntity1.getUserId().getId().intValue()));
             invitationDto.setLegalCaseId(actorEntity1.getLegalCaseId().getLegalCaseId().intValue());
@@ -50,14 +50,12 @@ public class ActorBl {
 
     }
 
-    public void acceptInvitation(Long actorId){
-        ActorEntity actorEntity= actorRepository.findById(actorId).orElse(null);
+    public void acceptInvitation(Long actorId) {
+        ActorEntity actorEntity = actorRepository.findById(actorId).orElse(null);
         assert actorEntity != null;
         actorEntity.setStatus(true);
         actorRepository.save(actorEntity);
+
+
     }
-
-
-
-
 }
