@@ -8,7 +8,7 @@ Accept: application/json
 {
     "username": "usuarios_testo22",
     "secret": "1234aa",
-    "status": 1,
+    "status": true,
     "personId": {
         "name": "ale",
         "ci": "123456789",
@@ -18,5 +18,5 @@ Accept: application/json
         "email": "idontevenplaymm@gmail.com",
         "address": "calle 1234"
     },
-    "ImageId": 0
+    "ImageId": 2
 }

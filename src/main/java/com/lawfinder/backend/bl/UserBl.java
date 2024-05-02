@@ -17,7 +17,7 @@ public class UserBl {
     private final EmailService emailService;
     private final RoleRepository roleRepository;
     private final VerificationRepository verificationRepository;
-    private UserRoleRepository userRoleRepository;
+    private final UserRoleRepository userRoleRepository;
 
 
     PersonEntity personMemory = new PersonEntity();
@@ -57,7 +57,7 @@ public class UserBl {
         userEntity.setUsername(userDto.getUsername());
         //System.out.println("Contraseña" + userDto.getSecret());
         userEntity.setSecret(PasswordService.hashPassword(userDto.getSecret()));
-        userEntity.setStatus(false);
+        userEntity.setStatus(true);
         userEntity.setPersonId(person);
         //userEntity.setImageId(1);
         userEntity.setTxUser("lawfinder");
@@ -72,9 +72,9 @@ public class UserBl {
         RoleEntity roleEntity = roleRepository.findByRole("CUSTOMER");
         userRoleEntity.setRole(roleEntity);
         userRoleEntity.setUser(userEntity);
-        userRoleEntity.setStatus(true);
-        userRoleEntity.setTx_user("lawfinder");
+        userRoleEntity.setStatus(1);
         userRoleEntity.setTx_host("localhost");
+        userRoleEntity.setTx_user("lawfinder");
         userRoleEntity.setTx_date(new Date());
         userRoleRepository.saveAndFlush(userRoleEntity);
 
@@ -120,7 +120,7 @@ public class UserBl {
         RoleEntity roleEntity = roleRepository.findByRole("LAWYER");
         userRoleEntity.setRole(roleEntity);
         userRoleEntity.setUser(userEntity);
-        userRoleEntity.setStatus(true);
+        userRoleEntity.setStatus(1);
         userRoleEntity.setTx_user("lawfinder");
         userRoleEntity.setTx_host("localhost");
         userRoleEntity.setTx_date(new Date());
@@ -148,11 +148,7 @@ public class UserBl {
     public Boolean verifyUserByEmail(DeviceIdDto deviceIdDto) {
         UserEntity userEntity = new UserEntity();
         userEntity = userRepository.findByEmail(deviceIdDto.getEmail());
-        if (userEntity != null) {
-            return true;
-        } else {
-            return false;
-        }
+        return userEntity != null;
     }
 
 

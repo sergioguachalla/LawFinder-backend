@@ -19,8 +19,8 @@ public class UserRoleEntity {
     @ManyToOne
     @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
     private UserEntity user;
-    @Column(name = "STATUS", length = 1)
-    private boolean status;
+    @Column(name = "STATUS")
+    private Integer status;
 
     @Column(name = "TX_USER", length = 50)
     private String tx_user;
@@ -35,7 +35,8 @@ public class UserRoleEntity {
     }
 
     // Constructor con todos los atributos
-    public UserRoleEntity(RoleEntity role, UserEntity user, boolean status, String tx_user, String tx_host, Date tx_date) {
+    public UserRoleEntity(RoleEntity role, UserEntity user, Integer status, String tx_user,
+                          String tx_host, Date tx_date) {
         this.role = role;
         this.user = user;
         this.status = status;
@@ -70,11 +71,11 @@ public class UserRoleEntity {
         this.user = user;
     }
 
-    public boolean getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
