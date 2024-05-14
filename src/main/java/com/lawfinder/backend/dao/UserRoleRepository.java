@@ -15,4 +15,12 @@ public interface UserRoleRepository extends JpaRepository<UserRoleEntity,Long> {
             "JOIN UserEntity u ON u.id = ur.user.id " +
             "WHERE p.status = 1 AND pr.status = 1 AND r.status = 1 AND ur.status = true AND u.id = :userId")
     List<String> findPrivilegesByUserId(@Param("userId") Long userId);
+
+
+    //
+    @Query("SELECT r.roleName FROM RoleEntity r " +
+            "JOIN UserRoleEntity ur ON r.roleId = ur.role.roleId " +
+            "JOIN UserEntity u ON u.id = ur.user.id " +
+            "WHERE r.status = 1 AND ur.status = true AND u.id = :userId")
+    List<String> findRolesByUserId(@Param("userId") Long userId);
 }

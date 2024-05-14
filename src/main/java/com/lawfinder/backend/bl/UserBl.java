@@ -7,6 +7,7 @@ import java.util.*;
 
 import com.lawfinder.backend.services.EmailService;
 import com.lawfinder.backend.services.PasswordService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,10 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserBl {
     private final UserRepository userRepository;
     private final PersonRepository personRepository;
+
     private final EmailService emailService;
     private final RoleRepository roleRepository;
     private final VerificationRepository verificationRepository;
     private UserRoleRepository userRoleRepository;
+
+    @Autowired
+    private PersonBl personBl;
 
 
     PersonEntity personMemory = new PersonEntity();
@@ -57,7 +62,7 @@ public class UserBl {
         userEntity.setUsername(userDto.getUsername());
         //System.out.println("Contraseña" + userDto.getSecret());
         userEntity.setSecret(PasswordService.hashPassword(userDto.getSecret()));
-        userEntity.setStatus(false);
+        userEntity.setStatus(true);
         userEntity.setIsblocked(false);
         userEntity.setPersonId(person);
         //userEntity.setImageId(1);
@@ -106,7 +111,7 @@ public class UserBl {
         userEntity.setUsername(userDto.getUsername());
         //System.out.println("Contraseña" + userDto.getSecret());
         userEntity.setSecret(PasswordService.hashPassword(userDto.getSecret()));
-        userEntity.setStatus(false);
+        userEntity.setStatus(true);
         userEntity.setIsblocked(false);
         userEntity.setPersonId(person);
         //userEntity.setImageId(1);
@@ -189,6 +194,23 @@ public class UserBl {
         int code = random.nextInt(900000) + 100000; // Generar número aleatorio de 6 dígitos
         return String.valueOf(code);
     }
+
+    public List<UserListDto> getUsers(){
+        List<UserEntity> userEntities = userRepository.findAllByStatus();
+        List<UserListDto> userDtos = new ArrayList<>();
+        for(UserEntity userEntity : userEntities){
+            UserListDto userListDto = new UserListDto();
+            userListDto.setId(userEntity.getId());
+            userListDto.setUsername(userEntity.getUsername());
+            userListDto.setIsblocked(userEntity.getIsblocked());
+            userListDto.setRoles(userRoleRepository.findRolesByUserId(userEntity.getId()));
+            userDtos.add(userListDto);
+        }
+        return userDtos;
+    }
+
+
+
 
 
 }

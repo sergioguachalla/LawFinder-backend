@@ -2,13 +2,12 @@ package com.lawfinder.backend.api;
 
 import com.lawfinder.backend.Entity.PersonEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.lawfinder.backend.bl.*;
 import com.lawfinder.backend.dto.*;
+
+import java.util.List;
+
 @CrossOrigin(origins = "*")
 
 @RestController
@@ -86,6 +85,23 @@ public class UserApi {
         }
         return response;
 
+    }
+
+    //Get all Users
+    @GetMapping("/api/v1/users")
+    public ResponseDto<List<UserListDto>> getAllUsers(){
+        ResponseDto<List<UserListDto>> response = new ResponseDto<>();
+        if(this.userBl.getAllUsers().isEmpty()){
+            response.setCode("0001");
+            response.setResponse(null);
+            response.setErrorMessage("No users found");
+        }else{
+            response.setCode("0000");
+            response.setResponse(this.userBl.getUsers());
+            response.setErrorMessage(null);
+        }
+
+        return response;
     }
 
 
