@@ -22,6 +22,9 @@ public class UserEntity {
     @Column(name = "STATUS", nullable = false)
     private Boolean status;
 
+    @Column(name = "ISBLOCKED", nullable = false)
+    private Boolean isblocked;
+
     @OneToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "PERSON_ID", nullable = false)
     private PersonEntity personId;
@@ -49,18 +52,20 @@ public class UserEntity {
 
 
     public UserEntity(Long id, String username, String secret, 
-    Boolean status, PersonEntity personId, //int imageId,
+    Boolean status, Boolean isblocked, PersonEntity personId, //int imageId,
                        String txUser,
     String txHost, Date txDate) {
         this.id = id;
         this.username = username;
         this.secret = secret;
         this.status = status;
+        this.isblocked = isblocked;
         this.personId = personId;
         //this.imageId = imageId;
         this.txUser = txUser;
         this.txHost = txHost;
         this.txDate = txDate;
+
     }
 
     public Long getId() {
@@ -135,6 +140,14 @@ public class UserEntity {
 
     public void setTxDate(Date txDate) {
         this.txDate = txDate;
+    }
+
+    public Boolean getIsblocked() {
+        return isblocked;
+    }
+
+    public void setIsblocked(Boolean isblocked) {
+        this.isblocked = isblocked;
     }
 
     @Override

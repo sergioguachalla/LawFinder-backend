@@ -22,9 +22,15 @@ class AuthApi {
 
         TokenDto tokenDto = this.authBl.login(login);
         if (tokenDto == null) {
-            response.setCode("0001");
-            response.setResponse(null);
-            response.setErrorMessage("Invalid credentials");
+            if (authBl.isAccountBlocked(login.getUsername())) {
+                response.setCode("0002");
+                response.setResponse(null);
+                response.setErrorMessage("Account blocked");
+            } else {
+                response.setCode("0001");
+                response.setResponse(null);
+                response.setErrorMessage("Invalid credentials");
+            }
             return response;
         } else {
             response.setCode("0000");

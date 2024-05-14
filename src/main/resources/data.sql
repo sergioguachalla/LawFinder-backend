@@ -1,4 +1,5 @@
 -- Truncar las tablas
+/*
 TRUNCATE TABLE legal_file_type;
 TRUNCATE TABLE privilege;
 TRUNCATE TABLE role;
@@ -234,3 +235,4 @@ INSERT INTO PROVINCE (DEPARTMENT_ID, PROVINCE_NAME) VALUES
   (9, 'Tomina'),
   (9, 'Yamparáez'),
   (9, 'Zuñac');
+*/

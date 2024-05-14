@@ -58,6 +58,7 @@ public class UserBl {
         //System.out.println("Contraseña" + userDto.getSecret());
         userEntity.setSecret(PasswordService.hashPassword(userDto.getSecret()));
         userEntity.setStatus(false);
+        userEntity.setIsblocked(false);
         userEntity.setPersonId(person);
         //userEntity.setImageId(1);
         userEntity.setTxUser("lawfinder");
@@ -106,6 +107,7 @@ public class UserBl {
         //System.out.println("Contraseña" + userDto.getSecret());
         userEntity.setSecret(PasswordService.hashPassword(userDto.getSecret()));
         userEntity.setStatus(false);
+        userEntity.setIsblocked(false);
         userEntity.setPersonId(person);
         //userEntity.setImageId(1);
         userEntity.setTxUser("lawfinder");
