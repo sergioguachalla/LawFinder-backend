@@ -133,9 +133,20 @@ public class AuthBl {
     }
 
     public List<String> getRoles(Long id){
-
         //System.out.println(userRepository.getRolesByUserId(id));
         return userRoleRepository.findPrivilegesByUserId(id);
+    }
+
+    //unlock user
+    public Boolean unlockUser(Long id) {
+        UserEntity userEntity = userRepository.findByUserId(id);
+        if (userEntity != null) {
+            userEntity.setIsblocked(!userEntity.getIsblocked());
+            userRepository.save(userEntity);
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

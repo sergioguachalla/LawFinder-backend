@@ -209,6 +209,13 @@ public class UserBl {
         return userDtos;
     }
 
+    //delete user logically
+    public void deleteUser(Long userId){
+        UserEntity userEntity = userRepository.findByUserId(userId);
+        userEntity.setStatus(false);
+        userRepository.save(userEntity);
+    }
+
 
 
 

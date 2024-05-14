@@ -104,6 +104,24 @@ public class UserApi {
         return response;
     }
 
+    //delete user
+    @PutMapping("/api/v1/users/{id}")
+    public ResponseDto<String> deleteUser(@PathVariable Long id){
+        ResponseDto<String> response = new ResponseDto<>();
+        try{
+            this.userBl.deleteUser(id);
+            response.setCode("0000");
+            response.setResponse("User deleted");
+            response.setErrorMessage(null);
+
+        }catch (Exception e){
+            response.setCode("0001");
+            response.setResponse(null);
+            response.setErrorMessage("User not found");
+        }
+        return response;
+    }
+
 
 
 
