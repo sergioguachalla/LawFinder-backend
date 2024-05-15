@@ -12,6 +12,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 @Service
 public class RoleBl {
     @Autowired private RoleRepository roleRepository;
@@ -38,5 +43,26 @@ public class RoleBl {
         privilegeRoleEntity.setPrivilege(privilegeEntity);
         privilegeRoleEntity.setStatus(1);
         privilegeRoleRepository.save(privilegeRoleEntity);
+    }
+
+    public List<RoleDto> findRoles() {
+        List<RoleEntity> roleEntities = roleRepository.findAll();
+        return roleEntities.stream().map(roleEntity -> {
+            List<String> privileges = new ArrayList<>();
+
+            RoleDto roleDto = new RoleDto();
+            roleDto.setRoleId(roleEntity.getRoleId());
+            roleDto.setRoleName(roleEntity.getRoleName());
+            logger.info("Role ID: {}", roleEntity.getRoleId());
+            List<PrivilegeRoleEntity> privilegeRoleEntities = privilegeRoleRepository.
+                    findAllByRoleRoleId(roleEntity.getRoleId());
+               privilegeRoleEntities.forEach(privilegeRoleEntity -> {
+                   logger.info("Privilege: {}", privilegeRoleEntity.getPrivilege().getPriv());
+                   privileges.add(privilegeRoleEntity.getPrivilege().getPriv());
+                       }
+                );
+            roleDto.setPrivileges(privileges);
+            return roleDto;
+        }).toList();
     }
 }

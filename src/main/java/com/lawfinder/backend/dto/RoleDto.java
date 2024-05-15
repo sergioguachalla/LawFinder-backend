@@ -35,6 +35,9 @@ public class RoleDto {
         this.roleName = roleName;
         this.privileges = privileges;
     }
+    public RoleDto(){
+
+    }
 
     @Override
     public String toString() {
