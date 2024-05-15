@@ -35,14 +35,18 @@ public class RoleBl {
         roleRepository.save(roleEntity);
     }
 
-    public void addPrivilegeToRole(Long roleId, Long privilegeId) {
-        PrivilegeEntity privilegeEntity = privilegeRepository.findById(privilegeId).orElseThrow();
+    public void addPrivilegeToRole(Long roleId, List<Long> privileges) {
         RoleEntity roleEntity = roleRepository.findById(roleId).orElseThrow();
-        PrivilegeRoleEntity privilegeRoleEntity = new PrivilegeRoleEntity();
-        privilegeRoleEntity.setRole(roleEntity);
-        privilegeRoleEntity.setPrivilege(privilegeEntity);
-        privilegeRoleEntity.setStatus(1);
-        privilegeRoleRepository.save(privilegeRoleEntity);
+
+        for (Long privilegeId : privileges) {
+            PrivilegeEntity privilegeEntity = privilegeRepository.findById(privilegeId).orElseThrow();
+            PrivilegeRoleEntity privilegeRoleEntity = new PrivilegeRoleEntity();
+            privilegeRoleEntity.setRole(roleEntity);
+            privilegeRoleEntity.setPrivilege(privilegeEntity);
+            privilegeRoleEntity.setStatus(1);
+            privilegeRoleRepository.save(privilegeRoleEntity);
+        }
+
     }
 
     public List<RoleDto> findRoles() {

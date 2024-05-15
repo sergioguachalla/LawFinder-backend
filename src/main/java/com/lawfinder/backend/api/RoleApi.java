@@ -20,8 +20,9 @@ public class RoleApi {
     }
 
     @PostMapping("/privileges/")
-    public ResponseDto<String> addPrivilegeToRole(@RequestParam("roleId") Long roleId,@RequestParam("privilegeId") Long privilegeId) {
-        roleBl.addPrivilegeToRole(roleId, privilegeId);
+    public ResponseDto<String> addPrivilegeToRole(@RequestParam("roleId") Long roleId,
+                                                  @RequestBody List<Long> privileges) {
+        roleBl.addPrivilegeToRole(roleId, privileges);
         return new ResponseDto<String>("0001", "Privilege added to role successfully", null);
     }
 
