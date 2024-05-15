@@ -1,0 +1,35 @@
+version: '3.9'
+
+networks:
+  law-finder-network:
+    driver: bridge
+
+
+services:
+  law-finder-db:
+    image: law-finder-db:1.0 
+    ports:
+      - 5432:5432
+    volumes:
+      - ./src/main/resources/init.sql:/docker-entrypoint-initdb.d/create_database.sql
+      - ./docker/bd/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=law-finder
+    build: .
+    command:
+      [
+        "postgres",
+        "-c",
+        "log_statement=all",
+        "-c",
+        "log_destination=stderr",
+        "-c",
+        "shared_preload_libraries=pg_cron",
+        "-c",
+        "cron.database_name=law-finder",
+      ]
+    networks:
+        - law-finder-network
+
