@@ -50,6 +50,9 @@ public class AuthBl {
         if (userEntity.getIsblocked()) {
             return null;
         }
+        if(!userEntity.getStatus()){
+            return null;
+        }
 
         List<String> roles = getRoles(userEntity.getId());
         for (String role : roles) {
