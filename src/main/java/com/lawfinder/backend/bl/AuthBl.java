@@ -15,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AuthBl {
@@ -24,6 +26,9 @@ public class AuthBl {
     private final UserRepository userRepository;
     @Autowired
     private final UserRoleRepository userRoleRepository;
+
+    private Map<String, Integer> failedLoginAttempts = new HashMap<>();
+
 
 
 
@@ -42,6 +47,12 @@ public class AuthBl {
         if(userEntity == null) {
             return null;
         }
+        if (userEntity.getIsblocked()) {
+            return null;
+        }
+        if(!userEntity.getStatus()){
+            return null;
+        }
 
         List<String> roles = getRoles(userEntity.getId());
         for (String role : roles) {
@@ -51,18 +62,37 @@ public class AuthBl {
         if (login.getUsername().equals(userEntity.getUsername()) &&
                PasswordService.checkPassword(login.getPassword(), userEntity.getSecret())
         ) {
+            //limpiar los intentos
+            failedLoginAttempts.put(login.getUsername(), 0);
+
             System.out.println(PasswordService.checkPassword(login.getPassword(), userEntity.getSecret()));
             TokenDto tokenDto = new TokenDto();
             tokenDto.setAuthToken(generateToken(userEntity.getId(), login.getUsername(), "AUTH", 30, roles));
             tokenDto.setRefreshToken(generateToken(userEntity.getId(), login.getUsername() , "REFRESH", 60,roles));
             return tokenDto;
-        } else {
+        }
+
+        else if (login.getUsername().equals(userEntity.getUsername())) {
+            if (failedLoginAttempts.containsKey(login.getUsername())) {
+                failedLoginAttempts.put(login.getUsername(), failedLoginAttempts.get(login.getUsername()) + 1);
+            } else {
+                failedLoginAttempts.put(login.getUsername(), 1);
+            }
+            if (failedLoginAttempts.get(login.getUsername()) >= 3) {
+                userEntity.setIsblocked(true);
+                userRepository.save(userEntity);
+            }
+            return null;
+        }
+        else {
             return null;
         }
     }
 
-
-
+    public boolean isAccountBlocked(String username) {
+        UserEntity userEntity = userRepository.findAllByUsername(username);
+        return userEntity != null && userEntity.getIsblocked();
+    }
 
 
     private String  generateToken(Long userId, String name, String type, int minutes, List<String> roles) {
@@ -106,9 +136,20 @@ public class AuthBl {
     }
 
     public List<String> getRoles(Long id){
-
         //System.out.println(userRepository.getRolesByUserId(id));
         return userRoleRepository.findPrivilegesByUserId(id);
+    }
+
+    //unlock user
+    public Boolean unlockUser(Long id) {
+        UserEntity userEntity = userRepository.findByUserId(id);
+        if (userEntity != null) {
+            userEntity.setIsblocked(!userEntity.getIsblocked());
+            userRepository.save(userEntity);
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

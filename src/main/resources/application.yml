@@ -1,13 +1,14 @@
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/law_finder_test
+
+    url: jdbc:postgresql://localhost:5432/law-finder
     username: postgres
-    password: admin
+    password: postgres
     driver-class-name: org.postgresql.Driver
-  # sql:
-  #   init:
-  #     mode: always
+#  sql:
+#    init:
+#      mode: always
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
