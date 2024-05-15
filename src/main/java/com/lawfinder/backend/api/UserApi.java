@@ -122,6 +122,41 @@ public class UserApi {
         return response;
     }
 
+    @GetMapping("/api/v1/users/{id}/role/edit")
+    public ResponseDto<EditUserDto> getUserEditRoles(@PathVariable Long id){
+        ResponseDto<EditUserDto> response = new ResponseDto<>();
+        try{
+            response.setCode("0000");
+            response.setResponse(this.userBl.getUserEditRoles(id));
+            response.setErrorMessage(null);
+        }catch (Exception e){
+            response.setCode("0001");
+            response.setResponse(null);
+            response.setErrorMessage("User not found");
+        }
+        return response;
+    }
+
+    //update user
+    @PutMapping("/api/v1/users/{id}/update")
+    public ResponseDto<String> updateUser(@PathVariable Long id, @RequestBody UserDto user){
+        ResponseDto<String> response = new ResponseDto<>();
+        try{
+            this.userBl.updateUser(id, user);
+            response.setCode("0000");
+            response.setResponse("User updated");
+            response.setErrorMessage(null);
+        }catch (Exception e){
+            response.setCode("0001");
+            response.setResponse(null);
+            response.setErrorMessage("User not found");
+        }
+        return response;
+    }
+
+
+
+
 
 
 

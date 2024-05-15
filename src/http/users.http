@@ -2,6 +2,12 @@ GET http://localhost:8080/api/v1/users
 ###
 PUT http://localhost:8080/api/v1/users/3
 ###
+GET http://localhost:8080/api/v1/users/3/role/edit
+###
+PUT http://localhost:8080/api/v1/user/3/role/1/delete
+###
+PUT http://localhost:8080/api/v1/user/3/role/1/add
+###
 POST http://localhost:8080/api/v1/user
 Content-Type: application/json
 Accept: application/json
