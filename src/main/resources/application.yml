@@ -1,9 +1,9 @@
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/law_finder
+    url: jdbc:postgresql://localhost:5433/law-finder
     username: postgres
-    password: admin
+    password: postgres
     driver-class-name: org.postgresql.Driver
   # sql:
   #   init:

@@ -52,5 +52,18 @@ public class PersonBl {
         return personEntity != null;
 
     }
+
+    //person entity to persondto
+    public PersonDto personEntityToPersonDto(PersonEntity personEntity){
+        PersonDto personDto = new PersonDto();
+        personDto.setPersonId(personEntity.getPersonId());
+        personDto.setName(personEntity.getName());
+        personDto.setLastname(personEntity.getLastname());
+        personDto.setNumber(personEntity.getNumber());
+        personDto.setEmail(personEntity.getEmail());
+        personDto.setCi(personEntity.getCi());
+        personDto.setAddress(personEntity.getAddress());
+        return personDto;
+    }
 }
 

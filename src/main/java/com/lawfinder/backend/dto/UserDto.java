@@ -13,6 +13,8 @@ public class UserDto {
 
     private Boolean status;
 
+    private Boolean isblocked;
+
     private PersonDto personId;
 
     private int imageId;
@@ -25,12 +27,13 @@ public class UserDto {
 
     public UserDto() {}
 
-    public UserDto(Long id, String username, String secret, Boolean status, PersonDto personId, //int imageId,
+    public UserDto(Long id, String username, String secret, Boolean status, Boolean isblocked, PersonDto personId, //int imageId,
                     String txUser, String txHost, Date txDate) {
         this.id = id;
         this.username = username;
         this.secret = secret;
         this.status = status;
+        this.isblocked = isblocked;
         this.personId = personId;
         //this.imageId = imageId;
         this.txUser = txUser;
@@ -108,6 +111,14 @@ public class UserDto {
 
     public void setTxDate(Date txDate) {
         this.txDate = txDate;
+    }
+
+    public Boolean getIsblocked() {
+        return isblocked;
+    }
+
+    public void setIsblocked(Boolean isblocked) {
+        this.isblocked = isblocked;
     }
 
     @Override

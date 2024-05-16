@@ -42,6 +42,14 @@ public class RoleEntity {
         this.roleName = roleName;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     // toString
 
     @Override

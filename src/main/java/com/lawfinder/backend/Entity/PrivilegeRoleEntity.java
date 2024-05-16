@@ -9,22 +9,23 @@ public class PrivilegeRoleEntity {
     @Column(name = "PRIVROLE_ID")
     private Long privRoleId;
 
-    @ManyToOne (fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PRIVILEGE_ID", referencedColumnName = "PRIVILEGE_ID")
     private PrivilegeEntity privilege;
 
-    @ManyToOne (fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ROLE_ID", referencedColumnName = "ROLE_ID")
     private RoleEntity role;
 
     @Column(name = "STATUS", length = 1)
     private int status;
+
     // Constructor
     public PrivilegeRoleEntity() {
     }
 
     // Constructor con todos los atributos
-    public PrivilegeRoleEntity (Long privRoleId ,PrivilegeEntity privilege, RoleEntity role) {
+    public PrivilegeRoleEntity(Long privRoleId, PrivilegeEntity privilege, RoleEntity role) {
         this.privRoleId = privRoleId;
         this.privilege = privilege;
         this.role = role;
@@ -54,6 +55,14 @@ public class PrivilegeRoleEntity {
 
     public void setRole(RoleEntity role) {
         this.role = role;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     //toString

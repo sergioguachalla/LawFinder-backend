@@ -17,7 +17,7 @@ public class UserBl {
     private final EmailService emailService;
     private final RoleRepository roleRepository;
     private final VerificationRepository verificationRepository;
-    private final UserRoleRepository userRoleRepository;
+    private UserRoleRepository userRoleRepository;
 
 
     PersonEntity personMemory = new PersonEntity();
@@ -57,7 +57,7 @@ public class UserBl {
         userEntity.setUsername(userDto.getUsername());
         //System.out.println("Contraseña" + userDto.getSecret());
         userEntity.setSecret(PasswordService.hashPassword(userDto.getSecret()));
-        userEntity.setStatus(true);
+        userEntity.setStatus(false);
         userEntity.setPersonId(person);
         //userEntity.setImageId(1);
         userEntity.setTxUser("lawfinder");
@@ -73,8 +73,8 @@ public class UserBl {
         userRoleEntity.setRole(roleEntity);
         userRoleEntity.setUser(userEntity);
         userRoleEntity.setStatus(1);
-        userRoleEntity.setTx_host("localhost");
         userRoleEntity.setTx_user("lawfinder");
+        userRoleEntity.setTx_host("localhost");
         userRoleEntity.setTx_date(new Date());
         userRoleRepository.saveAndFlush(userRoleEntity);
 
@@ -148,7 +148,11 @@ public class UserBl {
     public Boolean verifyUserByEmail(DeviceIdDto deviceIdDto) {
         UserEntity userEntity = new UserEntity();
         userEntity = userRepository.findByEmail(deviceIdDto.getEmail());
-        return userEntity != null;
+        if (userEntity != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 
@@ -183,6 +187,79 @@ public class UserBl {
         int code = random.nextInt(900000) + 100000; // Generar número aleatorio de 6 dígitos
         return String.valueOf(code);
     }
+
+    public List<UserListDto> getUsers(){
+        List<UserEntity> userEntities = userRepository.findAllByStatus();
+        List<UserListDto> userDtos = new ArrayList<>();
+        for(UserEntity userEntity : userEntities){
+            UserListDto userListDto = new UserListDto();
+            userListDto.setId(userEntity.getId());
+            userListDto.setUsername(userEntity.getUsername());
+            userListDto.setIsblocked(userEntity.getIsblocked());
+            userListDto.setRoles(userRoleRepository.findRolesByUserId(userEntity.getId()));
+            userDtos.add(userListDto);
+        }
+        return userDtos;
+    }
+
+    //delete user logically
+    public void deleteUser(Long userId){
+        UserEntity userEntity = userRepository.findByUserId(userId);
+        userEntity.setStatus(false);
+        userRepository.save(userEntity);
+    }
+
+    //get user roles
+
+    public EditUserDto getUserEditRoles(Long userId){
+        UserEntity userEntity = userRepository.findByUserId(userId);
+        List<RoleEntity> RoleRepository = roleRepository.findAll();
+        //RoleEntity to UserRoleDto
+        List<UserRoleDto> allRoles = new ArrayList<>();
+        for(RoleEntity roleEntity : RoleRepository){
+            UserRoleDto userRoleDto = new UserRoleDto();
+            userRoleDto.setId(roleEntity.getRoleId());
+            userRoleDto.setRole(roleEntity.getRoleName());
+            allRoles.add(userRoleDto);
+        }
+
+        EditUserDto editUserDto = new EditUserDto();
+        editUserDto.setId(userEntity.getId());
+        editUserDto.setUsername(userEntity.getUsername());
+        editUserDto.setEmail(userEntity.getPersonId().getEmail());
+        editUserDto.setAllRoles(allRoles);
+        List<UserRoleDto> userRoleDtos = new ArrayList<>();
+        List<UserRoleEntity> userRoleEntities = userRoleRepository.findByUser_Id(userId);
+        for(UserRoleEntity userRoleEntity : userRoleEntities){
+            UserRoleDto userRoleDto = new UserRoleDto();
+            userRoleDto.setId(userRoleEntity.getRole().getRoleId());
+            userRoleDto.setRole(userRoleEntity.getRole().getRoleName());
+            userRoleDtos.add(userRoleDto);
+        }
+        editUserDto.setRoles(userRoleDtos);
+
+        return editUserDto;
+    }
+
+    public void updateUser(Long id ,UserDto userDto){
+        UserEntity userEntity = userRepository.findByUserId(id);
+        userEntity.setUsername(userDto.getUsername());
+        userEntity.setSecret(PasswordService.hashPassword(userDto.getSecret()));
+        userEntity.setTxUser("lawfinder");
+        userEntity.setTxHost("localhost");
+        userEntity.setTxDate(new Date());
+        userRepository.save(userEntity);
+
+
+    }
+
+
+
+
+
+
+
+
 
 
 }
