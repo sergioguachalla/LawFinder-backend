@@ -52,6 +52,13 @@ public class RoleEntity {
 
     // toString
 
+
+    public RoleEntity(Long roleId, String roleName, int status) {
+        this.roleId = roleId;
+        this.roleName = roleName;
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "RoleEntity{" +

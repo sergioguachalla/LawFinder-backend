@@ -1,6 +1,7 @@
 package com.lawfinder.backend.api;
 
 import com.lawfinder.backend.bl.RoleBl;
+import com.lawfinder.backend.dto.PrivilegeRoleDto;
 import com.lawfinder.backend.dto.ResponseDto;
 import com.lawfinder.backend.dto.RoleDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +31,8 @@ public class RoleApi {
     }
 
     @PostMapping("/privileges/")
-    public ResponseDto<String> addPrivilegeToRole(@RequestParam("roleId") Long roleId,
-                                                  @RequestBody List<Long> privileges) {
-        roleBl.addPrivilegeToRole(roleId, privileges);
+    public ResponseDto<String> addPrivilegeToRole(@RequestBody PrivilegeRoleDto privilegeRoleDto) {
+            roleBl.addPrivilegeToRole(privilegeRoleDto);
         return new ResponseDto<String>("0001", "Privilege added to role successfully", null);
     }
 
@@ -63,7 +63,7 @@ public class RoleApi {
         }
     }
 
-    @PutMapping("/api/v1/user/{id}/role/{role}/delete")
+    @PutMapping("/users/{id}/role/{role}/delete")
     public ResponseDto<String> deleteUserRole(@PathVariable Long id, @PathVariable Long role) {
         try {
             this.roleBl.deleteUserRole(id, role);

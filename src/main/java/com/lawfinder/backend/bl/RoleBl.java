@@ -6,6 +6,7 @@ import com.lawfinder.backend.Entity.RoleEntity;
 import com.lawfinder.backend.dao.PrivilegeRepository;
 import com.lawfinder.backend.dao.PrivilegeRoleRepository;
 import com.lawfinder.backend.dao.RoleRepository;
+import com.lawfinder.backend.dto.PrivilegeRoleDto;
 import com.lawfinder.backend.dto.RoleDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,15 +51,24 @@ public class RoleBl {
         roleRepository.save(roleEntity);
     }
 
-    public void addPrivilegeToRole(Long roleId, List<Long> privileges) {
-        RoleEntity roleEntity = roleRepository.findById(roleId).orElseThrow();
+    public void addPrivilegeToRole(PrivilegeRoleDto privilegeRoleDto){
+        logger.info("RoleDto: {}", privilegeRoleDto.getRoleName());
+        logger.info("RoleDto: {}", privilegeRoleDto.getPrivileges());
+        RoleEntity role = new RoleEntity();
+        role.setRoleName(privilegeRoleDto.getRoleName());
+        role.setStatus(1);
+        RoleEntity roleAux = roleRepository.save(role);
 
-        for (Long privilegeId : privileges) {
+
+        //RoleEntity roleEntity = roleRepository.findById(roleId).orElseThrow();
+
+        for (Long privilegeId : privilegeRoleDto.getPrivileges()) {
             PrivilegeEntity privilegeEntity = privilegeRepository.findById(privilegeId).orElseThrow();
             PrivilegeRoleEntity privilegeRoleEntity = new PrivilegeRoleEntity();
-            privilegeRoleEntity.setRole(roleEntity);
+            privilegeRoleEntity.setRole(roleAux);
             privilegeRoleEntity.setPrivilege(privilegeEntity);
             privilegeRoleEntity.setStatus(1);
+
             privilegeRoleRepository.save(privilegeRoleEntity);
         }
 

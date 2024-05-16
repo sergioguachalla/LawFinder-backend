@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/privileges")
+@CrossOrigin(origins = "*")
 public class PrivilegeApi {
     @Autowired private PrivilegeBl privilegeBl;
 
