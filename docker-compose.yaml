@@ -7,12 +7,15 @@ networks:
 
 services:
   law-finder-db:
-    image: law-finder-db:1.0 
+
+
+    image: law-finder-db:1.0
+
     ports:
-      - 5432:5432
+      - 5433:5432
     volumes:
-      - ./src/main/resources/init.sql:/docker-entrypoint-initdb.d/create_database.sql
-      - ./docker/bd/data:/var/lib/postgresql/data
+      - ./src/main/resources/init_2.sql:/docker-entrypoint-initdb.d/create_database.sql
+      - ./docker/bd/data:/var/lib/postgresql/data &&  sudo chmod 0700 /var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_USER=postgres

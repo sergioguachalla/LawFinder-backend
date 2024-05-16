@@ -72,7 +72,7 @@ public class UserBl {
         RoleEntity roleEntity = roleRepository.findByRole("CUSTOMER");
         userRoleEntity.setRole(roleEntity);
         userRoleEntity.setUser(userEntity);
-        userRoleEntity.setStatus(1);
+        userRoleEntity.setStatus(true);
         userRoleEntity.setTx_user("lawfinder");
         userRoleEntity.setTx_host("localhost");
         userRoleEntity.setTx_date(new Date());
@@ -105,12 +105,13 @@ public class UserBl {
         userEntity.setUsername(userDto.getUsername());
         //System.out.println("Contraseña" + userDto.getSecret());
         userEntity.setSecret(PasswordService.hashPassword(userDto.getSecret()));
-        userEntity.setStatus(false);
+        userEntity.setStatus(true);
         userEntity.setPersonId(person);
         //userEntity.setImageId(1);
         userEntity.setTxUser("lawfinder");
         userEntity.setTxHost("localhost");
         userEntity.setTxDate(new Date());
+        userEntity.setIsblocked(false);
         // userEntity.setImageId(1);
         // Save userEntity in the database
         userRepository.save(userEntity);
@@ -120,7 +121,7 @@ public class UserBl {
         RoleEntity roleEntity = roleRepository.findByRole("LAWYER");
         userRoleEntity.setRole(roleEntity);
         userRoleEntity.setUser(userEntity);
-        userRoleEntity.setStatus(1);
+        userRoleEntity.setStatus(true);
         userRoleEntity.setTx_user("lawfinder");
         userRoleEntity.setTx_host("localhost");
         userRoleEntity.setTx_date(new Date());

@@ -47,7 +47,7 @@ public class RoleApi {
         return new ResponseDto<>("0001", roleBl.findRoleById(id), null);
     }
 
-    @PutMapping("/api/v1/user/{id}/role/{role}/add")
+    @PutMapping("/users/{id}/role/{role}/add")
     public ResponseDto<String> updateUserRole(@PathVariable Long id, @PathVariable Long role) {
         try {
             this.roleBl.addUserRole(id, role);

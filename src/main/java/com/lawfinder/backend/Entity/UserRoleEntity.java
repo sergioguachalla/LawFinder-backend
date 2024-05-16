@@ -20,7 +20,7 @@ public class UserRoleEntity {
     @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
     private UserEntity user;
     @Column(name = "STATUS")
-    private Integer status;
+    private Boolean status;
 
     @Column(name = "TX_USER", length = 50)
     private String tx_user;
@@ -35,7 +35,7 @@ public class UserRoleEntity {
     }
 
     // Constructor con todos los atributos
-    public UserRoleEntity(RoleEntity role, UserEntity user, Integer status, String tx_user,
+    public UserRoleEntity(RoleEntity role, UserEntity user, Boolean status, String tx_user,
                           String tx_host, Date tx_date) {
         this.role = role;
         this.user = user;
@@ -71,11 +71,11 @@ public class UserRoleEntity {
         this.user = user;
     }
 
-    public Integer getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 

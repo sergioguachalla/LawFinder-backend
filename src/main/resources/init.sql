@@ -383,10 +383,13 @@ VALUES
   ('Sentencia');
 
 INSERT INTO privilege (privilege,STATUS)
-values ('DELETE_USER',1),('VIEW_CASE',1),('EDIT_CASE',1),('DELETE_CASE',1),('CREATE_CASE',1);
+values ('DELETE_USER',1),('BLOCK_USER',1),('UNLOCK_USER',1), ('CREATE_ROLE',1), ('EDIT_USER',1),('CREATE_PRIVILEGE',1),('VIEW_CASE',1),('EDIT_CASE',1),('DELETE_CASE',1),('CREATE_CASE',1),('REGISTER_AUDIENCE',1);
 
 INSERT INTO ROLE(rolename,STATUS)
-values ('ADMIN',1),('LAWYER',1),('CUSTOMER',1),('LAWYER_INVITED',1);
+values ('ADMIN',1),('LAWYER',1),('CUSTOMER',1);
+
+INSERT INTO privilege_role(privilege_id,role_id,status)
+values(1,1,1),(2,1,1),(3,1,1),(4,1,1),(5,1,1),(6,1,1),(7,2,1),(8,2,1),(9,2,1),(10,2,1),(11,2,1),(7,3,1);
 
 INSERT INTO category (category_name, description) VALUES
 ('Derecho Penal', 'Incluye las normas legales y principios que regulan los delitos, las penas y el sistema de justicia penal.'),

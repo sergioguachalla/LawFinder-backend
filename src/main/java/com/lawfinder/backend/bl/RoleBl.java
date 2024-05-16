@@ -91,7 +91,7 @@ public class RoleBl {
 
  public void deleteUserRole(Long userId, Long roleId){
         UserRoleEntity userRoleEntity = userRoleRepository.findByUser_IdAndRole_Id(userId, roleId);
-        userRoleEntity.setStatus(0);
+        userRoleEntity.setStatus(false);
         userRoleRepository.save(userRoleEntity);
     }
 
@@ -100,7 +100,7 @@ public class RoleBl {
         //verificar si el user role ya lo tenia pero estaba en false
         UserRoleEntity userRoleEntity = userRoleRepository.findWithoutStatus(userId, roleId);
         if(userRoleEntity != null){
-            userRoleEntity.setStatus(1);
+            userRoleEntity.setStatus(true);
             userRoleRepository.save(userRoleEntity);
             return;
         }
@@ -109,7 +109,7 @@ public class RoleBl {
         RoleEntity roleEntity = roleRepository.findByRoleId(roleId);
         userRoleEntity1.setUser(userEntity);
         userRoleEntity1.setRole(roleEntity);
-        userRoleEntity1.setStatus(1);
+        userRoleEntity1.setStatus(true);
         userRoleEntity1.setTx_user("lawfinder");
         userRoleEntity1.setTx_host("localhost");
         userRoleEntity1.setTx_date(new Date());
