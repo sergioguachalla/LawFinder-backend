@@ -1,5 +1,7 @@
 package com.lawfinder.backend.services;
 
+import com.lawfinder.backend.dao.UserRepository;
+import com.lawfinder.backend.dao.UserRoleRepository;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.AddressException;
@@ -18,6 +20,11 @@ public class EmailService {
 
     @Autowired
     private JavaMailSender mailSender;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private UserRoleRepository userRoleRepository;
+
     @Value("${spring.mail.username}")
     private String FROM;
 

@@ -63,7 +63,7 @@ public class UserBl {
         userEntity.setTxUser("lawfinder");
         userEntity.setTxHost("localhost");
         userEntity.setTxDate(new Date());
-        userEntity.setIsblocked(false);
+        userEntity.setIsblocked(true);
        // userEntity.setImageId(1);
         // Save userEntity in the database
         userRepository.save(userEntity);
@@ -104,7 +104,6 @@ public class UserBl {
 
         // Set properties from userDto to userEntity
         userEntity.setUsername(userDto.getUsername());
-        //System.out.println("Contraseña" + userDto.getSecret());
         userEntity.setSecret(PasswordService.hashPassword(userDto.getSecret()));
         userEntity.setStatus(true);
         userEntity.setPersonId(person);
@@ -112,10 +111,10 @@ public class UserBl {
         userEntity.setTxUser("lawfinder");
         userEntity.setTxHost("localhost");
         userEntity.setTxDate(new Date());
-        userEntity.setIsblocked(false);
+        userEntity.setIsblocked(true);
         // userEntity.setImageId(1);
         // Save userEntity in the database
-        userRepository.save(userEntity);
+        UserEntity userAux = userRepository.save(userEntity);
 
         // Create UserRoleEntity
         UserRoleEntity userRoleEntity = new UserRoleEntity();
@@ -127,6 +126,16 @@ public class UserBl {
         userRoleEntity.setTx_host("localhost");
         userRoleEntity.setTx_date(new Date());
         userRoleRepository.saveAndFlush(userRoleEntity);
+
+        UserEntity user = userRepository.findByUserId(userAux.getId());
+        user.setUsername(person.getName() + "_" + person.getLastname() + "_" + userAux.getId());
+        userRepository.save(user);
+        emailService.sendEmailMime(userDto.getPersonId().getEmail(),
+                "Estado de cuenta",
+                "Hola " + userDto.getPersonId().getName() + ",\n\n"
+                        + "Tu cuenta ha sido creada exitósamente, sin embargo, un administrador \n" +
+                        "debe aprobar tu cuenta para que puedas acceder a la plataforma.\n\n");
+
         
     }
 
@@ -148,13 +157,9 @@ public class UserBl {
     }
 
     public Boolean verifyUserByEmail(DeviceIdDto deviceIdDto) {
-        UserEntity userEntity = new UserEntity();
+        UserEntity userEntity;
         userEntity = userRepository.findByEmail(deviceIdDto.getEmail());
-        if (userEntity != null) {
-            return true;
-        } else {
-            return false;
-        }
+        return userEntity != null;
     }
 
 

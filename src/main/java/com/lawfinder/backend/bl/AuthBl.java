@@ -11,6 +11,7 @@ import com.lawfinder.backend.dao.UserRoleRepository;
 import com.lawfinder.backend.dto.LoginDto;
 import com.lawfinder.backend.dto.TokenDto;
 import com.lawfinder.backend.services.PasswordService;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,7 @@ public class AuthBl {
 
     private Map<String, Integer> failedLoginAttempts = new HashMap<>();
 
-
+    private Logger logger = org.slf4j.LoggerFactory.getLogger(AuthBl.class);
 
 
     public AuthBl(UserRepository userRepository, UserRoleRepository userRoleRepository) {
@@ -55,9 +56,9 @@ public class AuthBl {
         }
 
         List<String> roles = getRoles(userEntity.getId());
-        for (String role : roles) {
-            System.out.println(role);
-        }
+//        for (String role : roles) {
+//            System.out.println(role);
+//        }
 
         if (login.getUsername().equals(userEntity.getUsername()) &&
                PasswordService.checkPassword(login.getPassword(), userEntity.getSecret())
@@ -65,7 +66,6 @@ public class AuthBl {
             //limpiar los intentos
             failedLoginAttempts.put(login.getUsername(), 0);
 
-            System.out.println(PasswordService.checkPassword(login.getPassword(), userEntity.getSecret()));
             TokenDto tokenDto = new TokenDto();
             tokenDto.setAuthToken(generateToken(userEntity.getId(), login.getUsername(), "AUTH", 30, roles));
             tokenDto.setRefreshToken(generateToken(userEntity.getId(), login.getUsername() , "REFRESH", 60,roles));
@@ -91,7 +91,10 @@ public class AuthBl {
 
     public boolean isAccountBlocked(String username) {
         UserEntity userEntity = userRepository.findAllByUsername(username);
-        return userEntity != null && userEntity.getIsblocked();
+        if (userEntity == null) {
+            return false;
+        }
+        return userEntity.getIsblocked();
     }
 
 

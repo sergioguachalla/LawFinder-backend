@@ -10,10 +10,10 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<UserEntity,Long> {
 
-    @Query("SELECT u FROM UserEntity u WHERE u.username = :username")
+    @Query("SELECT u FROM UserEntity u WHERE u.username = :username and u.status = true")
     public UserEntity findAllByUsername(@Param("username") String username);
 
-    @Query("SELECT u FROM UserEntity u WHERE u.personId.email = :email")
+    @Query("SELECT u FROM UserEntity u WHERE u.personId.email = :email and u.status = true")
     public UserEntity findByEmail(@Param("email") String email);
 
     @Query("SELECT u FROM UserEntity u WHERE u.id = :userId")

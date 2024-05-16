@@ -2,6 +2,7 @@ package com.lawfinder.backend.api;
 
 import com.lawfinder.backend.bl.AuthBl;
 import com.lawfinder.backend.dto.*;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,11 +15,14 @@ class AuthApi {
     @Autowired
     AuthBl authBl;
 
+    private Logger logger = org.slf4j.LoggerFactory.getLogger(AuthApi.class);
+
     @PostMapping("/api/v1/auth/login")
     public ResponseDto<TokenDto> login(@RequestBody LoginDto login) {
         ResponseDto<TokenDto> response = new ResponseDto<>();
 
         TokenDto tokenDto = this.authBl.login(login);
+        logger.info("TokenDto: {}", tokenDto);
         if (tokenDto == null) {
             if (authBl.isAccountBlocked(login.getUsername())) {
                 response.setCode("0002");
