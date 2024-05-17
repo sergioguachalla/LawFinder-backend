@@ -1,9 +1,7 @@
 package com.lawfinder.backend.api;
 
 import com.lawfinder.backend.bl.RoleBl;
-import com.lawfinder.backend.dto.PrivilegeRoleDto;
-import com.lawfinder.backend.dto.ResponseDto;
-import com.lawfinder.backend.dto.RoleDto;
+import com.lawfinder.backend.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,7 +42,7 @@ public class RoleApi {
 
     @GetMapping("/{id}")
     public ResponseDto<RoleDto> findRoleById(@PathVariable Long id) {
-        return new ResponseDto<>("0001", roleBl.findRoleById(id), null);
+        return new ResponseDto<>("0000", roleBl.findRoleById(id), null);
     }
 
     @PutMapping("/users/{id}/role/{role}/add")
@@ -81,8 +79,40 @@ public class RoleApi {
 
     @DeleteMapping("/{roleId}")
     public ResponseDto<String> deleteRole(@PathVariable Long roleId) {
-        roleBl.deleteRole(roleId);
-        return new ResponseDto<>("0001", "Role deleted successfully", null);
+        try{
+            roleBl.deleteRole(roleId);
+            return new ResponseDto<>("0000", "Role deleted successfully", null);
+        }
+        catch (Exception e) {
+            ResponseDto<String> response = new ResponseDto<>();
+            response.setCode("0001");
+            response.setResponse("Error deleting role");
+            return response;
+        }
+    }
+
+    @GetMapping("/{roleId}/privileges")
+    public ResponseDto<List<RoleUpdateDto>> findPrivilegesByRole(@PathVariable Long roleId) {
+        ResponseDto<List<RoleUpdateDto>> response = new ResponseDto<>();
+
+        try {
+            return new ResponseDto<>("0000", roleBl.findPrivilegesByRole(roleId), null);
+        } catch (Exception e) {
+            response.setCode("0001");
+            response.setResponse(null);
+            response.setErrorMessage("Error finding privileges");
+            return response;
+        }
+    }
+
+    @PutMapping("/{roleId}/privilges")
+    public ResponseDto<String> updatePrivilegesByRoleId(@PathVariable Long roleId, @RequestBody List<RoleUpdateDto> roleUpdateDtos) {
+        try {
+            roleBl.updatePrivilegesByRoleId(roleId, roleUpdateDtos);
+            return new ResponseDto<>("0000", "Privileges updated successfully", null);
+        } catch (Exception e) {
+            return new ResponseDto<>("0001", "Error updating privileges", null);
+        }
     }
 
 

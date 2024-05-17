@@ -8,6 +8,7 @@ import com.lawfinder.backend.dao.PrivilegeRoleRepository;
 import com.lawfinder.backend.dao.RoleRepository;
 import com.lawfinder.backend.dto.PrivilegeRoleDto;
 import com.lawfinder.backend.dto.RoleDto;
+import com.lawfinder.backend.dto.RoleUpdateDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +73,7 @@ public class RoleBl {
     }
 
     public List<RoleDto> findRoles() {
-        List<RoleEntity> roleEntities = roleRepository.findAll();
+        List<RoleEntity> roleEntities = roleRepository.findAllActiveRoles();
         return roleEntities.stream().map(roleEntity -> {
             List<String> privileges = new ArrayList<>();
 
@@ -110,7 +111,7 @@ public class RoleBl {
     }
   
   /**
-  Ale
+  Ale handsome
   **/
 
  public void deleteUserRole(Long userId, Long roleId){
@@ -153,6 +154,43 @@ public class RoleBl {
         });
         roleDto.setPrivileges(privileges);
         return roleDto;
+    }
+
+    public  List<RoleUpdateDto> findPrivilegesByRole(Long id){
+        List<RoleUpdateDto> roleUpdateDtos = new ArrayList<>();
+        List<PrivilegeEntity> allprivileges = privilegeRepository.findAll();
+        List<PrivilegeRoleEntity> privilegeRoleEntities = privilegeRoleRepository.findAllByRoleRoleId(id);
+        //de todos los privilegios, devolver todos pero diciendo que rol tiene cada uno
+        for (PrivilegeEntity privilegeEntity : allprivileges) {
+            RoleUpdateDto roleUpdateDto = new RoleUpdateDto();
+            roleUpdateDto.setPrivilegeId(privilegeEntity.getPrivilegeId());
+            roleUpdateDto.setPrivilege(privilegeEntity.getPriv());
+            roleUpdateDto.setStatus(false);
+            for (PrivilegeRoleEntity privilegeRoleEntity : privilegeRoleEntities) {
+                if(privilegeRoleEntity.getPrivilege().getPrivilegeId() == privilegeEntity.getPrivilegeId()){
+                    roleUpdateDto.setStatus(true);
+                    break;
+                }
+            }
+            roleUpdateDtos.add(roleUpdateDto);
+        }
+        return roleUpdateDtos;
+    }
+
+    public void updatePrivilegesByRoleId (Long roleId, List<RoleUpdateDto> roleUpdateDtos){
+        List<PrivilegeRoleEntity> privilegeRoleEntities = privilegeRoleRepository.findAllByRoleRoleId(roleId);
+        for (PrivilegeRoleEntity privilegeRoleEntity : privilegeRoleEntities) {
+            for (RoleUpdateDto roleUpdateDto : roleUpdateDtos) {
+                if(privilegeRoleEntity.getPrivilege().getPrivilegeId() == roleUpdateDto.getPrivilegeId()){
+                    privilegeRoleEntity.setStatus(roleUpdateDto.isStatus() ? 1 : 0);
+                    privilegeRoleRepository.save(privilegeRoleEntity);
+                    break;
+                }
+            }
+        }
+
+
+
     }
 
    

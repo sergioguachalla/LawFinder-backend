@@ -220,7 +220,7 @@ public class UserBl {
 
     public EditUserDto getUserEditRoles(Long userId){
         UserEntity userEntity = userRepository.findByUserId(userId);
-        List<RoleEntity> RoleRepository = roleRepository.findAll();
+        List<RoleEntity> RoleRepository = roleRepository.findAllActiveRoles()   ;
         //RoleEntity to UserRoleDto
         List<UserRoleDto> allRoles = new ArrayList<>();
         for(RoleEntity roleEntity : RoleRepository){

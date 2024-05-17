@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import javax.management.relation.Role;
+import java.util.List;
 
 
 public interface RoleRepository extends JpaRepository<RoleEntity,Long> {
@@ -17,5 +18,9 @@ public interface RoleRepository extends JpaRepository<RoleEntity,Long> {
 
     @Query("SELECT r FROM RoleEntity r WHERE r.roleId = :roleId")
     RoleEntity findByRoleId(Long roleId);
+
+    //find all with status true
+    @Query("SELECT r FROM RoleEntity r WHERE r.status = 1")
+    List<RoleEntity> findAllActiveRoles();
     
 }
