@@ -27,3 +27,23 @@ Accept: application/json
     },
     "ImageId": 2
 }
+
+###
+# Password reset request
+POST http://localhost:8080/api/v1/user/forgotpassword
+Content-Type: application/json
+Accept: application/json
+
+{
+    "mail": "idontevenplaymm@gmail.com"
+}
+
+###
+# Password reset
+POST http://localhost:8080/api/v1/user/resetpassword?passwordResetToken=92eb83d0-b1f6-4baf-8444-7061507c2de2
+Content-Type: application/json
+Accept: application/json
+
+{
+    "password": "1234aaa"
+}
