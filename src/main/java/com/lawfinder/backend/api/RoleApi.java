@@ -79,6 +79,12 @@ public class RoleApi {
         }
     }
 
+    @DeleteMapping("/{roleId}")
+    public ResponseDto<String> deleteRole(@PathVariable Long roleId) {
+        roleBl.deleteRole(roleId);
+        return new ResponseDto<>("0001", "Role deleted successfully", null);
+    }
+
 
 
 

@@ -43,9 +43,6 @@ public class RoleBl {
 
     public void saveRole(RoleDto roleDto){
         RoleEntity roleEntity = new RoleEntity();
-        logger.info("RoleDto: {}", roleDto.getRoleName());
-        logger.info("RoleDto: {}", roleDto.getRoleId());
-        logger.info("RoleDto: {}", roleDto.toString());
         roleEntity.setRoleName(roleDto.getRoleName());
         roleEntity.setStatus(1);
         roleRepository.save(roleEntity);
@@ -93,6 +90,17 @@ public class RoleBl {
             roleDto.setPrivileges(privileges);
             return roleDto;
         }).toList();
+    }
+
+    public void deleteRole(Long roleId){
+        List<PrivilegeRoleEntity> privilegeRoleEntities = privilegeRoleRepository.findAllByRoleRoleId(roleId);
+        for (PrivilegeRoleEntity privilegeRoleEntity : privilegeRoleEntities) {
+            privilegeRoleEntity.setStatus(0);
+            privilegeRoleRepository.save(privilegeRoleEntity);
+        }
+        RoleEntity roleEntity = roleRepository.findById(roleId).orElseThrow();
+        roleEntity.setStatus(0);
+        roleRepository.save(roleEntity);
     }
   
   /**
