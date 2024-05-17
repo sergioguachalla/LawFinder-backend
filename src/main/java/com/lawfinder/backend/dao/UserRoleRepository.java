@@ -50,5 +50,6 @@ public interface UserRoleRepository extends JpaRepository<UserRoleEntity,Long> {
             "WHERE u.id = :userId AND r.roleId = :roleId")
     UserRoleEntity findWithoutStatus(Long userId, Long roleId);
 
+    List<UserRoleEntity> findAllByRoleRoleId(Long roleId);
 
 }

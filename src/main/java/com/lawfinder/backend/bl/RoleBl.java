@@ -94,6 +94,11 @@ public class RoleBl {
 
     public void deleteRole(Long roleId){
         List<PrivilegeRoleEntity> privilegeRoleEntities = privilegeRoleRepository.findAllByRoleRoleId(roleId);
+        List<UserRoleEntity> userRoleEntities = userRoleRepository.findAllByRoleRoleId(roleId);
+        for (UserRoleEntity userRoleEntity : userRoleEntities) {
+            userRoleEntity.setStatus(false);
+            userRoleRepository.save(userRoleEntity);
+        }
         for (PrivilegeRoleEntity privilegeRoleEntity : privilegeRoleEntities) {
             privilegeRoleEntity.setStatus(0);
             privilegeRoleRepository.save(privilegeRoleEntity);
@@ -101,6 +106,7 @@ public class RoleBl {
         RoleEntity roleEntity = roleRepository.findById(roleId).orElseThrow();
         roleEntity.setStatus(0);
         roleRepository.save(roleEntity);
+
     }
   
   /**
