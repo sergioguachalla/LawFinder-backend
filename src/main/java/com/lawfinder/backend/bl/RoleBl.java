@@ -31,24 +31,29 @@ import java.util.Date;
 
 @Service
 public class RoleBl {
-    @Autowired private RoleRepository roleRepository;
-    @Autowired private PrivilegeRoleRepository privilegeRoleRepository;
-    @Autowired private PrivilegeRepository privilegeRepository;
-    @Autowired private UserRepository userRepository;
-    @Autowired private UserRoleRepository userRoleRepository;
+    @Autowired
+    private RoleRepository roleRepository;
+    @Autowired
+    private PrivilegeRoleRepository privilegeRoleRepository;
+    @Autowired
+    private PrivilegeRepository privilegeRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private UserRoleRepository userRoleRepository;
     /**
-    Sergio
-    **/
+     * Sergio
+     **/
     private final Logger logger = LoggerFactory.getLogger(RoleBl.class);
 
-    public void saveRole(RoleDto roleDto){
+    public void saveRole(RoleDto roleDto) {
         RoleEntity roleEntity = new RoleEntity();
         roleEntity.setRoleName(roleDto.getRoleName());
         roleEntity.setStatus(1);
         roleRepository.save(roleEntity);
     }
 
-    public void addPrivilegeToRole(PrivilegeRoleDto privilegeRoleDto){
+    public void addPrivilegeToRole(PrivilegeRoleDto privilegeRoleDto) {
         logger.info("RoleDto: {}", privilegeRoleDto.getRoleName());
         logger.info("RoleDto: {}", privilegeRoleDto.getPrivileges());
         RoleEntity role = new RoleEntity();
@@ -72,7 +77,7 @@ public class RoleBl {
     }
 
     public List<RoleDto> findRoles() {
-        List<RoleEntity> roleEntities = roleRepository.findAll();
+        List<RoleEntity> roleEntities = roleRepository.findAllByStatus(1);
         return roleEntities.stream().map(roleEntity -> {
             List<String> privileges = new ArrayList<>();
 
@@ -82,17 +87,17 @@ public class RoleBl {
             logger.info("Role ID: {}", roleEntity.getRoleId());
             List<PrivilegeRoleEntity> privilegeRoleEntities = privilegeRoleRepository.
                     findAllByRoleRoleId(roleEntity.getRoleId());
-               privilegeRoleEntities.forEach(privilegeRoleEntity -> {
-                   logger.info("Privilege: {}", privilegeRoleEntity.getPrivilege().getPriv());
-                   privileges.add(privilegeRoleEntity.getPrivilege().getPriv());
-                       }
-                );
+            privilegeRoleEntities.forEach(privilegeRoleEntity -> {
+                        logger.info("Privilege: {}", privilegeRoleEntity.getPrivilege().getPriv());
+                        privileges.add(privilegeRoleEntity.getPrivilege().getPriv());
+                    }
+            );
             roleDto.setPrivileges(privileges);
             return roleDto;
         }).toList();
     }
 
-    public void deleteRole(Long roleId){
+    public void deleteRole(Long roleId) {
         List<PrivilegeRoleEntity> privilegeRoleEntities = privilegeRoleRepository.findAllByRoleRoleId(roleId);
         List<UserRoleEntity> userRoleEntities = userRoleRepository.findAllByRoleRoleId(roleId);
         for (UserRoleEntity userRoleEntity : userRoleEntities) {
@@ -106,6 +111,21 @@ public class RoleBl {
         RoleEntity roleEntity = roleRepository.findById(roleId).orElseThrow();
         roleEntity.setStatus(0);
         roleRepository.save(roleEntity);
+    }
+
+    public void updateRole(RoleDto roleDto) {
+        RoleEntity roleEntity = roleRepository.findById(roleDto.getRoleId()).orElseThrow();
+        roleEntity.setRoleName(roleDto.getRoleName());
+        List<String> privileges = roleDto.getPrivileges();
+        for (String privilege : privileges) {
+            PrivilegeEntity privilegeEntity = privilegeRepository.findByPriv(privilege);
+            PrivilegeRoleEntity privilegeRoleEntity = new PrivilegeRoleEntity();
+            privilegeRoleEntity.setRole(roleEntity);
+            privilegeRoleEntity.setPrivilege(privilegeEntity);
+            privilegeRoleEntity.setStatus(1);
+            privilegeRoleRepository.save(privilegeRoleEntity);
+        }
+
 
     }
   

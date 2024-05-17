@@ -12,5 +12,6 @@ public interface PrivilegeRepository extends JpaRepository<PrivilegeEntity,Long>
     @Query("SELECT p FROM PrivilegeEntity p WHERE p.status = ?1")
     List<PrivilegeEntity> findAllByStatus(int status);
 
+    PrivilegeEntity findByPriv(String priv);
     
 }
