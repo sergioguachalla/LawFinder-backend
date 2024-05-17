@@ -41,11 +41,18 @@ public class UserApi {
     @PostMapping("/api/v1/user/forgotpassword")
     public ResponseEntity<ResponseDto<String>> forgotPassword( @RequestBody MailDto mail ){
         ResponseDto<String> response = new ResponseDto<>();
-        String email = mail.getMail();
-        this.userBl.resetPassword(email);
-        response.setCode("0000");
-        response.setResponse("mail sended");
-        return ResponseEntity.ok(response);
+        try{
+            String email = mail.getMail();
+            this.userBl.resetPassword(email);
+            response.setCode("0000");
+            response.setResponse("Se envio un correo con el link para restablecer la contraseña. Por favor revisa tu bandeja de entrada.");
+            return ResponseEntity.ok(response);
+
+        }catch (Exception e){
+            response.setCode("0001");
+            response.setResponse("No se encontró el usuario con el correo ingresado.");
+            return ResponseEntity.badRequest().body(response);
+        }
     }
 
     @PostMapping("/api/v1/user/resetpassword")
