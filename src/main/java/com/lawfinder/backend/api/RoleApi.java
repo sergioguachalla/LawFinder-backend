@@ -105,7 +105,7 @@ public class RoleApi {
         }
     }
 
-    @PutMapping("/{roleId}/privilges")
+    @PutMapping("/{roleId}/privileges")
     public ResponseDto<String> updatePrivilegesByRoleId(@PathVariable Long roleId, @RequestBody List<RoleUpdateDto> roleUpdateDtos) {
         try {
             roleBl.updatePrivilegesByRoleId(roleId, roleUpdateDtos);

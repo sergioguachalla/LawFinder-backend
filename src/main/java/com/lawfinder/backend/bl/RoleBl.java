@@ -199,13 +199,33 @@ public class RoleBl {
     }
 
     public void updatePrivilegesByRoleId (Long roleId, List<RoleUpdateDto> roleUpdateDtos){
+
         List<PrivilegeRoleEntity> privilegeRoleEntities = privilegeRoleRepository.findAllByRoleRoleId(roleId);
-        for (PrivilegeRoleEntity privilegeRoleEntity : privilegeRoleEntities) {
-            for (RoleUpdateDto roleUpdateDto : roleUpdateDtos) {
-                if(privilegeRoleEntity.getPrivilege().getPrivilegeId() == roleUpdateDto.getPrivilegeId()){
-                    privilegeRoleEntity.setStatus(roleUpdateDto.isStatus() ? 1 : 0);
+        for(RoleUpdateDto role: roleUpdateDtos){
+            if(role.isStatus()){
+                boolean exist = false;
+                for(PrivilegeRoleEntity privilegeRoleEntity: privilegeRoleEntities){
+                    if(privilegeRoleEntity.getPrivilege().getPrivilegeId() == role.getPrivilegeId()){
+                        exist = true;
+                        break;
+                    }
+                }
+                if(!exist){
+                    PrivilegeRoleEntity privilegeRoleEntity = new PrivilegeRoleEntity();
+                    RoleEntity roleEntity = roleRepository.findByRoleId(roleId);
+                    PrivilegeEntity privilegeEntity = privilegeRepository.findById(role.getPrivilegeId()).orElseThrow();
+                    privilegeRoleEntity.setRole(roleEntity);
+                    privilegeRoleEntity.setPrivilege(privilegeEntity);
+                    privilegeRoleEntity.setStatus(1);
                     privilegeRoleRepository.save(privilegeRoleEntity);
-                    break;
+                }
+            }else{
+                for(PrivilegeRoleEntity privilegeRoleEntity: privilegeRoleEntities){
+                    if(privilegeRoleEntity.getPrivilege().getPrivilegeId() == role.getPrivilegeId()){
+                        privilegeRoleEntity.setStatus(0);
+                        privilegeRoleRepository.save(privilegeRoleEntity);
+                        break;
+                    }
                 }
             }
         }
