@@ -22,5 +22,5 @@ public interface RoleRepository extends JpaRepository<RoleEntity,Long> {
     //find all with status true
     @Query("SELECT r FROM RoleEntity r WHERE r.status = 1")
     List<RoleEntity> findAllActiveRoles();
-    
+
 }

@@ -115,6 +115,12 @@ public class RoleApi {
         }
     }
 
+    @PutMapping("/{roleId}/update")
+    public ResponseDto<String> updateRole(@RequestBody RoleDto roleDto) {
+        roleBl.updateRole(roleDto);
+        return new ResponseDto<>("0001", "Role updated successfully", null);
+    }
+
 
 
 
