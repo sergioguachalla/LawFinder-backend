@@ -260,13 +260,40 @@ public class UserBl {
 
     }
 
+    final private TreeMap<UUID, String> passwordResetRequests = new TreeMap<>();
+    public void resetPassword(String email) {
+        PersonEntity personEntity = personRepository.findByEmail(email);
+        try{
+            Long personId = personEntity.getPersonId();
+            UserEntity userEntity = userRepository.findByPersonId(personId);
+            UUID uuid = UUID.randomUUID();
+            passwordResetRequests.put(uuid, email);
+            emailService.sendEmailMime(email,
+                    "Restablecimiento de contraseña",
+                    "Hola " + userEntity.getPersonId().getName() + ",\n\n"
+                            + "Hemos recibido una solicitud para restablecer tu contraseña. Haz clic en el siguiente enlace para restablecer tu contraseña: \n\n" +
+                            "http://localhost:5173/ResetPassword?uuid=" + uuid + "\n\n"
+                            + "Si no solicitaste restablecer tu contraseña, ignora este mensaje.");
+        }catch (Exception e){
+            throw new IllegalArgumentException("No se encontró el usuario con el correo electrónico proporcionado.");
+        }
+    }
 
+    public void changePassword(UUID passwordResetToken, String newPassword) {
+        if(passwordResetRequests.containsKey(passwordResetToken)) {
+            String email = passwordResetRequests.get(passwordResetToken);
+            passwordResetRequests.remove(passwordResetToken);
+            UserEntity userEntity = userRepository.findByEmail(email);
+            userEntity.setSecret(PasswordService.hashPassword(newPassword));
+            userRepository.save(userEntity);
 
-
-
-
-
-
-
-
+            emailService.sendEmailMime(email,
+                    "Contraseña restablecida",
+                    "Hola " + userEntity.getPersonId().getName() + ",\n\n"
+                            + "Tu contraseña ha sido restablecida exitósamente.\n\n" +
+                            "Si tu no solicitaste restablecer tu contraseña, por favor contacta con el administrador.");
+        } else {
+            throw new IllegalArgumentException("token de restablecimiento de contraseña no válido.");
+        }
+    }
 }

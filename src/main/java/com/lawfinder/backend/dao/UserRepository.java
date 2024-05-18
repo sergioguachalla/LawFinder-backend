@@ -10,6 +10,9 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<UserEntity,Long> {
 
+    @Query("SELECT u FROM UserEntity u WHERE u.personId.personId = :personId")
+    public UserEntity findByPersonId(Long personId);
+
     @Query("SELECT u FROM UserEntity u WHERE u.username = :username and u.status = true")
     public UserEntity findAllByUsername(@Param("username") String username);
 
