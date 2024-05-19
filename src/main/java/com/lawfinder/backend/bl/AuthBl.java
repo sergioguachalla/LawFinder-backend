@@ -5,11 +5,14 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.lawfinder.backend.Entity.PersonEntity;
 import com.lawfinder.backend.Entity.UserEntity;
+import com.lawfinder.backend.dao.PersonRepository;
 import com.lawfinder.backend.dao.UserRepository;
 import com.lawfinder.backend.dao.UserRoleRepository;
 import com.lawfinder.backend.dto.LoginDto;
 import com.lawfinder.backend.dto.TokenDto;
+import com.lawfinder.backend.services.EmailService;
 import com.lawfinder.backend.services.PasswordService;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,15 +30,22 @@ public class AuthBl {
     private final UserRepository userRepository;
     @Autowired
     private final UserRoleRepository userRoleRepository;
+    @Autowired
+    private final PersonRepository personRepository;
+
+    @Autowired
+    private final EmailService emailService;
 
     private Map<String, Integer> failedLoginAttempts = new HashMap<>();
 
     private Logger logger = org.slf4j.LoggerFactory.getLogger(AuthBl.class);
 
 
-    public AuthBl(UserRepository userRepository, UserRoleRepository userRoleRepository) {
+    public AuthBl(UserRepository userRepository, UserRoleRepository userRoleRepository, PersonRepository personRepository, EmailService emailService) {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
+        this.personRepository = personRepository;
+        this.emailService = emailService;
     }
     public static final String KEY = "lawFinder_2023";
 
@@ -146,9 +156,15 @@ public class AuthBl {
     //unlock user
     public Boolean unlockUser(Long id) {
         UserEntity userEntity = userRepository.findByUserId(id);
+        PersonEntity personEntity = personRepository.findByPersonId(userEntity.getPersonId().getPersonId());
         if (userEntity != null) {
             userEntity.setIsblocked(!userEntity.getIsblocked());
             userRepository.save(userEntity);
+            emailService.sendEmailMime(personEntity.getEmail(), "Cuenta Verificada",
+            "Su cuenta ha sido desbloqueada, ya puede iniciar sesion.\n\n" +
+                    "Su nombre de usuario es: " + userEntity.getUsername() + "\n\n" +
+                    "Gracias por usar LawFinder");
+
             return true;
         } else {
             return false;

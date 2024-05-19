@@ -7,6 +7,7 @@ import java.util.*;
 
 import com.lawfinder.backend.services.EmailService;
 import com.lawfinder.backend.services.PasswordService;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,7 @@ public class UserBl {
     private final VerificationRepository verificationRepository;
     private UserRoleRepository userRoleRepository;
 
+    Logger logger = org.slf4j.LoggerFactory.getLogger(UserBl.class);
 
     PersonEntity personMemory = new PersonEntity();
 
@@ -54,6 +56,7 @@ public class UserBl {
         personMemory = personRepository.save(person);
 
         // Set properties from userDto to userEntity
+        logger.info("username: " + userDto.getUsername());
         userEntity.setUsername(userDto.getUsername());
         //System.out.println("Contraseña" + userDto.getSecret());
         userEntity.setSecret(PasswordService.hashPassword(userDto.getSecret()));
@@ -103,6 +106,8 @@ public class UserBl {
         personMemory = personRepository.save(person);
 
         // Set properties from userDto to userEntity
+        logger.info("username: " + userDto.getUsername());
+
         userEntity.setUsername(userDto.getUsername());
         userEntity.setSecret(PasswordService.hashPassword(userDto.getSecret()));
         userEntity.setStatus(true);
@@ -128,7 +133,8 @@ public class UserBl {
         userRoleRepository.saveAndFlush(userRoleEntity);
 
         UserEntity user = userRepository.findByUserId(userAux.getId());
-        user.setUsername(person.getName() + "_" + person.getLastname() + "_" + userAux.getId());
+        user.setUsername(user.getUsername() + "_" +  userAux.getId());
+
         userRepository.save(user);
         emailService.sendEmailMime(userDto.getPersonId().getEmail(),
                 "Estado de cuenta",
