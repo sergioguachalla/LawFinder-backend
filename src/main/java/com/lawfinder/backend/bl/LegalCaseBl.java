@@ -221,4 +221,21 @@ public class LegalCaseBl {
 
     }
 
+
+    public boolean sendInvitation(Long caseId, String mail){
+        System.out.println(mail+ "aaaa");
+        UserEntity userEntity = userRepository.findByEmail(mail);
+        System.out.println("userEntity: " + userEntity.getUsername());
+        if(userEntity == null){
+            return false;
+        }
+        LegalCaseEntity legalCaseEntity = legalCaseRepository.findById(caseId).orElse(null);
+        ActorEntity actor = new ActorEntity();
+        actor.setLegalCaseId(legalCaseEntity);
+        actor.setUserId(userEntity);
+        actor.setStatus(false);
+        actorRepository.saveAndFlush(actor);
+        return true;
+    }
+
 }

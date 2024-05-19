@@ -195,6 +195,25 @@ public class LegalCaseApi {
         return response;
     }
 
+    @PostMapping("/api/v1/legalcase/{id}/invitation")
+    public ResponseDto<String> createInvitation(@PathVariable Long id, @RequestBody NewInvitationDto newInvitationDto){
+        ResponseDto<String> response = new ResponseDto<>();
+        System.out.println(newInvitationDto.getEmail());
+        if(this.legalCaseBl.sendInvitation(id, newInvitationDto.getEmail())){
+            response.setCode("0001");
+            response.setResponse("Invitation sended");
+            response.setErrorMessage(null);
+        }
+        else{
+            response.setCode("0000");
+            response.setResponse("User Does Not Exist");
+            response.setErrorMessage(null);
+        }
+
+        return response;
+    }
+
+
 }
 
 
