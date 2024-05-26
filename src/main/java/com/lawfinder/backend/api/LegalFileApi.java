@@ -1,5 +1,6 @@
 package com.lawfinder.backend.api;
 import com.lawfinder.backend.bl.AuthBl;
+import com.lawfinder.backend.bl.LogBl;
 import com.lawfinder.backend.bl.TokenBl;
 import com.lawfinder.backend.dto.ResponseDto;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,6 +19,7 @@ public class LegalFileApi {
     private LegalFileBl s3Service;
     @Autowired private AuthBl authBl;
     @Autowired private TokenBl tokenBl;
+    @Autowired private LogBl logBl;
 
     @PostMapping("/api/v1/legalfile")
     public ResponseDto<String>  upload(@RequestParam("file") MultipartFile file,
@@ -36,6 +38,8 @@ public class LegalFileApi {
             response.setCode("0001");
             response.setResponse(null);
             response.setErrorMessage("Invalid token");
+            logBl.saveSecurityLog("desconocido", "intento de registro de archivo sin autorizacion", ipAddress, 6L);
+
             return response;
         }
         s3Service.saveFile(file, instanceCaseId, summary, dueDate, courtId, documentTypeId,tokenBl.getUsernameFromToken(token), ipAddress);

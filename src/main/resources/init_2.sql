@@ -29,10 +29,19 @@ DROP TABLE IF EXISTS SUB_CATEGORY CASCADE;
 DROP TABLE IF EXISTS APPLICATION_LOG CASCADE;
 DROP TABLE IF EXISTS LOG_CATEGORY CASCADE;
 DROP TABLE IF EXISTS LOG_LEVEL CASCADE;
+DROP TABLE IF EXISTS SECURITY_LOG CASCADE;
 
 -- tables
 -- Table: ACTOR
-
+CREATE TABLE IF NOT EXISTS SECURITY_LOG (
+                                 LOG_ID serial  NOT NULL,
+                                 USER_LOG varchar(255)  NULL,
+                                 DATE timestamp  NOT NULL,
+                                 HOST varchar(100)  NOT NULL,
+                                 DESCRIPTION text  NOT NULL,
+                                 CATEGORY_ID int  NOT NULL,
+                                 CONSTRAINT SECURITY_LOG_pk PRIMARY KEY (LOG_ID)
+);
 CREATE TABLE IF NOT EXISTS APPLICATION_LOG (
                                  LOG_ID serial  NOT NULL,
                                  USER_LOG varchar(255)  NULL,
@@ -632,5 +641,5 @@ values (1, 'admin_sudo', '$2a$12$qnrJ8yFM8EfuqKzGJR32eOqgDITFqDXx5jSQEqF6iF7LAAU
 INSERT INTO se_user_role (role_id, user_id, status, is_blocked, date_created, date_blocked, tx_user, tx_host, tx_date)
 values (1, 1, TRUE, FALSE, CURRENT_DATE, CURRENT_DATE, 'admin', 'localhost', CURRENT_DATE);
 
-INSERT into log_category (category_name) values ('INSERT'), ('UPDATE'), ('DELETE');
+INSERT into log_category (category_name) values ('INSERT'), ('UPDATE'), ('DELETE'), ('LOGIN'), ('AUDIT'),('INTRUSION');
 INSERT into log_level (level_name) values ('INFO'), ('WARNING'), ('ERROR');

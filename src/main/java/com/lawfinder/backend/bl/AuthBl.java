@@ -53,11 +53,12 @@ public class AuthBl {
 
 
 
-    public TokenDto login(LoginDto login) {
+    public TokenDto login(LoginDto login, String ipAddress) {
 
         UserEntity userEntity = userRepository.findAllByUsername(login.getUsername());
 
         if(userEntity == null) {
+            logBl.saveSecurityLog("desconocido", "Intento de inicio de sesion fallido de un usuario desconocido", ipAddress, 4L);
             return null;
         }
         if (userEntity.getIsblocked()) {
@@ -81,11 +82,13 @@ public class AuthBl {
             TokenDto tokenDto = new TokenDto();
             tokenDto.setAuthToken(generateToken(userEntity.getId(), login.getUsername(), "AUTH", 30, roles));
             tokenDto.setRefreshToken(generateToken(userEntity.getId(), login.getUsername() , "REFRESH", 60,roles));
+            logBl.saveSecurityLog(login.getUsername(), "Inicio de sesion exitoso", ipAddress, 4L);
             return tokenDto;
         }
 
         else if (login.getUsername().equals(userEntity.getUsername())) {
             if (failedLoginAttempts.containsKey(login.getUsername())) {
+                logBl.saveSecurityLog(login.getUsername(), "Intento de inicio de sesion fallido", ipAddress, 4L);
                 failedLoginAttempts.put(login.getUsername(), failedLoginAttempts.get(login.getUsername()) + 1);
             } else {
                 failedLoginAttempts.put(login.getUsername(), 1);
@@ -93,6 +96,7 @@ public class AuthBl {
             if (failedLoginAttempts.get(login.getUsername()) >= 3) {
                 userEntity.setIsblocked(true);
                 userRepository.save(userEntity);
+                logBl.saveSecurityLog(login.getUsername(), "Usuario bloqueado por exceso de intentos", ipAddress, 4L);
             }
             return null;
         }

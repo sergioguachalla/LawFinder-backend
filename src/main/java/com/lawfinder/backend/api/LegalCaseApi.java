@@ -32,6 +32,8 @@ public class LegalCaseApi {
     @Autowired
     private CommentBl commentBl;
     @Autowired
+    private LogBl logBl;
+    @Autowired
     private AuthBl authBl;
     @Autowired private TokenBl tokenBl;
 
@@ -130,7 +132,22 @@ public class LegalCaseApi {
             @RequestParam(required = false) Boolean inProgress,
             @RequestParam(required = false) String title,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size){
+            @RequestParam(defaultValue = "10") int size,
+            @RequestHeader("Authorization") String token,
+            HttpServletRequest request
+            ){
+
+        //getip
+        String ipAddress = authBl.getClientIp(request);
+        if (!authBl.validateToken(token)) {
+            ResponseDto<Page<LegalCaseDto>> response = new ResponseDto<>();
+            response.setCode("0001");
+            response.setResponse(null);
+            response.setErrorMessage("Invalid token");
+            logBl.saveSecurityLog("desconocido", "intento de acceso a casos legales no autorizado",ipAddress, 6L);
+            return response;
+        }
+
 
         ResponseDto<Page<LegalCaseDto>> response = new ResponseDto<>();
         Pageable pageable = PageRequest.of(page, size);

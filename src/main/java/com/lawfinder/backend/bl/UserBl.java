@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserBl {
     @Autowired private LogBl logBl;
+
     private final UserRepository userRepository;
     private final PersonRepository personRepository;
     private final EmailService emailService;
@@ -38,7 +39,7 @@ public class UserBl {
     }
 
     @Transactional
-    public void saveCustomer(UserDto userDto) {
+    public void saveCustomer(UserDto userDto, String ipAddress) {
         UserEntity userEntity = new UserEntity();
 
         // Convert PersonDto to PersonEntity
@@ -84,11 +85,19 @@ public class UserBl {
         userRoleEntity.setTx_host("localhost");
         userRoleEntity.setTx_date(new Date());
         userRoleRepository.saveAndFlush(userRoleEntity);
+        logBl.saveLog(userDto.getUsername(),
+                "Se ha creado un nuevo usuario con id: " + userEntity.getId(),
+                1L, ipAddress, 1L);
+        emailService.sendEmailMime(userDto.getPersonId().getEmail(),
+                "Estado de cuenta",
+                "Hola " + userDto.getPersonId().getName() + ",\n\n"
+                        + "Tu cuenta ha sido creada exitósamente, sin embargo, un administrador \n" +
+                        "debe aprobar tu cuenta para que puedas acceder a la plataforma.\n\n");
 
     }
 
     @Transactional
-    public void saveLawyer(UserDto userDto) {
+    public void saveLawyer(UserDto userDto, String ipAddress) {
         UserEntity userEntity = new UserEntity();
 
         // Convert PersonDto to PersonEntity
@@ -139,6 +148,9 @@ public class UserBl {
         user.setUsername(user.getUsername() + "_" +  userAux.getId());
 
         userRepository.save(user);
+        logBl.saveLog(userDto.getUsername(),
+                "Se ha creado un nuevo abogado con id: " + userEntity.getId(),
+                1L, ipAddress, 1L);
         emailService.sendEmailMime(userDto.getPersonId().getEmail(),
                 "Estado de cuenta",
                 "Hola " + userDto.getPersonId().getName() + ",\n\n"
@@ -157,6 +169,11 @@ public class UserBl {
                 + "Utiliza este código para completar tu registro en LawFinder.\n\n"
                 + "¡Bienvenido y que tengas una excelente experiencia con nuestra plataforma!";
         emailService.sendEmailMime(email, subject, message);
+
+        logBl.saveLog(email,
+                "Se ha enviado un correo de verificación a: " + email,
+                1L, "localhost", 1L);
+
     }
 
     public Boolean verify(DeviceIdDto deviceIdDto) {
@@ -276,7 +293,7 @@ public class UserBl {
     }
 
     final private TreeMap<UUID, String> passwordResetRequests = new TreeMap<>();
-    public void resetPassword(String email) {
+    public void resetPassword(String email, String ipAddress) {
         PersonEntity personEntity = personRepository.findByEmail(email);
         try{
             Long personId = personEntity.getPersonId();
@@ -289,6 +306,10 @@ public class UserBl {
                             + "Hemos recibido una solicitud para restablecer tu contraseña. Haz clic en el siguiente enlace para restablecer tu contraseña: \n\n" +
                             "http://localhost:5173/ResetPassword?uuid=" + uuid + "\n\n"
                             + "Si no solicitaste restablecer tu contraseña, ignora este mensaje.");
+
+            logBl.saveSecurityLog(email,
+                    "Se ha enviado un correo de restablecimiento de contraseña a: " + email,
+                    ipAddress, 4L);
         }catch (Exception e){
             throw new IllegalArgumentException("No se encontró el usuario con el correo electrónico proporcionado.");
         }
@@ -307,8 +328,13 @@ public class UserBl {
                     "Hola " + userEntity.getPersonId().getName() + ",\n\n"
                             + "Tu contraseña ha sido restablecida exitósamente.\n\n" +
                             "Si tu no solicitaste restablecer tu contraseña, por favor contacta con el administrador.");
+            logBl.saveSecurityLog(email,
+                    "Se ha restablecido la contraseña del usuario con email: " + email,
+                    "localhost", 2L);
         } else {
             throw new IllegalArgumentException("token de restablecimiento de contraseña no válido.");
         }
+
+
     }
 }

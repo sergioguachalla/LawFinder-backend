@@ -21,10 +21,12 @@ class AuthApi {
     private Logger logger = org.slf4j.LoggerFactory.getLogger(AuthApi.class);
 
     @PostMapping("/api/v1/auth/login")
-    public ResponseDto<TokenDto> login(@RequestBody LoginDto login) {
+    public ResponseDto<TokenDto> login(@RequestBody LoginDto login, HttpServletRequest request) {
         ResponseDto<TokenDto> response = new ResponseDto<>();
 
-        TokenDto tokenDto = this.authBl.login(login);
+        //get ip from request
+        String ipAddress = authBl.getClientIp(request);
+        TokenDto tokenDto = this.authBl.login(login,ipAddress);
         logger.info("TokenDto: {}", tokenDto);
         if (tokenDto == null) {
             if (authBl.isAccountBlocked(login.getUsername())) {

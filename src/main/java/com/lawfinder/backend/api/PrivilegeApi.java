@@ -1,6 +1,7 @@
 package com.lawfinder.backend.api;
 
 import com.lawfinder.backend.bl.AuthBl;
+import com.lawfinder.backend.bl.LogBl;
 import com.lawfinder.backend.bl.PrivilegeBl;
 import com.lawfinder.backend.bl.TokenBl;
 import com.lawfinder.backend.dto.PrivilegeDto;
@@ -18,6 +19,7 @@ public class PrivilegeApi {
     @Autowired private PrivilegeBl privilegeBl;
     @Autowired private AuthBl authBl;
     @Autowired private TokenBl tokenBl;
+    @Autowired private LogBl logBl;
 
     @PostMapping("/")
     public ResponseDto<String> savePrivilege(
@@ -33,6 +35,7 @@ public class PrivilegeApi {
             response.setCode("0001");
             response.setResponse(null);
             response.setErrorMessage("Invalid token");
+            logBl.saveSecurityLog("desconocido", "intento de agregar privilegios sin autorizacion", ipAddress, 6L);
             return response;
         }
         privilegeBl.savePrivilege(privilegeDto,tokenBl.getUsernameFromToken(token),ipAddress);
@@ -52,6 +55,8 @@ public class PrivilegeApi {
             response.setCode("0001");
             response.setResponse(null);
             response.setErrorMessage("Invalid token");
+            logBl.saveSecurityLog("desconocido", "intento de eliminar privilegios sin autorizacion", ipAddress, 6L);
+
             return response;
         }
 
@@ -72,6 +77,7 @@ public class PrivilegeApi {
             response.setCode("0001");
             response.setResponse(null);
             response.setErrorMessage("Invalid token");
+            logBl.saveSecurityLog("desconocido", "intento de actualizar privilegios sin autorizacion", ipAddress, 6L);
             return response;
         }
 

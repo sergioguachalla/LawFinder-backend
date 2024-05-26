@@ -1,8 +1,6 @@
 package com.lawfinder.backend.api;
 
-import com.lawfinder.backend.bl.AuthBl;
-import com.lawfinder.backend.bl.RoleBl;
-import com.lawfinder.backend.bl.TokenBl;
+import com.lawfinder.backend.bl.*;
 import com.lawfinder.backend.dto.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +24,7 @@ public class RoleApi {
     @Autowired private RoleBl roleBl;
     @Autowired private AuthBl authBl;
     @Autowired private TokenBl tokenBl;
+    @Autowired private LogBl logBl;
 
     @PostMapping("/")
     public ResponseDto<String> saveRole(
@@ -40,6 +39,7 @@ public class RoleApi {
             response.setCode("0001");
             response.setResponse(null);
             response.setErrorMessage("Invalid token");
+            logBl.saveSecurityLog("desconocido", "intento de agregar roles sin autorizacion", ipAddress, 6L);
             return response;
         }
         roleBl.saveRole(roleDto,tokenBl.getUsernameFromToken(token),ipAddress);
@@ -59,6 +59,7 @@ public class RoleApi {
                 response.setCode("0001");
                 response.setResponse(null);
                 response.setErrorMessage("Invalid token");
+                logBl.saveSecurityLog("desconocido", "intento de agregar privilegios a roles sin autorizacion", ipAddress, 6L);
                 return response;
             }
             roleBl.addPrivilegeToRole(privilegeRoleDto,tokenBl.getUsernameFromToken(token),ipAddress);
@@ -90,6 +91,7 @@ public class RoleApi {
                 response.setCode("0001");
                 response.setResponse(null);
                 response.setErrorMessage("Invalid token");
+                logBl.saveSecurityLog("desconocido", "intento de actualizar roles sin autorizacion", ipAddress, 6L);
                 return response;
             }
             this.roleBl.addUserRole(id, role,tokenBl.getUsernameFromToken(token),ipAddress);
@@ -119,6 +121,7 @@ public class RoleApi {
                 response.setCode("0001");
                 response.setResponse(null);
                 response.setErrorMessage("Invalid token");
+                logBl.saveSecurityLog("desconocido", "intento de eliminar roles sin autorizacion", ipAddress, 6L);
                 return response;
             }
             this.roleBl.deleteUserRole(id, role,tokenBl.getUsernameFromToken(token),ipAddress);
@@ -147,6 +150,7 @@ public class RoleApi {
                 response.setCode("0001");
                 response.setResponse(null);
                 response.setErrorMessage("Invalid token");
+                logBl.saveSecurityLog("desconocido", "intento de eliminar roles sin autorizacion", ipAddress, 6L);
                 return response;
             }
             roleBl.deleteRole(roleId,tokenBl.getUsernameFromToken(token),ipAddress);
@@ -193,6 +197,7 @@ public class RoleApi {
     ) {
         String ipAddress = authBl.getClientIp(request);
         if(!authBl.validateToken(token)) {
+            logBl.saveSecurityLog("desconocido", "intento de actualizar roles sin autorizacion", ipAddress, 6L);
             return new ResponseDto<>("0001", "Invalid token", null);
         }
         roleBl.updateRole(roleDto,tokenBl.getUsernameFromToken(token),ipAddress);
