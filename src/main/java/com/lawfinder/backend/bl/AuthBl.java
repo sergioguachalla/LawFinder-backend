@@ -14,6 +14,7 @@ import com.lawfinder.backend.dto.LoginDto;
 import com.lawfinder.backend.dto.TokenDto;
 import com.lawfinder.backend.services.EmailService;
 import com.lawfinder.backend.services.PasswordService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -169,6 +170,23 @@ public class AuthBl {
         } else {
             return false;
         }
+    }
+
+
+    public String getClientIp(HttpServletRequest request) {
+        String ipAddress = request.getHeader("X-Forwarded-For");
+        if (ipAddress == null || ipAddress.isEmpty() || "unknown".equalsIgnoreCase(ipAddress)) {
+            ipAddress = request.getHeader("X-Real-IP");
+        }
+        if (ipAddress == null || ipAddress.isEmpty() || "unknown".equalsIgnoreCase(ipAddress)) {
+            ipAddress = request.getRemoteAddr();
+        }
+        if ("0:0:0:0:0:0:0:1".equals(ipAddress)) {
+            ipAddress = "127.0.0.1";  // For localhost access testing
+        } else if (ipAddress.contains(",")) {
+            ipAddress = ipAddress.split(",")[0].trim();  // Handle multiple IPs (e.g., "X-Forwarded-For: client, proxy1, proxy2")
+        }
+        return ipAddress;
     }
 
 }

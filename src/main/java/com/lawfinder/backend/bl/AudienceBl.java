@@ -1,9 +1,15 @@
 package com.lawfinder.backend.bl;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import com.lawfinder.backend.Entity.ApplicationLogEntity;
 import com.lawfinder.backend.Entity.LegalCaseEntity;
+import com.lawfinder.backend.Entity.LogCategoryEntity;
+import com.lawfinder.backend.dao.ApplicationLogRepository;
+import com.lawfinder.backend.dao.LogCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +19,16 @@ import com.lawfinder.backend.dto.AudienceDto;
 
 @Service
 public class AudienceBl {
-    @Autowired
-    private AudienceRepository audienceRepository;
+    @Autowired private AudienceRepository audienceRepository;
+    @Autowired private ApplicationLogRepository applicationLogRepository;
+    @Autowired private LogCategoryRepository logCategoryRepository;
+    @Autowired private LogBl logBl;
 
     //Save audience
-    public void saveAudience(Long idCase,AudienceDto audienceDto){
+    public void saveAudience(Long idCase,AudienceDto audienceDto, String username, String ipAddress){
         AudienceEntity audienceEntity = new AudienceEntity();
+        LogCategoryEntity logCategoryEntity = new LogCategoryEntity();
+        logCategoryEntity = logCategoryRepository.findById(1L).get();
 
         LegalCaseEntity legalCaseEntity = new LegalCaseEntity();
         legalCaseEntity.setLegalCaseId(idCase);
@@ -28,6 +38,12 @@ public class AudienceBl {
         audienceEntity.setAddress(audienceDto.getAddress());
         audienceEntity.setLegalCaseId(legalCaseEntity);
         audienceRepository.saveAndFlush(audienceEntity);
+
+        //Logs
+        logBl.saveLog(username,
+                        "Se ha creado una audiencia con fecha: " + audienceDto.getAudienceDate() +
+                " en el caso con id: " + idCase + ", con id de audiencia: " + audienceEntity.getAudienceId(),
+                        "INFO", ipAddress, 1L);
     }
 
     // obtener audiencias

@@ -26,9 +26,29 @@ DROP TABLE IF EXISTS SE_USER CASCADE;
 DROP TABLE IF EXISTS SE_USER_ROLE CASCADE;
 DROP TABLE IF EXISTS SE_VERIFICATION CASCADE;
 DROP TABLE IF EXISTS SUB_CATEGORY CASCADE;
+DROP TABLE IF EXISTS APPLICATION_LOG CASCADE;
+DROP TABLE IF EXISTS LOG_CATEGORY CASCADE;
 
 -- tables
 -- Table: ACTOR
+
+CREATE TABLE IF NOT EXISTS APPLICATION_LOG (
+                                 LOG_ID serial  NOT NULL,
+                                 USER_LOG varchar(255)  NOT NULL,
+                                 DATE timestamp  NOT NULL,
+                                 HOST varchar(100)  NOT NULL,
+                                 DESCRIPTION text  NOT NULL,
+                                 CATEGORY_ID int  NOT NULL,
+                                 LOG_LEVEL varchar(100)  NOT NULL,
+                                 CONSTRAINT APPLICATION_LOG_pk PRIMARY KEY (LOG_ID)
+);
+
+CREATE TABLE IF NOT EXISTS LOG_CATEGORY (
+                              CATEGORY_ID serial  NOT NULL,
+                              CATEGORY_NAME varchar(255)  NOT NULL,
+                              CONSTRAINT LOG_CATEGORY_pk PRIMARY KEY (CATEGORY_ID)
+);
+
 CREATE TABLE IF NOT EXISTS ACTOR (
                                      ACTOR_ID serial  NOT NULL,
                                      USER_ID int  NOT NULL,
@@ -357,6 +377,8 @@ TRUNCATE TABLE instance;
 TRUNCATE TABLE court;
 TRUNCATE TABLE department;
 TRUNCATE TABLE province;
+TRUNCATE TABLE log_category;
+
 
 -- Reiniciar los valores de las secuencias con el valor deseado
 ALTER SEQUENCE legal_file_type_legal_file_type_id_seq RESTART WITH 1;
@@ -369,7 +391,10 @@ ALTER SEQUENCE instance_instance_id_seq RESTART WITH 1;
 ALTER SEQUENCE court_court_id_seq RESTART WITH 1;
 ALTER SEQUENCE department_department_id_seq RESTART WITH 1;
 ALTER SEQUENCE province_province_id_seq RESTART WITH 1;
+ALTER SEQUENCE log_category_category_id_seq RESTART WITH 1;
+
 -- Ahora los inserts comenzarán con el ID 1
+
 
 
 INSERT INTO legal_file_type (FILE_NAME)
@@ -383,13 +408,13 @@ VALUES
     ('Sentencia');
 
 INSERT INTO privilege (privilege,STATUS)
-values ('DELETE_USER',1),('BLOCK_USER',1),('UNLOCK_USER',1), ('CREATE_ROLE',1), ('EDIT_USER',1),('CREATE_PRIVILEGE',1),('VIEW_CASE',1),('EDIT_CASE',1),('DELETE_CASE',1),('CREATE_CASE',1),('REGISTER_AUDIENCE',1);
+values ('DELETE_USER',1),('BLOCK_USER',1),('UNLOCK_USER',1), ('CREATE_ROLE',1), ('EDIT_USER',1),('CREATE_PRIVILEGE',1),('VIEW_CASE',1),('EDIT_CASE',1),('DELETE_CASE',1),('CREATE_CASE',1),('REGISTER_AUDIENCE',1),('VIEW_APPLICATION_LOGS',1),('VIEW_SECURITY_LOGS',1);
 
 INSERT INTO ROLE(rolename,STATUS)
 values ('ADMIN',1),('LAWYER',1),('CUSTOMER',1);
 
 INSERT INTO privilege_role(privilege_id,role_id,status)
-values(1,1,1),(2,1,1),(3,1,1),(4,1,1),(5,1,1),(6,1,1),(7,2,1),(8,2,1),(9,2,1),(10,2,1),(11,2,1),(7,3,1);
+values(1,1,1),(2,1,1),(3,1,1),(4,1,1),(5,1,1),(6,1,1),(7,2,1),(8,2,1),(9,2,1),(10,2,1),(11,2,1),(7,3,1),(12,1,1),(13,1,1);
 
 INSERT INTO category (category_name, description) VALUES
                                                       ('Derecho Penal', 'Incluye las normas legales y principios que regulan los delitos, las penas y el sistema de justicia penal.'),
@@ -598,3 +623,5 @@ values (1, 'admin_sudo', '$2a$12$qnrJ8yFM8EfuqKzGJR32eOqgDITFqDXx5jSQEqF6iF7LAAU
 
 INSERT INTO se_user_role (role_id, user_id, status, is_blocked, date_created, date_blocked, tx_user, tx_host, tx_date)
 values (1, 1, TRUE, FALSE, CURRENT_DATE, CURRENT_DATE, 'admin', 'localhost', CURRENT_DATE);
+
+INSERT into log_category (category_name) values ('INSERT'), ('UPDATE'), ('DELETE'), ('SECURITY');
