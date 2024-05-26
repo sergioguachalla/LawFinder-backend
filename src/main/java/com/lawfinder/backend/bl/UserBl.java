@@ -8,17 +8,20 @@ import java.util.*;
 import com.lawfinder.backend.services.EmailService;
 import com.lawfinder.backend.services.PasswordService;
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserBl {
+    @Autowired private LogBl logBl;
     private final UserRepository userRepository;
     private final PersonRepository personRepository;
     private final EmailService emailService;
     private final RoleRepository roleRepository;
     private final VerificationRepository verificationRepository;
     private UserRoleRepository userRoleRepository;
+
 
     Logger logger = org.slf4j.LoggerFactory.getLogger(UserBl.class);
 
@@ -216,10 +219,14 @@ public class UserBl {
     }
 
     //delete user logically
-    public void deleteUser(Long userId){
+    public void deleteUser(Long userId, String username, String ipAddress){
         UserEntity userEntity = userRepository.findByUserId(userId);
         userEntity.setStatus(false);
         userRepository.save(userEntity);
+
+        logBl.saveLog(username,
+                "Se ha eliminado el usuario con id: " + userId,
+                2L, ipAddress, 3L);
     }
 
     //get user roles
@@ -254,7 +261,7 @@ public class UserBl {
         return editUserDto;
     }
 
-    public void updateUser(Long id ,UserDto userDto){
+    public void updateUser(Long id ,UserDto userDto, String username, String ipAddress){
         UserEntity userEntity = userRepository.findByUserId(id);
         userEntity.setUsername(userDto.getUsername());
         userEntity.setSecret(PasswordService.hashPassword(userDto.getSecret()));
@@ -262,7 +269,9 @@ public class UserBl {
         userEntity.setTxHost("localhost");
         userEntity.setTxDate(new Date());
         userRepository.save(userEntity);
-
+        logBl.saveLog(username,
+                "Se ha actualizado el usuario con id: " + id,
+                2L, ipAddress, 2L);
 
     }
 

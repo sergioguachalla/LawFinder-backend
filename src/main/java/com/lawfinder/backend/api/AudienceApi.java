@@ -49,15 +49,15 @@ public class AudienceApi {
             HttpServletRequest request
     ){
         String ipAddress = authBl.getClientIp(request);
+        ResponseDto<String> response = new ResponseDto<>();
+
         if(!authBl.validateToken(token)){
-            ResponseDto<String> response = new ResponseDto<>();
             response.setCode("0001");
             response.setResponse(null);
             response.setErrorMessage("Invalid token");
             return response;
         }
 
-        ResponseDto<String> response = new ResponseDto<>();
         this.audienceBl.saveAudience(idCase, audienceDto, tokenBl.getUsernameFromToken(token),ipAddress);
         response.setCode("0000");
         response.setResponse("Audiencia creada");

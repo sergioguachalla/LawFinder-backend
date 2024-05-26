@@ -1,6 +1,7 @@
 package com.lawfinder.backend.api;
 
 import com.lawfinder.backend.Entity.PersonEntity;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,8 @@ import java.util.UUID;
 public class UserApi {
     @Autowired
     private UserBl userBl;
+    @Autowired private AuthBl authBl;
+    @Autowired private TokenBl tokenBl;
     // Constructor
 
     public UserApi(UserBl userBl) {
@@ -135,10 +138,22 @@ public class UserApi {
 
     //delete user
     @PutMapping("/api/v1/users/{id}")
-    public ResponseDto<String> deleteUser(@PathVariable Long id){
+    public ResponseDto<String> deleteUser(
+            @PathVariable Long id,
+            @RequestHeader("Authorization") String token,
+            HttpServletRequest request
+
+            ){
         ResponseDto<String> response = new ResponseDto<>();
         try{
-            this.userBl.deleteUser(id);
+            String ipAddress = authBl.getClientIp(request);
+            if(!authBl.validateToken(token)) {
+                response.setCode("0001");
+                response.setResponse(null);
+                response.setErrorMessage("Invalid token");
+                return response;
+            }
+            this.userBl.deleteUser(id,tokenBl.getUsernameFromToken(token),ipAddress);
             response.setCode("0000");
             response.setResponse("User deleted");
             response.setErrorMessage(null);
@@ -168,10 +183,24 @@ public class UserApi {
 
     //update user
     @PutMapping("/api/v1/users/{id}/update")
-    public ResponseDto<String> updateUser(@PathVariable Long id, @RequestBody UserDto user){
+    public ResponseDto<String> updateUser(
+            @PathVariable Long id,
+            @RequestBody UserDto user,
+            @RequestHeader("Authorization") String token,
+            HttpServletRequest request
+    ){
         ResponseDto<String> response = new ResponseDto<>();
+
         try{
-            this.userBl.updateUser(id, user);
+            String ipAddress = authBl.getClientIp(request);
+            if(!authBl.validateToken(token)){
+                response.setCode("0001");
+                response.setResponse(null);
+                response.setErrorMessage("Invalid token");
+                return response;
+            }
+
+            this.userBl.updateUser(id, user, tokenBl.getUsernameFromToken(token),ipAddress);
             response.setCode("0000");
             response.setResponse("User updated");
             response.setErrorMessage(null);

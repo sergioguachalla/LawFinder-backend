@@ -33,6 +33,7 @@ public class AuthBl {
     private final UserRoleRepository userRoleRepository;
     @Autowired
     private final PersonRepository personRepository;
+    @Autowired private LogBl logBl;
 
     @Autowired
     private final EmailService emailService;
@@ -155,7 +156,7 @@ public class AuthBl {
     }
 
     //unlock user
-    public Boolean unlockUser(Long id) {
+    public Boolean unlockUser(Long id, String username, String ipAddress) {
         UserEntity userEntity = userRepository.findByUserId(id);
         PersonEntity personEntity = personRepository.findByPersonId(userEntity.getPersonId().getPersonId());
         if (userEntity != null) {
@@ -166,6 +167,11 @@ public class AuthBl {
                     "Su nombre de usuario es: " + userEntity.getUsername() + "\n\n" +
                     "Gracias por usar LawFinder");
 
+            if(userEntity.getIsblocked()) {
+                logBl.saveLog(username, "Usuario bloqueado con id "+ userEntity.getId() , 2L,ipAddress,2L);
+            } else {
+                logBl.saveLog(username, "Usuario desbloqueado con id "+ userEntity.getId() , 2L,ipAddress,2L);
+            }
             return true;
         } else {
             return false;
