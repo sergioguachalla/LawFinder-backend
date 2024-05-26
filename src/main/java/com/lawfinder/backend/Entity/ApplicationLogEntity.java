@@ -24,17 +24,18 @@ public class ApplicationLogEntity {
     @Column(name = "DESCRIPTION")
     private String description;
 
-    @Column(name = "LOG_LEVEL")
-    private String level;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CATEGORY_ID", nullable = false)
     private LogCategoryEntity category;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "LEVEL_ID", nullable = false)
+    private LogLevelEntity level;
+
 
     public ApplicationLogEntity() {}
 
-    public ApplicationLogEntity(Long logId, String userLog, LocalDateTime date, String host, String description, String level, LogCategoryEntity category) {
+    public ApplicationLogEntity(Long logId, String userLog, LocalDateTime date, String host, String description, LogCategoryEntity category, LogLevelEntity level) {
         this.logId = logId;
         this.userLog = userLog;
         this.date = date;
@@ -85,11 +86,11 @@ public class ApplicationLogEntity {
         this.description = description;
     }
 
-    public String getLevel() {
+    public LogLevelEntity getLevel() {
         return level;
     }
 
-    public void setLevel(String level) {
+    public void setLevel(LogLevelEntity level) {
         this.level = level;
     }
 

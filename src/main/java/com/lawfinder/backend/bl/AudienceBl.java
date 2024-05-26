@@ -43,7 +43,7 @@ public class AudienceBl {
         logBl.saveLog(username,
                         "Se ha creado una audiencia con fecha: " + audienceDto.getAudienceDate() +
                 " en el caso con id: " + idCase + ", con id de audiencia: " + audienceEntity.getAudienceId(),
-                        "INFO", ipAddress, 1L);
+                        1L, ipAddress, 1L);
     }
 
     // obtener audiencias

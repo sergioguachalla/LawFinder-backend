@@ -28,18 +28,19 @@ DROP TABLE IF EXISTS SE_VERIFICATION CASCADE;
 DROP TABLE IF EXISTS SUB_CATEGORY CASCADE;
 DROP TABLE IF EXISTS APPLICATION_LOG CASCADE;
 DROP TABLE IF EXISTS LOG_CATEGORY CASCADE;
+DROP TABLE IF EXISTS LOG_LEVEL CASCADE;
 
 -- tables
 -- Table: ACTOR
 
 CREATE TABLE IF NOT EXISTS APPLICATION_LOG (
                                  LOG_ID serial  NOT NULL,
-                                 USER_LOG varchar(255)  NOT NULL,
+                                 USER_LOG varchar(255)  NULL,
                                  DATE timestamp  NOT NULL,
                                  HOST varchar(100)  NOT NULL,
                                  DESCRIPTION text  NOT NULL,
                                  CATEGORY_ID int  NOT NULL,
-                                 LOG_LEVEL varchar(100)  NOT NULL,
+                                 LEVEL_ID int  NOT NULL,
                                  CONSTRAINT APPLICATION_LOG_pk PRIMARY KEY (LOG_ID)
 );
 
@@ -47,6 +48,11 @@ CREATE TABLE IF NOT EXISTS LOG_CATEGORY (
                               CATEGORY_ID serial  NOT NULL,
                               CATEGORY_NAME varchar(255)  NOT NULL,
                               CONSTRAINT LOG_CATEGORY_pk PRIMARY KEY (CATEGORY_ID)
+);
+CREATE TABLE IF NOT EXISTS LOG_LEVEL (
+                         LEVEL_ID serial  NOT NULL,
+                         LEVEL_NAME varchar(255)  NOT NULL,
+                         CONSTRAINT LEVEL_pk PRIMARY KEY (LEVEL_ID)
 );
 
 CREATE TABLE IF NOT EXISTS ACTOR (
@@ -378,6 +384,7 @@ TRUNCATE TABLE court;
 TRUNCATE TABLE department;
 TRUNCATE TABLE province;
 TRUNCATE TABLE log_category;
+TRUNCATE TABLE log_level;
 
 
 -- Reiniciar los valores de las secuencias con el valor deseado
@@ -392,6 +399,7 @@ ALTER SEQUENCE court_court_id_seq RESTART WITH 1;
 ALTER SEQUENCE department_department_id_seq RESTART WITH 1;
 ALTER SEQUENCE province_province_id_seq RESTART WITH 1;
 ALTER SEQUENCE log_category_category_id_seq RESTART WITH 1;
+ALTER SEQUENCE log_level_level_id_seq RESTART WITH 1;
 
 -- Ahora los inserts comenzarán con el ID 1
 
@@ -624,4 +632,5 @@ values (1, 'admin_sudo', '$2a$12$qnrJ8yFM8EfuqKzGJR32eOqgDITFqDXx5jSQEqF6iF7LAAU
 INSERT INTO se_user_role (role_id, user_id, status, is_blocked, date_created, date_blocked, tx_user, tx_host, tx_date)
 values (1, 1, TRUE, FALSE, CURRENT_DATE, CURRENT_DATE, 'admin', 'localhost', CURRENT_DATE);
 
-INSERT into log_category (category_name) values ('INSERT'), ('UPDATE'), ('DELETE'), ('SECURITY');
+INSERT into log_category (category_name) values ('INSERT'), ('UPDATE'), ('DELETE');
+INSERT into log_level (level_name) values ('INFO'), ('WARNING'), ('ERROR');

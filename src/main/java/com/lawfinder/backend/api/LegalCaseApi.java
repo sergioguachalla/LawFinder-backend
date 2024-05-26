@@ -2,6 +2,7 @@ package com.lawfinder.backend.api;
 
 import com.lawfinder.backend.bl.*;
 import com.lawfinder.backend.dto.*;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -32,6 +33,8 @@ public class LegalCaseApi {
     private CommentBl commentBl;
     @Autowired
     private AuthBl authBl;
+    @Autowired private TokenBl tokenBl;
+
 
     private Stack<String> pendingInvitations = new Stack<>();
     Set<Integer> conjunto = new HashSet<>();
@@ -57,9 +60,13 @@ public class LegalCaseApi {
     }
     
     @PostMapping("/api/v1/legalcase")
-    public ResponseDto<String> createCase(@RequestBody LegalCaseDto legalCase , @RequestHeader("Authorization") String token) {
+    public ResponseDto<String> createCase(
+            @RequestBody LegalCaseDto legalCase ,
+            @RequestHeader("Authorization") String token,
+            HttpServletRequest request
+    ) {
         ResponseDto<String> response = new ResponseDto<>();
-
+        String ipAddress = authBl.getClientIp(request);
         if (!authBl.validateToken(token)) {
             response.setCode("0001");
             response.setResponse(null);
@@ -67,7 +74,7 @@ public class LegalCaseApi {
             return response;
         }
 
-        this.legalCaseBl.saveLegalCase(legalCase,pendingInvitations);
+        this.legalCaseBl.saveLegalCase(legalCase,pendingInvitations,tokenBl.getUsernameFromToken(token), ipAddress);
         response.setCode("0000");
         response.setResponse("Task created");
         pendingInvitations.clear();
@@ -135,8 +142,14 @@ public class LegalCaseApi {
     }
 
     @PutMapping("/api/v1/legalcase/{id}")
-    public ResponseDto<String> updateLegalCase(@PathVariable Long id, @RequestHeader("Authorization") String token) {
+    public ResponseDto<String> updateLegalCase(
+            @PathVariable Long id,
+            @RequestHeader("Authorization") String token,
+            HttpServletRequest request
+
+    ) {
         ResponseDto<String> response = new ResponseDto<>();
+        String ipAddress = authBl.getClientIp(request);
         if (!authBl.validateToken(token)) {
             response.setCode("0001");
             response.setResponse(null);
@@ -144,7 +157,7 @@ public class LegalCaseApi {
             return response;
         }
 
-        this.legalCaseBl.updateLegalCase(id);
+        this.legalCaseBl.updateLegalCase(id,tokenBl.getUsernameFromToken(token), ipAddress);
         response.setCode("0000");
         response.setResponse("Case updated");
         response.setErrorMessage(null);
@@ -186,9 +199,23 @@ public class LegalCaseApi {
     }
 
     @PostMapping("/api/v1/legalcase/{id}/instance")
-    public ResponseDto<String> createInstance(@PathVariable Long id, @RequestBody InstanceLegalCaseDto instanceLegalCaseDto){
+    public ResponseDto<String> createInstance(
+            @PathVariable Long id,
+            @RequestBody InstanceLegalCaseDto instanceLegalCaseDto,
+            @RequestHeader("Authorization") String token,
+            HttpServletRequest request
+            ){
+
         ResponseDto<String> response = new ResponseDto<>();
-        this.legalCaseBl.updateInstanceLegalCase(id, instanceLegalCaseDto);
+        String ipAddress = authBl.getClientIp(request);
+
+        if(!authBl.validateToken(token)){
+            response.setCode("0001");
+            response.setResponse(null);
+            response.setErrorMessage("Invalid token");
+            return response;
+        }
+        this.legalCaseBl.updateInstanceLegalCase(id, instanceLegalCaseDto, tokenBl.getUsernameFromToken(token), ipAddress);
         response.setCode("0000");
         response.setResponse("Instance created");
         response.setErrorMessage(null);

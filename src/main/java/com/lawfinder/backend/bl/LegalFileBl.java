@@ -8,6 +8,7 @@ import com.lawfinder.backend.Entity.LegalFileEntity;
 import com.lawfinder.backend.Entity.LegalFileTypeEntity;
 import com.lawfinder.backend.dao.FileRepository;
 import com.lawfinder.backend.dao.LegalFileRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
@@ -16,6 +17,8 @@ import java.util.List;
 
 @Service
 public class LegalFileBl{
+
+    @Autowired private LogBl logBl;
 
     private String bucketName = "lawfinderdocs";
     private final FileRepository fileRepository;
@@ -30,7 +33,8 @@ public class LegalFileBl{
     }
 
     
-    public void saveFile(MultipartFile file,Integer     instanceCaseId ,String summary, String dueDate, Integer courtId, Integer documentTypeId ) {
+    public void saveFile(MultipartFile file,Integer     instanceCaseId ,String summary, String dueDate,
+                         Integer courtId, Integer documentTypeId, String username, String ipAddress) {
         String originalFilename = file.getOriginalFilename();
         
             try {
@@ -80,8 +84,14 @@ public class LegalFileBl{
                 legalFileEntity.setTxHost("localhost");
                 legalFileEntity.setTxDate(new java.util.Date());
                 legalFileRepository.saveAndFlush(legalFileEntity);
-                
 
+                //Logs
+                logBl.saveLog(username,
+                        "Se ha subido un archivo con nombre: " + originalFilename +
+                                " en el caso con id: " + instanceCaseId + ", con id de archivo: " + fileEntity.getFileId(),
+                        1L, ipAddress, 1L);
+
+                
             } catch (IOException e) {
                 e.printStackTrace();
             }
