@@ -29,16 +29,19 @@ public class LegalCaseBl {
     private final UserRepository userRepository;
     private final ActorRepository actorRepository;
     private final CounterpartRepository counterpartRepository;
+    private final ConfidentialityRepository confidentialityRepository;
 
 
     public LegalCaseBl(LegalCaseRepository legalCaseRepository, InstanceLegalCaseRepository instanceLegalCaseRepository, 
-                        InstanceRepository instanceRepository, UserRepository userRepository, ActorRepository actorRepository, CounterpartRepository counterpartRepository) {
+                        InstanceRepository instanceRepository, UserRepository userRepository, 
+                        ActorRepository actorRepository, CounterpartRepository counterpartRepository, ConfidentialityRepository confidentialityRepository) {
         this.legalCaseRepository = legalCaseRepository;
         this.instanceLegalCaseRepository = instanceLegalCaseRepository;
         this.instanceRepository = instanceRepository;
         this.userRepository = userRepository;
         this.actorRepository = actorRepository;
         this.counterpartRepository = counterpartRepository;
+        this.confidentialityRepository = confidentialityRepository;
     }
 
     @Transactional
@@ -72,7 +75,7 @@ public class LegalCaseBl {
         legalCaseEntity.setTxHost("192.128.12.3");
         legalCaseEntity.setTxDate(new java.util.Date());
         
-        legalCaseRepository.saveAndFlush(legalCaseEntity);
+        //legalCaseRepository.saveAndFlush(legalCaseEntity);
         // Register the initial instance on db
         
         
@@ -103,6 +106,25 @@ public class LegalCaseBl {
             actor.setStatus(false);
             actorRepository.saveAndFlush(actor);
         }
+
+        InstanceEntity savedInstance = instanceRepository.findById((long) legalCaseDto.getIdInstance()).orElse(null);
+        if (savedInstance != null) {
+            if(savedInstance.getInstanceName().equals("Instancia Preliminar")){
+                Confidentiality confidentiality = confidentialityRepository.findByDescription("Público");
+                legalCaseEntity.setConfidentiality(confidentiality);
+                legalCaseRepository.saveAndFlush(legalCaseEntity);
+        }
+        if(savedInstance.getInstanceName().equals("Instancia de Investigación")){
+            Confidentiality confidentiality = confidentialityRepository.findByDescription("Confidencial");
+            legalCaseEntity.setConfidentiality(confidentiality);
+            legalCaseRepository.saveAndFlush(legalCaseEntity);
+        }
+        if(savedInstance.getInstanceName().equals("Instancia de Sentencia")){
+            Confidentiality confidentiality = confidentialityRepository.findByDescription("Restringido");
+            legalCaseEntity.setConfidentiality(confidentiality);
+            legalCaseRepository.saveAndFlush(legalCaseEntity);
+        }
+    }
         
         CounterpartEntity counterpart = new CounterpartEntity();
         counterpart.setLegalCaseId(legalCaseEntity);
@@ -229,6 +251,22 @@ public class LegalCaseBl {
         logBl.saveLog(username, "Se ha actualizado la instancia del caso con id: " +
                 legalCaseEntity.getLegalCaseId(),
                 2L, ipAddress, 2L);
+
+        if(instanceLegalCaseDto.getInstanceId() == 1){
+            Confidentiality confidentiality = confidentialityRepository.findByDescription("Público");
+            legalCaseEntity.setConfidentiality(confidentiality);
+            legalCaseRepository.saveAndFlush(legalCaseEntity);
+        }
+        if(instanceLegalCaseDto.getInstanceId() == 2){
+            Confidentiality confidentiality = confidentialityRepository.findByDescription("Confidencial");
+            legalCaseEntity.setConfidentiality(confidentiality);
+            legalCaseRepository.saveAndFlush(legalCaseEntity);
+        }
+        if(instanceLegalCaseDto.getInstanceId() == 3){
+            Confidentiality confidentiality = confidentialityRepository.findByDescription("Interna o Privada");
+            legalCaseEntity.setConfidentiality(confidentiality);
+            legalCaseRepository.saveAndFlush(legalCaseEntity);
+        }   
 
 
     }
