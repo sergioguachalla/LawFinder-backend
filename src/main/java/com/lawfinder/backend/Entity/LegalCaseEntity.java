@@ -60,13 +60,18 @@ public class LegalCaseEntity {
     @OneToMany(mappedBy = "legalCaseId")
     private List<ActorEntity> actors;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CONFIDENTIALITY_ID", referencedColumnName = "CONFIDENTIALITY_ID")
+    private Confidentiality confidentiality;
+
     // Constructor vacío
     public LegalCaseEntity() {
     }
 
     // Constructor con todos los atributos
     public LegalCaseEntity( ProvinceEntity province, UserEntity user, CrimeEntity crime ,
-    String title, Date startDate, String summary, Boolean status, String txUser, String txHost, Date txDate) {
+    String title, Date startDate, String summary, Boolean status, String txUser, String txHost, Date txDate,
+    Confidentiality confidentiality) {
 
         this.province = province;
         this.user = user;
@@ -76,6 +81,7 @@ public class LegalCaseEntity {
         this.summary = summary;
         this.status = status;
         this.txUser = txUser;
+        this.confidentiality = confidentiality;
         this.txHost = txHost;
         this.txDate = txDate;
     }
@@ -87,6 +93,9 @@ public class LegalCaseEntity {
 
     public CrimeEntity getCrime() {
         return crime;
+    }
+    public Confidentiality getConfidentiality() {
+        return confidentiality;
     }
 
 
@@ -143,6 +152,9 @@ public class LegalCaseEntity {
         this.user = user;
     }
 
+    public void setConfidentiality(Confidentiality confidentiality) {
+        this.confidentiality = confidentiality;
+    }
 
     public void setCrime(CrimeEntity crime) {
         this.crime = crime;
