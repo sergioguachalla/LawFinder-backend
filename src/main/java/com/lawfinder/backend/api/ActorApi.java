@@ -29,8 +29,6 @@ public class ActorApi {
             return response;
         }
         ResponseDto<List<InvitationDto>> response = new ResponseDto<>();
-        String username = tokenBl.getUsernameFromToken(token);
-        System.out.println(username+ "-----------------------------------------");
         response.setCode("0000");
         response.setResponse(this.actorBl.findByInvitationsId(idUser));
         response.setErrorMessage(null);

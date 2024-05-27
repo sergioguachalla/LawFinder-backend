@@ -5,8 +5,8 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "APPLICATION_LOG")
-public class ApplicationLogEntity {
+@Table(name = "SECURITY_LOG")
+public class SecurityLogEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "LOG_ID")
@@ -28,23 +28,17 @@ public class ApplicationLogEntity {
     @JoinColumn(name = "CATEGORY_ID", nullable = false)
     private LogCategoryEntity category;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "LEVEL_ID", nullable = false)
-    private LogLevelEntity level;
 
+    public SecurityLogEntity() {}
 
-    public ApplicationLogEntity() {}
-
-    public ApplicationLogEntity(Long logId, String userLog, LocalDateTime date, String host, String description, LogCategoryEntity category, LogLevelEntity level) {
+    public SecurityLogEntity(Long logId, String userLog, LocalDateTime date, String host, String description, LogCategoryEntity category) {
         this.logId = logId;
         this.userLog = userLog;
         this.date = date;
         this.host = host;
         this.description = description;
-        this.level = level;
         this.category = category;
     }
-
 
     public Long getLogId() {
         return logId;
@@ -86,14 +80,6 @@ public class ApplicationLogEntity {
         this.description = description;
     }
 
-    public LogLevelEntity getLevel() {
-        return level;
-    }
-
-    public void setLevel(LogLevelEntity level) {
-        this.level = level;
-    }
-
     public LogCategoryEntity getCategory() {
         return category;
     }
@@ -102,9 +88,10 @@ public class ApplicationLogEntity {
         this.category = category;
     }
 
+
     @Override
     public String toString() {
-        return "ApplicationLogEntity{" +
+        return "SecurityLogEntity{" +
                 "logId=" + logId +
                 ", userLog='" + userLog + '\'' +
                 ", date=" + date +

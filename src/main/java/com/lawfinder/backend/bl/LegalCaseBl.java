@@ -3,6 +3,7 @@ import com.lawfinder.backend.Entity.*;
 import com.lawfinder.backend.dao.*;
 import com.lawfinder.backend.dto.*;
 import com.lawfinder.backend.specifications.LegalCaseSpecifications;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +21,7 @@ import java.util.Stack;
 
 @Service
 public class LegalCaseBl {
+    @Autowired LogBl logBl;
     @Autowired
     private final LegalCaseRepository legalCaseRepository;
     private final InstanceLegalCaseRepository instanceLegalCaseRepository;
@@ -40,7 +42,8 @@ public class LegalCaseBl {
     }
 
     @Transactional
-    public void saveLegalCase(LegalCaseDto legalCaseDto, Stack<String> pendingInvitations) {
+    public void saveLegalCase(LegalCaseDto legalCaseDto, Stack<String> pendingInvitations, String username, String ipAddress) {
+
         LegalCaseEntity legalCaseEntity = new LegalCaseEntity();
         ProvinceEntity province = new ProvinceEntity();
         DepartmentEntity department = new DepartmentEntity();
@@ -106,6 +109,9 @@ public class LegalCaseBl {
         counterpart.setCounterpartName(legalCaseDto.getCounterpartName());
         counterpartRepository.saveAndFlush(counterpart);
 
+        logBl.saveLog(username, "Se ha creado un caso con id: " +
+                legalCaseEntity.getLegalCaseId(),
+                1L, ipAddress, 1L);
 
     }
 
@@ -166,11 +172,14 @@ public class LegalCaseBl {
     }
 
 
-    public void updateLegalCase(Long caseId){
+    public void updateLegalCase(Long caseId, String username, String ipAddress) {
         LegalCaseEntity legalCaseEntity = legalCaseRepository.findById(caseId).orElse(null);
         legalCaseEntity.setStatus(false);
         legalCaseEntity.setTxDate(new Date());
         legalCaseRepository.save(legalCaseEntity);
+        logBl.saveLog(username, "Se ha archivado el caso con id: " +
+                legalCaseEntity.getLegalCaseId(),
+                2L, ipAddress, 2L);
     }
     
     
@@ -202,7 +211,7 @@ public class LegalCaseBl {
         return caseInformationDto;
     }
 
-    public void updateInstanceLegalCase(Long caseId, InstanceLegalCaseDto instanceLegalCaseDto){
+    public void updateInstanceLegalCase(Long caseId, InstanceLegalCaseDto instanceLegalCaseDto, String username, String ipAddress){
         LegalCaseEntity legalCaseEntity = legalCaseRepository.findById(caseId).orElse(null);
         InstanceEntity instanceEntity = instanceRepository.findById(instanceLegalCaseDto.getInstanceId()).orElse(null);
         List<InstanceLegalCaseEntity> instancePrevious = instanceLegalCaseRepository.getPreviousInstances(caseId);
@@ -217,6 +226,9 @@ public class LegalCaseBl {
         instanceLegalCaseEntity.setStartDate(instanceLegalCaseDto.getStartDate());
         instanceLegalCaseEntity.setEndDate(instanceLegalCaseDto.getEndDate());
         instanceLegalCaseRepository.saveAndFlush(instanceLegalCaseEntity);
+        logBl.saveLog(username, "Se ha actualizado la instancia del caso con id: " +
+                legalCaseEntity.getLegalCaseId(),
+                2L, ipAddress, 2L);
 
 
     }
