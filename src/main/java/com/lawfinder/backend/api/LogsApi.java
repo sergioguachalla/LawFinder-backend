@@ -77,19 +77,19 @@ public class LogsApi {
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date to,
             @RequestParam(required = false) Long categoryId,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            @RequestHeader("Authorization") String token,
-            HttpServletRequest request
+            @RequestParam(defaultValue = "10") int size
+            /*@RequestHeader("Authorization") String token,
+            HttpServletRequest request*/
     ){
         ResponseDto<Page<ApplicationLogsDto>> response = new ResponseDto<>();
-        String ipAddress = authBl.getClientIp(request);
+       /* String ipAddress = authBl.getClientIp(request);
         if(!authBl.validateToken(token)){
             response.setCode("0001");
             response.setResponse(null);
             response.setErrorMessage("Invalid token");
             logBl.saveSecurityLog("desconocido", "intento de obtener logs sin autorizacion", ipAddress, 6L);
             return response;
-        }
+        }*/
         response.setCode("0000");
         Pageable pageable = PageRequest.of(page, size);
         response.setResponse(logBl.getSecurityLogs(from, to, categoryId, pageable));
