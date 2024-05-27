@@ -2,14 +2,8 @@ package com.lawfinder.backend.specifications;
 
 import java.util.Date;
 
+import com.lawfinder.backend.Entity.*;
 import org.springframework.data.jpa.domain.Specification;
-
-import com.lawfinder.backend.Entity.ActorEntity;
-import com.lawfinder.backend.Entity.CategoryEntity;
-import com.lawfinder.backend.Entity.CrimeEntity;
-import com.lawfinder.backend.Entity.InstanceLegalCaseEntity;
-import com.lawfinder.backend.Entity.LegalCaseEntity;
-import com.lawfinder.backend.Entity.SubCategoryEntity;
 
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
@@ -77,6 +71,14 @@ public class LegalCaseSpecifications {
         return (root, query, cb) -> cb.like(cb.lower(root.get("title")), "%" + keyword.toLowerCase() + "%");
     }
 
+
+
+    public static Specification<LegalCaseEntity> hasConfidentiality(Long confidentialityId) {
+        return (root, query, cb) -> {
+            Join<LegalCaseEntity, Confidentiality> join = root.join("confidentiality");
+            return cb.equal(join.get("confidentialityId"), confidentialityId);
+        };
+    }
     
     
 

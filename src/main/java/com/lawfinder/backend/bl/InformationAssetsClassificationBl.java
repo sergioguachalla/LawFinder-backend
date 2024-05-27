@@ -3,7 +3,12 @@ package com.lawfinder.backend.bl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.lawfinder.backend.dto.ConfidentialCaseDto;
+import com.lawfinder.backend.dto.ConfidentialityDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.lawfinder.backend.Entity.LegalCaseEntity;
@@ -50,6 +55,45 @@ public class InformationAssetsClassificationBl {
 
       return informationAssets;
    }
+
+
+
+   public Page<ConfidentialCaseDto> findAllConfidentialCases(Pageable pageable, Long confidentiality){
+      Specification<LegalCaseEntity> specification = Specification.where(null);
+        if(confidentiality != null){
+             specification = specification.and((root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("confidentiality"), confidentiality));
+        }
+        return legalCaseRepository.findAll(specification, pageable).map((this::mapToLegalDto));
+   }
+
+    private ConfidentialCaseDto mapToLegalDto(LegalCaseEntity legalCaseEntity){
+        ConfidentialCaseDto confidentialCaseDto = new ConfidentialCaseDto();
+        confidentialCaseDto.setCaseId(legalCaseEntity.getLegalCaseId());
+        confidentialCaseDto.setConfidentiality(legalCaseEntity.getConfidentiality().getDescription());
+        confidentialCaseDto.setCaseName(legalCaseEntity.getTitle());
+        confidentialCaseDto.setCaseDescription(legalCaseEntity.getSummary());
+        confidentialCaseDto.setCrime(legalCaseEntity.getCrime().getName());
+        confidentialCaseDto.setStartDate(legalCaseEntity.getStartDate());
+
+        return confidentialCaseDto;
+    }
+
+
+
+    public List<ConfidentialityDto> getAllConfidentialities(){
+        List<ConfidentialityDto> confidentialities = new ArrayList<>();
+        confidentialityRepository.findAll().forEach(confidentiality -> {
+            ConfidentialityDto confidentialityDto = new ConfidentialityDto();
+            confidentialityDto.setConfidentialityId(confidentiality.getConfidentialityId());
+            confidentialityDto.setDescription(confidentiality.getDescription());
+            confidentialities.add(confidentialityDto);
+        });
+        return confidentialities;
+    }
+
+
+
+
 
 
    
