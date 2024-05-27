@@ -1,6 +1,7 @@
 package com.lawfinder.backend.api;
 
 import com.lawfinder.backend.Entity.PersonEntity;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +15,10 @@ import java.util.UUID;
 
 @RestController
 public class UserApi {
-    @Autowired
-    private UserBl userBl;
+    @Autowired private UserBl userBl;
+    @Autowired private AuthBl authBl;
+    @Autowired private TokenBl tokenBl;
+    @Autowired private  LogBl logBl;
     // Constructor
 
     public UserApi(UserBl userBl) {
@@ -23,9 +26,11 @@ public class UserApi {
     }
 
     @PostMapping("/api/v1/user")
-    public ResponseDto<String> createUser(@RequestBody UserDto user) {
+    public ResponseDto<String> createUser(@RequestBody UserDto user, HttpServletRequest request) {
+
+        String ipAddress = authBl.getClientIp(request);
         ResponseDto<String> response = new ResponseDto<>();
-        this.userBl.saveCustomer(user);
+        this.userBl.saveCustomer(user, ipAddress);
         PersonEntity person = new PersonEntity();
         person.setEmail(user.getPersonId().getEmail());
         MailDto mail = new MailDto();
@@ -39,17 +44,19 @@ public class UserApi {
     }
 
     @PostMapping("/api/v1/user/forgotpassword")
-    public ResponseEntity<ResponseDto<String>> forgotPassword( @RequestBody MailDto mail ){
+    public ResponseEntity<ResponseDto<String>> forgotPassword( @RequestBody MailDto mail, HttpServletRequest request){
         ResponseDto<String> response = new ResponseDto<>();
+        String ipAddress = authBl.getClientIp(request);
         try{
             String email = mail.getMail();
-            this.userBl.resetPassword(email);
+            this.userBl.resetPassword(email,ipAddress);
             response.setCode("0000");
             response.setResponse("Se envio un correo con el link para restablecer la contraseña. Por favor revisa tu bandeja de entrada.");
             return ResponseEntity.ok(response);
 
         }catch (Exception e){
             response.setCode("0001");
+            logBl.saveSecurityLog("desconocido", "Intento de restablecer contraseña con correo no registrado", ipAddress, 6L);
             response.setResponse("No se encontró el usuario con el correo ingresado.");
             return ResponseEntity.badRequest().body(response);
         }
@@ -66,9 +73,10 @@ public class UserApi {
     }
     
     @PostMapping("/api/v1/lawyer")
-    public ResponseDto<String> createLawyer(@RequestBody UserDto lawyer){
+    public ResponseDto<String> createLawyer(@RequestBody UserDto lawyer, HttpServletRequest request){
         ResponseDto<String> response = new ResponseDto<>();
-        this.userBl.saveLawyer(lawyer);
+        String ipAddress = authBl.getClientIp(request);
+        this.userBl.saveLawyer(lawyer,ipAddress);
         PersonEntity person = new PersonEntity();
         person.setEmail(lawyer.getPersonId().getEmail());
         MailDto mail = new MailDto();
@@ -118,8 +126,19 @@ public class UserApi {
 
     //Get all Users
     @GetMapping("/api/v1/users")
-    public ResponseDto<List<UserListDto>> getAllUsers(){
+    public ResponseDto<List<UserListDto>> getAllUsers(
+            @RequestHeader("Authorization") String token,
+            HttpServletRequest request
+    ){
         ResponseDto<List<UserListDto>> response = new ResponseDto<>();
+        String ipAddress = authBl.getClientIp(request);
+        if(!authBl.validateToken(token)){
+            response.setCode("0001");
+            response.setResponse(null);
+            response.setErrorMessage("Invalid token");
+            logBl.saveSecurityLog("desconocido", "Intento de acceso no autorizado a users", ipAddress, 6L);
+            return response;
+        }
         if(this.userBl.getAllUsers().isEmpty()){
             response.setCode("0001");
             response.setResponse(null);
@@ -135,10 +154,23 @@ public class UserApi {
 
     //delete user
     @PutMapping("/api/v1/users/{id}")
-    public ResponseDto<String> deleteUser(@PathVariable Long id){
+    public ResponseDto<String> deleteUser(
+            @PathVariable Long id,
+            @RequestHeader("Authorization") String token,
+            HttpServletRequest request
+
+            ){
         ResponseDto<String> response = new ResponseDto<>();
         try{
-            this.userBl.deleteUser(id);
+            String ipAddress = authBl.getClientIp(request);
+            if(!authBl.validateToken(token)) {
+                response.setCode("0001");
+                response.setResponse(null);
+                response.setErrorMessage("Invalid token");
+                logBl.saveSecurityLog("desconocido", "Intento de delete no autorizado a users", ipAddress, 6L);
+                return response;
+            }
+            this.userBl.deleteUser(id,tokenBl.getUsernameFromToken(token),ipAddress);
             response.setCode("0000");
             response.setResponse("User deleted");
             response.setErrorMessage(null);
@@ -168,10 +200,25 @@ public class UserApi {
 
     //update user
     @PutMapping("/api/v1/users/{id}/update")
-    public ResponseDto<String> updateUser(@PathVariable Long id, @RequestBody UserDto user){
+    public ResponseDto<String> updateUser(
+            @PathVariable Long id,
+            @RequestBody UserDto user,
+            @RequestHeader("Authorization") String token,
+            HttpServletRequest request
+    ){
         ResponseDto<String> response = new ResponseDto<>();
+
         try{
-            this.userBl.updateUser(id, user);
+            String ipAddress = authBl.getClientIp(request);
+            if(!authBl.validateToken(token)){
+                response.setCode("0001");
+                response.setResponse(null);
+                response.setErrorMessage("Invalid token");
+                logBl.saveSecurityLog("desconocido", "Intento de update no autorizado a users", ipAddress, 6L);
+                return response;
+            }
+
+            this.userBl.updateUser(id, user, tokenBl.getUsernameFromToken(token),ipAddress);
             response.setCode("0000");
             response.setResponse("User updated");
             response.setErrorMessage(null);

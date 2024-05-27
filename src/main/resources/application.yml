@@ -1,5 +1,8 @@
-
+server:
+  port: 8080
 spring:
+  application:
+    name: law-finder
   datasource:
     url: jdbc:postgresql://localhost:5433/law-finder
     username: postgres

@@ -42,28 +42,27 @@ public class RoleBl {
     private UserRepository userRepository;
     @Autowired
     private UserRoleRepository userRoleRepository;
+    @Autowired LogBl logBl;
     /**
      * Sergio
      **/
     private final Logger logger = LoggerFactory.getLogger(RoleBl.class);
 
-    public void saveRole(RoleDto roleDto) {
+    public void saveRole(RoleDto roleDto, String username, String ipAddress) {
         RoleEntity roleEntity = new RoleEntity();
         roleEntity.setRoleName(roleDto.getRoleName());
         roleEntity.setStatus(1);
         roleRepository.save(roleEntity);
+        logBl.saveLog(username,"Rol"+ roleDto.getRoleName()+" creado",1L,ipAddress,1L);
     }
 
-    public void addPrivilegeToRole(PrivilegeRoleDto privilegeRoleDto) {
+    public void addPrivilegeToRole(PrivilegeRoleDto privilegeRoleDto, String username, String ipAddress) {
         logger.info("RoleDto: {}", privilegeRoleDto.getRoleName());
         logger.info("RoleDto: {}", privilegeRoleDto.getPrivileges());
         RoleEntity role = new RoleEntity();
         role.setRoleName(privilegeRoleDto.getRoleName());
         role.setStatus(1);
         RoleEntity roleAux = roleRepository.save(role);
-
-
-        //RoleEntity roleEntity = roleRepository.findById(roleId).orElseThrow();
 
         for (Long privilegeId : privilegeRoleDto.getPrivileges()) {
             PrivilegeEntity privilegeEntity = privilegeRepository.findById(privilegeId).orElseThrow();
@@ -74,6 +73,7 @@ public class RoleBl {
 
             privilegeRoleRepository.save(privilegeRoleEntity);
         }
+        logBl.saveLog(username,"Privilegio agregado a "+ privilegeRoleDto.getRoleName(),1L,ipAddress,1L);
 
     }
 
@@ -99,7 +99,7 @@ public class RoleBl {
         }).toList();
     }
 
-    public void deleteRole(Long roleId) {
+    public void deleteRole(Long roleId,String username, String ipAddress) {
         List<PrivilegeRoleEntity> privilegeRoleEntities = privilegeRoleRepository.findAllByRoleRoleId(roleId);
         List<UserRoleEntity> userRoleEntities = userRoleRepository.findAllByRoleRoleId(roleId);
         for (UserRoleEntity userRoleEntity : userRoleEntities) {
@@ -113,9 +113,11 @@ public class RoleBl {
         RoleEntity roleEntity = roleRepository.findById(roleId).orElseThrow();
         roleEntity.setStatus(0);
         roleRepository.save(roleEntity);
+
+        logBl.saveLog(username,"Rol "+ roleEntity.getRoleName()+ " eliminado ",2L,ipAddress,3L);
     }
 
-    public void updateRole(RoleDto roleDto) {
+    public void updateRole(RoleDto roleDto, String username, String ipAddress) {
         RoleEntity roleEntity = roleRepository.findById(roleDto.getRoleId()).orElseThrow();
         roleEntity.setRoleName(roleDto.getRoleName());
         List<String> privileges = roleDto.getPrivileges();
@@ -127,7 +129,7 @@ public class RoleBl {
             privilegeRoleEntity.setStatus(1);
             privilegeRoleRepository.save(privilegeRoleEntity);
         }
-
+        logBl.saveLog(username,"Rol "+ roleEntity.getRoleName()+" Actualizado",1L,ipAddress,1L);
 
     }
   
@@ -135,19 +137,22 @@ public class RoleBl {
   Ale handsome
   **/
 
- public void deleteUserRole(Long userId, Long roleId){
+ public void deleteUserRole(Long userId, Long roleId, String username, String ipAddress){
         UserRoleEntity userRoleEntity = userRoleRepository.findByUser_IdAndRole_Id(userId, roleId);
         userRoleEntity.setStatus(false);
         userRoleRepository.save(userRoleEntity);
+        logBl.saveLog(username,"Rol eliminado al usuario: " + userId,2L,ipAddress,3L);
     }
 
     //add new Role
-    public void addUserRole(Long userId, Long roleId){
+    public void addUserRole(Long userId, Long roleId, String username, String ipAddress){
         //verificar si el user role ya lo tenia pero estaba en false
         UserRoleEntity userRoleEntity = userRoleRepository.findWithoutStatus(userId, roleId);
         if(userRoleEntity != null){
             userRoleEntity.setStatus(true);
             userRoleRepository.save(userRoleEntity);
+            logBl.saveLog(username,"Rol agregado  al userId: " + userId,1L,ipAddress,1L);
+
             return;
         }
         UserRoleEntity userRoleEntity1 = new UserRoleEntity();
@@ -160,6 +165,8 @@ public class RoleBl {
         userRoleEntity1.setTx_host("localhost");
         userRoleEntity1.setTx_date(new Date());
         userRoleRepository.save(userRoleEntity1);
+
+        logBl.saveLog(username,"Rol "+ roleEntity.getRoleName()+" agregado "+" al userId: " + userId,1L,ipAddress,1L);
     }
 
     public RoleDto findRoleById(Long id) {
@@ -229,6 +236,8 @@ public class RoleBl {
                 }
             }
         }
+
+        logBl.saveLog("admin_sudo","Privilegios actualizados para el rol: "+ roleId,1L,"127.0.0.1",1L);
 
 
 

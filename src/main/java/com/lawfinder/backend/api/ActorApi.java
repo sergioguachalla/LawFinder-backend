@@ -4,6 +4,9 @@ import java.util.*;
 
 import com.lawfinder.backend.bl.AuthBl;
 import com.lawfinder.backend.config.exception.InvalidInputException;
+
+import com.lawfinder.backend.bl.TokenBl;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import com.lawfinder.backend.bl.ActorBl;
 import com.lawfinder.backend.dto.*;
@@ -15,8 +18,8 @@ public class ActorApi {
     @Autowired
     private ActorBl actorBl;
 
-    @Autowired
-    private AuthBl authBl;
+    @Autowired private AuthBl authBl;
+    @Autowired private TokenBl tokenBl;
 
     @GetMapping("/api/v1/invitation/{idUser}")
     public ResponseDto<List<InvitationDto>> getInvitationsById
@@ -37,14 +40,17 @@ public class ActorApi {
             ResponseDto<List<InvitationDto>> response = new ResponseDto<>();
             response.setCode("0001");
             response.setResponse(null);
-            response.setErrorMessage("Invalid token");
+            response.setErrorMessage("Invalid tokenXD");
             return response;
         }
+
             ResponseDto<List<InvitationDto>> response = new ResponseDto<>();
             response.setCode("0000");
             response.setResponse(this.actorBl.findByInvitationsId(idUser));
             response.setErrorMessage(null);
             return response;
+
+
     }
 
     @PutMapping("/api/v1/actor/{idCase}")
