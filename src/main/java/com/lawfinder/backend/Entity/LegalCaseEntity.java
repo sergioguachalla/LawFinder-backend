@@ -61,7 +61,7 @@ public class LegalCaseEntity {
     private List<ActorEntity> actors;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CONFIDENTIALITY_ID", referencedColumnName = "CONFIDENTIALITY_ID")
+    @JoinColumn(name = "ID_CONFIDENTIALITY", referencedColumnName = "ID_CONFIDENTIALITY")
     private Confidentiality confidentiality;
 
     // Constructor vacío

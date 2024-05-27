@@ -14,7 +14,7 @@ services:
     ports:
       - 5433:5432
     volumes:
-      - ./src/main/resources/init_2.sql:/docker-entrypoint-initdb.d/create_database.sql
+      - ./src/main/resources/init_3.sql:/docker-entrypoint-initdb.d/create_database.sql
       - ./docker/bd/data:/var/lib/postgresql/data &&  sudo chmod 0700 /var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=postgres
