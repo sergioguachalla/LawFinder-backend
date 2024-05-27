@@ -120,7 +120,7 @@ public class LegalCaseBl {
             legalCaseRepository.saveAndFlush(legalCaseEntity);
         }
         if(savedInstance.getInstanceName().equals("Instancia de Sentencia")){
-            Confidentiality confidentiality = confidentialityRepository.findByDescription("Restringido");
+            Confidentiality confidentiality = confidentialityRepository.findByDescription("Uso Interno o Privado");
             legalCaseEntity.setConfidentiality(confidentiality);
             legalCaseRepository.saveAndFlush(legalCaseEntity);
         }
