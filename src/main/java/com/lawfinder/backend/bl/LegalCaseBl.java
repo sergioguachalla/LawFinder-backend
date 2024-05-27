@@ -74,6 +74,23 @@ public class LegalCaseBl {
         legalCaseEntity.setTxUser("admin");
         legalCaseEntity.setTxHost("192.128.12.3");
         legalCaseEntity.setTxDate(new java.util.Date());
+        InstanceEntity savedInstance = instanceRepository.findById((long) legalCaseDto.getIdInstance()).orElse(null);
+        if (savedInstance != null) {
+            if(savedInstance.getInstanceName().equals("Instancia Preliminar")){
+                Confidentiality confidentiality = confidentialityRepository.findByDescription("Publica");
+                legalCaseEntity.setConfidentiality(confidentiality);
+                legalCaseRepository.saveAndFlush(legalCaseEntity);
+            }
+            if(savedInstance.getInstanceName().equals("Instancia de Investigación")){
+                Confidentiality confidentiality = confidentialityRepository.findByDescription("Confidencial");
+                legalCaseEntity.setConfidentiality(confidentiality);
+                legalCaseRepository.saveAndFlush(legalCaseEntity);
+            }
+            if(savedInstance.getInstanceName().equals("Instancia de Sentencia")){
+                Confidentiality confidentiality = confidentialityRepository.findByDescription("Uso Interno o Privada");
+                legalCaseEntity.setConfidentiality(confidentiality);
+                legalCaseRepository.saveAndFlush(legalCaseEntity);
+            }
         
         //legalCaseRepository.saveAndFlush(legalCaseEntity);
         // Register the initial instance on db
@@ -107,23 +124,7 @@ public class LegalCaseBl {
             actorRepository.saveAndFlush(actor);
         }
 
-        InstanceEntity savedInstance = instanceRepository.findById((long) legalCaseDto.getIdInstance()).orElse(null);
-        if (savedInstance != null) {
-            if(savedInstance.getInstanceName().equals("Instancia Preliminar")){
-                Confidentiality confidentiality = confidentialityRepository.findByDescription("Público");
-                legalCaseEntity.setConfidentiality(confidentiality);
-                legalCaseRepository.saveAndFlush(legalCaseEntity);
-        }
-        if(savedInstance.getInstanceName().equals("Instancia de Investigación")){
-            Confidentiality confidentiality = confidentialityRepository.findByDescription("Confidencial");
-            legalCaseEntity.setConfidentiality(confidentiality);
-            legalCaseRepository.saveAndFlush(legalCaseEntity);
-        }
-        if(savedInstance.getInstanceName().equals("Instancia de Sentencia")){
-            Confidentiality confidentiality = confidentialityRepository.findByDescription("Restringido");
-            legalCaseEntity.setConfidentiality(confidentiality);
-            legalCaseRepository.saveAndFlush(legalCaseEntity);
-        }
+
     }
         
         CounterpartEntity counterpart = new CounterpartEntity();
@@ -253,7 +254,7 @@ public class LegalCaseBl {
                 2L, ipAddress, 2L);
 
         if(instanceLegalCaseDto.getInstanceId() == 1){
-            Confidentiality confidentiality = confidentialityRepository.findByDescription("Público");
+            Confidentiality confidentiality = confidentialityRepository.findByDescription("Publica");
             legalCaseEntity.setConfidentiality(confidentiality);
             legalCaseRepository.saveAndFlush(legalCaseEntity);
         }
@@ -263,7 +264,7 @@ public class LegalCaseBl {
             legalCaseRepository.saveAndFlush(legalCaseEntity);
         }
         if(instanceLegalCaseDto.getInstanceId() == 3){
-            Confidentiality confidentiality = confidentialityRepository.findByDescription("Interna o Privada");
+            Confidentiality confidentiality = confidentialityRepository.findByDescription("Uso Interno o Privada");
             legalCaseEntity.setConfidentiality(confidentiality);
             legalCaseRepository.saveAndFlush(legalCaseEntity);
         }   
