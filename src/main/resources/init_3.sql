@@ -660,5 +660,5 @@ INSERT into log_level (level_name) values ('INFO'), ('WARNING'), ('ERROR');
 -- INSERT TABLE CONFIDENTIALITY
 INSERT INTO CONFIDENTIALITY (DESCRIPTION, STATUS) VALUES
 ('Publica', TRUE),
-('Confidencial', TRUE),
-('Uso Interno o Privada', TRUE);
+('Uso Interno o Privada', TRUE),
+('Confidencial', TRUE);
