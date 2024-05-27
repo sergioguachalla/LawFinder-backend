@@ -124,7 +124,6 @@ public class LegalCaseBl {
             actorRepository.saveAndFlush(actor);
         }
 
-
     }
         
         CounterpartEntity counterpart = new CounterpartEntity();
