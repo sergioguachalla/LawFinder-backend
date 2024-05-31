@@ -172,7 +172,7 @@ public class UserBl {
 
         logBl.saveLog(email,
                 "Se ha enviado un correo de verificación a: " + email,
-                1L, "localhost", 1L);
+                1L, "127.0.0.1", 1L);
 
     }
 
@@ -330,7 +330,7 @@ public class UserBl {
                             "Si tu no solicitaste restablecer tu contraseña, por favor contacta con el administrador.");
             logBl.saveSecurityLog(email,
                     "Se ha restablecido la contraseña del usuario con email: " + email,
-                    "localhost", 2L);
+                    "127.0.0.1", 2L);
         } else {
             throw new IllegalArgumentException("token de restablecimiento de contraseña no válido.");
         }

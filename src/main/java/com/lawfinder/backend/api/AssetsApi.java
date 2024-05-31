@@ -3,6 +3,8 @@ package com.lawfinder.backend.api;
 import java.util.Date;
 import java.util.List;
 
+import com.lawfinder.backend.bl.AuthBl;
+import com.lawfinder.backend.bl.LogBl;
 import com.lawfinder.backend.dto.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,10 @@ public class AssetsApi {
 
    @Autowired
    InformationAssetsClassificationBl informationAssetsClassificationBl;
+   @Autowired
+   AuthBl authBl;
+   @Autowired
+   LogBl logBl;
 
    @GetMapping("")
    public ResponseDto<List<InformationAssetDto>> getInformationAssets() {
@@ -37,17 +43,18 @@ public class AssetsApi {
            @RequestParam(required = false) Long confidentialityId,
            @RequestParam(defaultValue = "0") int page,
            @RequestParam(defaultValue = "10") int size,
-           //@RequestHeader("Authorization") String token,
+           @RequestHeader("Authorization") String token,
            HttpServletRequest request
    ){
       ResponseDto<Page<ConfidentialCaseDto>> response = new ResponseDto<>();
-        /*String ipAddress = authBl.getClientIp(request);
+        String ipAddress = authBl.getClientIp(request);
         if(!authBl.validateToken(token)){
             response.setCode("0001");
             response.setResponse(null);
             response.setErrorMessage("Invalid token");
+            logBl.saveSecurityLog("desconocido", "Intento de acceso a reporte de activos no autorizado", ipAddress,6L);
             return response;
-        }*/
+        }
         Pageable pageable = PageRequest.of(page, size);
         response.setCode("0000");
         response.setResponse(informationAssetsClassificationBl.findAllConfidentialCases(pageable, confidentialityId));
