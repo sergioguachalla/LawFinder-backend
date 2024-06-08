@@ -17,4 +17,6 @@ public interface ActorRepository extends JpaRepository<ActorEntity,Long>{
 
     @Query("SELECT a FROM ActorEntity a WHERE a.userId.id = :userId AND a.legalCaseId.legalCaseId = :legalCaseId")
     ActorEntity getActorIdByUserIdAndLegalCaseId(@Param("userId") Long userId, @Param("legalCaseId") Long legalCaseId);
+
+    List<ActorEntity> findAllByLegalCaseIdLegalCaseId(@Param("legalCaseId") Long legalCaseId);
 }

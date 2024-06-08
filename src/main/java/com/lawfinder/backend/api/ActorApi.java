@@ -64,6 +64,15 @@ public class ActorApi {
 
     }
 
+    @GetMapping("/api/v1/cases/{caseId}/actors")
+    public ResponseDto<List<ActorOutDto>> getActorsByCaseId(@PathVariable String caseId){
+        ResponseDto<List<ActorOutDto>> response = new ResponseDto<>();
+        response.setCode("0000");
+        response.setResponse(this.actorBl.getActorsByCaseId(caseId));
+        response.setErrorMessage(null);
+        return response;
+    }
+
 
 
 

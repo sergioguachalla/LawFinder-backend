@@ -5,6 +5,9 @@ import java.util.Date;
 import java.util.List;
 
 import com.lawfinder.backend.config.exception.InvalidInputException;
+import com.lawfinder.backend.dto.ActorOutDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +20,7 @@ import com.lawfinder.backend.dto.InvitationDto;
 public class ActorBl {
     @Autowired
     private final ActorRepository actorRepository;
+    Logger logger = LoggerFactory.getLogger(ActorBl.class);
 
     public ActorBl(ActorRepository actorRepository) {
         this.actorRepository = actorRepository;
@@ -62,6 +66,22 @@ public class ActorBl {
         actorEntity.setStatus(true);
         actorRepository.save(actorEntity);
 
+
+    }
+
+    public List<ActorOutDto> getActorsByCaseId(String caseId) {
+        Long caseIdLong = Long.parseLong(caseId);
+        logger.info("caseIdLong: " + caseIdLong);
+        List<ActorEntity> actorEntity = actorRepository.findAllByLegalCaseIdLegalCaseId(caseIdLong);
+
+        List<ActorOutDto> listActorOutDto = new ArrayList<>();
+        actorEntity.forEach(actorEntity1 -> {
+            ActorOutDto actorOutDto = new ActorOutDto();
+            actorOutDto.setActorId(actorEntity1.getActorId());
+            actorOutDto.setUsername(actorEntity1.getUserId().getUsername());
+            listActorOutDto.add(actorOutDto);
+        });
+        return listActorOutDto;
 
     }
 }
