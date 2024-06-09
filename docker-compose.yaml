@@ -10,6 +10,10 @@ x-common-postgres-environment: &common-postgres-environment
   POSTGRES_DB: law-finder
   POSTGRES_DB_URL: jdbc:postgresql://law-finder-db:5432/law-finder
 
+x-common-mail-environment: &common-mail-environment
+  MAIL_HOST: mailhog
+  MAIL_PORT: 1026
+
 services:
   law-finder-db:
     container_name: law-finder-db
@@ -42,18 +46,19 @@ services:
       image: mailhog/mailhog
       container_name: 'mailhog'
       ports:
-        - "1025:1025"
-        - "8025:8025"
+        - 1026:1025
+        - 8025:8025
       networks:
           - law-finder-network
 
   lawfinder-backend:
     container_name: lawfinder-backend
     image: guachallasergio/lawfinder-backend:latest
+    environment:
+      <<: [ *common-postgres-environment, *common-mail-environment ]
     ports:
       - "8080:8080"
-    environment:
-      <<: *common-postgres-environment
+
     restart: always
     depends_on:
       - law-finder-db
