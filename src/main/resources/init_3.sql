@@ -656,8 +656,8 @@ values (1, 'admin_sudo', '$2a$12$qnrJ8yFM8EfuqKzGJR32eOqgDITFqDXx5jSQEqF6iF7LAAU
         TRUE, FALSE, 'admin', 'localhost', CURRENT_DATE);
 
 INSERT INTO se_user_role (role_id, user_id, status, is_blocked, date_created, date_blocked, tx_user, tx_host, tx_date)
-values (1, 1, TRUE, FALSE, CURRENT_DATE, CURRENT_DATE, 'admin', 'localhost', CURRENT_DATE);
-values (2, 2, TRUE, FALSE, CURRENT_DATE, CURRENT_DATE, 'admin', 'localhost', CURRENT_DATE);
+values (1, 1, TRUE, FALSE, CURRENT_DATE, CURRENT_DATE, 'admin', 'localhost', CURRENT_DATE),
+     (2, 2, TRUE, FALSE, CURRENT_DATE, CURRENT_DATE, 'admin', 'localhost', CURRENT_DATE);
 
 INSERT into log_category (category_name) values ('INSERT'), ('UPDATE'), ('DELETE'), ('LOGIN'), ('AUDIT'),('INTRUSION');
 INSERT into log_level (level_name) values ('INFO'), ('WARNING'), ('ERROR');
