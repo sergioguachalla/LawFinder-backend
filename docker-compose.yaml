@@ -13,7 +13,7 @@ x-common-postgres-environment: &common-postgres-environment
 services:
   law-finder-db:
     container_name: law-finder-db
-    image: law-finder-db:1.1
+    image: guachallasergio/law-finder-db:1.1
 
     ports:
       - 5433:5432
@@ -49,12 +49,11 @@ services:
 
   lawfinder-backend:
     container_name: lawfinder-backend
-    image: lawfinder-backend:1.0
+    image: guachallasergio/lawfinder-backend:latest
     ports:
       - "8080:8080"
     environment:
       <<: *common-postgres-environment
-      MAIL_HOST: http://0.0.0.0:1025
     restart: always
     depends_on:
       - law-finder-db
