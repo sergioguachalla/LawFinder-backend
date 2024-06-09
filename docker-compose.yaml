@@ -50,7 +50,6 @@ services:
         - 8025:8025
       networks:
           - law-finder-network
-
   lawfinder-backend:
     container_name: lawfinder-backend
     image: guachallasergio/lawfinder-backend:latest
