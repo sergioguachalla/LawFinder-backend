@@ -643,11 +643,16 @@ INSERT INTO PROVINCE (DEPARTMENT_ID, PROVINCE_NAME) VALUES
 
 -- Admin insert
 INSERT INTO person (name, lastname, ci, complement, number, email, address, tx_user, tx_host, tx_date)
-values ('admin', 'sudo', '1234567', 'N/A', '1234567', 'admin@gmail.com', 'N/A', 'admin', 'localhost', CURRENT_DATE);
+values ('admin', 'sudo', '1234567', 'N/A', '1234567', 'admin@gmail.com', 'N/A', 'admin', 'localhost', CURRENT_DATE),
+       -- test lawyer insert
+       ('test-lawyer', 'test-lawyer', '1234567', 'N/A', '1234567', 'test@gmail.com','N/A', 'admin', 'localhost', CURRENT_DATE);
 
 --password : Admin12_
 INSERT INTO se_user (person_id, username, secret, status, isblocked, tx_user, tx_host, tx_date)
 values (1, 'admin_sudo', '$2a$12$qnrJ8yFM8EfuqKzGJR32eOqgDITFqDXx5jSQEqF6iF7LAAUC0/nNi',
+        TRUE, FALSE, 'admin', 'localhost', CURRENT_DATE),
+        -- test lawyer insert
+        (2, 'test-lawyer', '$2a$12$qnrJ8yFM8EfuqKzGJR32eOqgDITFqDXx5jSQEqF6iF7LAAUC0/nNi',
         TRUE, FALSE, 'admin', 'localhost', CURRENT_DATE);
 
 INSERT INTO se_user_role (role_id, user_id, status, is_blocked, date_created, date_blocked, tx_user, tx_host, tx_date)

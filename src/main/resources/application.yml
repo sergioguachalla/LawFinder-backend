@@ -22,7 +22,7 @@ spring:
 #    username: law.finder.ucb@gmail.com
 #    password: zxtgwqffbbgubfbg
   mail:
-    host: localhost
+    host: ${MAIL_HOST:localhost}
     port: 1025
     username: law.finder.ucb@gmail.com
     password: password

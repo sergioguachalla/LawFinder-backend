@@ -26,6 +26,7 @@ COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
 ENV POSTGRES_DB_URL "jdbc:postgresql://localhost:5433/law-finder"
 ENV POSTGRES_USERNAME "postgres"
 ENV POSTGRES_PASSWORD "admin"
+ENV MAIL_HOST "localhost"
 
 
 
