@@ -69,6 +69,13 @@ public class ActorBl {
 
     }
 
+    public void declineInvitation(Long actorId) {
+        ActorEntity actorEntity = actorRepository.findById(actorId).orElse(null);
+        assert actorEntity != null;
+        actorEntity.setStatus(false);
+        actorRepository.save(actorEntity);
+    }
+
     public List<ActorOutDto> getActorsByCaseId(String caseId) {
         Long caseIdLong = Long.parseLong(caseId);
         logger.info("caseIdLong: " + caseIdLong);

@@ -64,6 +64,16 @@ public class ActorApi {
 
     }
 
+    @DeleteMapping("/api/v1/actor/{idCase}")
+    public ResponseDto<String> declineInvitation(@PathVariable Long idCase){
+        ResponseDto<String> response = new ResponseDto<>();
+        this.actorBl.declineInvitation(idCase);
+        response.setCode("0000");
+        response.setResponse("Invitacion rechazada");
+        response.setErrorMessage(null);
+        return response;
+    }
+
     @GetMapping("/api/v1/cases/{caseId}/actors")
     public ResponseDto<List<ActorOutDto>> getActorsByCaseId(@PathVariable String caseId){
         ResponseDto<List<ActorOutDto>> response = new ResponseDto<>();

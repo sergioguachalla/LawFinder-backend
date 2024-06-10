@@ -4,7 +4,7 @@ spring:
   application:
     name: law-finder
   datasource:
-    url: ${POSTGRES_DB_URL:jdbc:postgresql://localhost:5433/law-finder}
+    url: ${POSTGRES_DB_URL:jdbc:postgresql://localhost:5434/law-finder}
     username: ${POSTGRES_USERNAME:postgres}
     password: ${POSTGRES_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
@@ -23,6 +23,6 @@ spring:
 #    password: zxtgwqffbbgubfbg
   mail:
     host: ${MAIL_HOST:localhost}
-    port: ${MAIL_PORT:1026}
+    port: ${MAIL_PORT:1025}
     username: law.finder.ucb@gmail.com
     password: password

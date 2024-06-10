@@ -11,8 +11,8 @@ x-common-postgres-environment: &common-postgres-environment
   POSTGRES_DB_URL: jdbc:postgresql://law-finder-db:5432/law-finder
 
 x-common-mail-environment: &common-mail-environment
-  MAIL_HOST: mailhog
-  MAIL_PORT: 1026
+  MAIL_HOST: localhost
+  MAIL_PORT: 1025
 
 services:
   law-finder-db:
@@ -20,7 +20,7 @@ services:
     image: guachallasergio/law-finder-db:1.1
 
     ports:
-      - 5433:5432
+      - 5434:5432
     volumes:
       - ./src/main/resources/init_3.sql:/docker-entrypoint-initdb.d/create_database.sql
       - ./docker/bd/data:/var/lib/postgresql/data &&  sudo chmod 0700 /var/lib/postgresql/data
@@ -46,7 +46,7 @@ services:
       image: mailhog/mailhog
       container_name: 'mailhog'
       ports:
-        - 1026:1025
+        - 1025:1025
         - 8025:8025
       networks:
           - law-finder-network
